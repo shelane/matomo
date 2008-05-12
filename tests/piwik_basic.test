@@ -1,0 +1,77 @@
+<?php
+// $Id$
+
+class PiwikBasicTest extends DrupalTestCase {
+  protected $web_user;
+
+  function get_info() {
+    return array('name' => t('Piwik basic tests'), 'desc' => t('Test basic Piwik module functionality.'), 'group' => 'Piwik');
+  }
+
+  function setUp() {
+    // User to set up piwik.
+    $this->web_user = $this->drupalCreateUserRolePerm(array('administer piwik'));
+
+    $this->drupalGet('logout');
+    $this->drupalLoginUser($this->web_user);
+
+    parent::setUp();
+  }
+  
+  function testPiwik() {
+    // Check for setting page's presence.
+    $this->drupalGet('admin/settings/piwik');
+    $this->assertWantedRaw(t('Piwik site ID'), "[testPiwik]: Settings page displayed.");
+
+    // Check for account code validation.
+    $edit['piwik_account'] = $this->randomName(2);
+    $this->drupalPost('admin/settings/piwik', $edit, 'Save configuration');
+    $this->assertWantedRaw(t('A valid Piwik account number is an integer only.'), "[testPiwik]: Account number validated.");
+  }
+  
+  function testPiwikTracking() {
+    // Set visibility to hide tracking code on admin page only,
+    // track authenticated users.
+    $this->drupalVariableSet('piwik_visibility', 0);
+    $this->drupalVariableSet('piwik_pages', "admin*");
+    $this->drupalVariableSet('piwik_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
+    $ua_code = '1';
+    $this->drupalVariableSet('piwik_account', $ua_code);
+
+    // Check tracking code visibility.
+    $this->drupalGet('');
+    $this->assertWantedRaw($ua_code, '[testPiwikTracking]: Tracking code is displayed for authenticated.');
+
+    /* Sample JS code as added to page:
+    <script language="javascript" src="http://piwik.org/demo/piwik.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    <!--
+    piwik_action_name = document.title;
+    piwik_idsite = 1;
+    piwik_url = 'http://piwik.org/demo/piwik.php';
+    piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+    //-->
+    </script>
+    */
+
+    // Test whether tracking code uses latest JS.
+    $this->drupalGet('');
+    $this->assertWantedRaw('piwik.php', '[testPiwikTracking]: Tracking code found.');
+
+    // Test whether tracking code display is properly flipped.
+    $this->drupalVariableSet('piwik_visibility', 1);
+    $this->drupalGet('admin');
+    $this->assertWantedRaw($ua_code, '[testPiwikTracking]: Tracking code is displayed on admin page.');
+    $this->drupalGet('admin/settings/piwik');
+    // Checking for tracking code URI here, as $ua_code is displayed in the form.
+    $this->assertWantedRaw('piwik.php', '[testPiwikTracking]: Tracking code is displayed on admin subpage.');
+    $this->drupalGet('');
+    $this->assertNoUnWantedRaw($ua_code, '[testPiwikTracking]: Tracking code is not displayed on front page.');
+  
+    // Test whether tracking code is not display for anonymous.
+    $this->drupalGet('logout');
+    $this->drupalGet('');
+    $this->assertNoUnWantedRaw($ua_code, '[testPiwikTracking]: Tracking code is not displayed for anonymous.');
+  }
+
+}
