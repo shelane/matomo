@@ -16,10 +16,10 @@ function piwik_admin_settings_form(&$form_state) {
     '#collapsible' => FALSE,
   );
 
-  $form['account']['piwik_idsite'] = array(
+  $form['account']['piwik_site_id'] = array(
     '#type' => 'textfield',
     '#title' => t('Piwik site ID'),
-    '#default_value' => variable_get('piwik_idsite', ''),
+    '#default_value' => variable_get('piwik_site_id', ''),
     '#size' => 15,
     '#maxlength' => 20,
     '#required' => TRUE,
@@ -32,7 +32,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#size' => 80,
     '#maxlength' => 255,
     '#required' => TRUE,
-    '#description' => t('The URL to your Piwik base directory. Example: http://www.example.com/piwik/.'),
+    '#description' => t('The URL to your Piwik base directory. Example: "http://www.example.com/piwik".'),
   );
   $form['account']['piwik_url_https'] = array(
     '#type' => 'textfield',
@@ -40,7 +40,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#default_value' => variable_get('piwik_url_https', ''),
     '#size' => 80,
     '#maxlength' => 255,
-    '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: https://www.example.com/piwik/.'),
+    '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik".'),
   );
 
   // Standard tracking configurations.
@@ -209,15 +209,15 @@ function piwik_admin_settings_form(&$form_state) {
 }
 
 function piwik_admin_settings_form_validate($form, &$form_state) {
-  if (!preg_match('/^\d{1,}$/', $form_state['values']['piwik_idsite'])) {
-    form_set_error('piwik_idsite', t('A valid Piwik site ID is an integer only.'));
+  if (!preg_match('/^\d{1,}$/', $form_state['values']['piwik_site_id'])) {
+    form_set_error('piwik_site_id', t('A valid Piwik site ID is an integer only.'));
   }
-  if ($result = drupal_http_request($form_state['values']['piwik_url_http'] . 'piwik.php')) {
+  if ($result = drupal_http_request($form_state['values']['piwik_url_http'] .'/piwik.php')) {
     if ($result->code != 200) {
       form_set_error('piwik_url_http', t('A valid Piwik url is required. The provided URL was not accessible.'));
     }
   }
-  if (!empty($form_state['values']['piwik_url_https']) && $result = drupal_http_request($form_state['values']['piwik_url_https'] . 'piwik.php')) {
+  if (!empty($form_state['values']['piwik_url_https']) && $result = drupal_http_request($form_state['values']['piwik_url_https'] .'/piwik.php')) {
     if ($result->code != 200) {
       form_set_error('piwik_url_https', t('A valid Piwik url for SSL is required. The provided URL was not accessible.'));
     }

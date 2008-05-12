@@ -9,7 +9,7 @@
  * @author: Alexander Hass <www.hass.de>
  */
 
-define('PK_TRACKFILES_EXTENSIONS', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xml|zip');
+//define('PK_TRACKFILES_EXTENSIONS', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xml|zip');
 
 function piwik_help($path, $arg) {
   switch ($path) {
@@ -39,7 +39,7 @@ function piwik_menu() {
 function piwik_init() {
   global $user;
 
-  $id = variable_get('piwik_idsite', '');
+  $id = variable_get('piwik_site_id', '');
 
   // 1. Check if the piwik account number has a value.
   // 2. Track page views based on visibility value.
@@ -51,12 +51,12 @@ function piwik_init() {
     $scope = variable_get('piwik_js_scope', 'footer');
 
     // Should a local cached copy of piwik.js be used?
-    if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _piwik_cache($url_http)) {
+    if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _piwik_cache($url_http .'/piwik.js')) {
       drupal_add_js($source, 'module', $scope);
     }
     else {
       $script = 'var pkBaseURL = (("https:" == document.location.protocol) ? "'. check_url($url_https) .'" : "'. check_url($url_http) .'");';
-      $script .= 'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));';
+      $script .= 'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "/piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));';
       drupal_add_js($script, 'inline', $scope);
     }
 
@@ -69,7 +69,7 @@ function piwik_init() {
 function piwik_footer($main = 0) {
   global $user;
 
-  $id = variable_get('piwik_idsite', '');
+  $id = variable_get('piwik_site_id', '');
 
   if (!empty($id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
 
@@ -123,8 +123,8 @@ function piwik_footer($main = 0) {
     // Build settings code.
     $script = '';
     $script .= 'piwik_action_name = document.title;';
-    $script .= 'piwik_idsite = '. drupal_to_js(variable_get('piwik_idsite', '')) .';';
-    $script .= 'piwik_url = pkBaseURL + "piwik.php";';
+    $script .= 'piwik_site_id = '. drupal_to_js(variable_get('piwik_site_id', '')) .';';
+    $script .= 'piwik_url = pkBaseURL + "/piwik.php";';
     if (!empty($piwik_vars)) {
       $piwik_vars_fields = array();
       foreach ($piwik_vars as $name => $value) {
@@ -138,7 +138,7 @@ function piwik_footer($main = 0) {
     if (!empty($codesnippet)) {
       $script .= $codesnippet;
     }
-    $script .= 'piwik_log(piwik_action_name, piwik_idsite, piwik_url, piwik_vars);';
+    $script .= 'piwik_log(piwik_action_name, piwik_site_id, piwik_url, piwik_vars);';
 
     drupal_add_js($script, 'inline', 'footer');
   }
@@ -181,7 +181,7 @@ function piwik_requirements($phase) {
 
   if ($phase == 'runtime') {
     // Raise warning if Piwik user account has not been set yet.
-    if (!preg_match('/^\d{1,}$/', variable_get('piwik_idsite', ''))) {
+    if (!preg_match('/^\d{1,}$/', variable_get('piwik_site_id', ''))) {
       $requirements['piwik'] = array(
         'title' => t('Piwik module'),
         'description' => t('Piwik module has not been configured yet. Please configure its settings from the <a href="@url">Piwik settings page</a>.', array('@url' => url('admin/settings/piwik'))),

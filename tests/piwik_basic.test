@@ -24,7 +24,7 @@ class PiwikBasicTest extends DrupalTestCase {
     $this->assertWantedRaw(t('Piwik site ID'), "[testPiwik]: Settings page displayed.");
 
     // Check for account code validation.
-    $edit['piwik_account'] = $this->randomName(2);
+    $edit['piwik_site_id'] = $this->randomName(2);
     $this->drupalPost('admin/settings/piwik', $edit, 'Save configuration');
     $this->assertWantedRaw(t('A valid Piwik account number is an integer only.'), "[testPiwik]: Account number validated.");
   }
@@ -47,16 +47,16 @@ class PiwikBasicTest extends DrupalTestCase {
     <script type="text/javascript">
     <!--
     piwik_action_name = document.title;
-    piwik_idsite = 1;
+    piwik_site_id = 1;
     piwik_url = 'http://piwik.org/demo/piwik.php';
-    piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+    piwik_log(piwik_action_name, piwik_site_id, piwik_url);
     //-->
     </script>
     */
 
     // Test whether tracking code uses latest JS.
     $this->drupalGet('');
-    $this->assertWantedRaw('piwik.php', '[testPiwikTracking]: Tracking code found.');
+    $this->assertWantedRaw('/piwik.php', '[testPiwikTracking]: Tracking code found.');
 
     // Test whether tracking code display is properly flipped.
     $this->drupalVariableSet('piwik_visibility', 1);
@@ -64,7 +64,7 @@ class PiwikBasicTest extends DrupalTestCase {
     $this->assertWantedRaw($ua_code, '[testPiwikTracking]: Tracking code is displayed on admin page.');
     $this->drupalGet('admin/settings/piwik');
     // Checking for tracking code URI here, as $ua_code is displayed in the form.
-    $this->assertWantedRaw('piwik.php', '[testPiwikTracking]: Tracking code is displayed on admin subpage.');
+    $this->assertWantedRaw('/piwik.php', '[testPiwikTracking]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
     $this->assertNoUnWantedRaw($ua_code, '[testPiwikTracking]: Tracking code is not displayed on front page.');
   
