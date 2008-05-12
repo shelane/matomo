@@ -2,7 +2,3 @@
 name = "Piwik - Web analytics"
 description = Adds Piwik javascript tracking code to all your site's pages.
 core = 6.x
-
-version = "6.x-1.x-dev"
-core = "6.x"
-project = "piwik"
