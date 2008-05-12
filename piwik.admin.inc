@@ -36,7 +36,7 @@ function piwik_admin_settings_form(&$form_state) {
   );
   $form['account']['piwik_url_https'] = array(
     '#type' => 'textfield',
-    '#title' => t('Piwik HTTP URL'),
+    '#title' => t('Piwik HTTPS URL'),
     '#default_value' => variable_get('piwik_url_https', ''),
     '#size' => 80,
     '#maxlength' => 255,
