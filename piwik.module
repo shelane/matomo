@@ -48,7 +48,7 @@ function piwik_init() {
     
     $url_http = variable_get('piwik_url_http', '');
     $url_https = variable_get('piwik_url_https', '');
-    $scope = variable_get('googleanalytics_js_scope', 'footer');
+    $scope = variable_get('piwik_js_scope', 'footer');
 
     // Should a local cached copy of piwik.js be used?
     if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _piwik_cache($url_http)) {
@@ -180,7 +180,7 @@ function piwik_requirements($phase) {
   $requirements = array();
 
   if ($phase == 'runtime') {
-    // Raise warning if Google user account has not been set yet.
+    // Raise warning if Piwik user account has not been set yet.
     if (!preg_match('/^\d{1,}$/', variable_get('piwik_account', ''))) {
       $requirements['piwik'] = array(
         'title' => t('Piwik module'),
@@ -242,7 +242,7 @@ function _piwik_cache($location) {
  * @param $account
  *   A user object containing an array of roles to check.
  * @return boolean
- *   A decision on if the current user is being tracked by Google Analytics.
+ *   A decision on if the current user is being tracked by Piwik.
  */
 function _piwik_visibility_user($account) {
 

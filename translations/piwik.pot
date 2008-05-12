@@ -3,15 +3,15 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  googleanalytics.admin.inc,v 1.2.2.34 2008/05/03 20:28:17 hass
-#  googleanalytics.module,v 1.16.2.42 2008/05/03 19:26:59 hass
+#  googleanalytics.admin.inc,v 1.2.2.35 2008/05/06 18:44:32 hass
+#  googleanalytics.module,v 1.16.2.43 2008/05/06 18:44:32 hass
 #  googleanalytics.info,v 1.5.2.3 2007/12/30 20:42:58 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-05-03 22:28+0200\n"
+"POT-Creation-Date: 2008-05-12 17:38+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -20,287 +20,207 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: googleanalytics.admin.inc:15
+#: piwik.admin.inc:15
 msgid "General settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:21
-msgid "Google Analytics account number"
+#: piwik.admin.inc:21
+msgid "Piwik site ID"
 msgstr ""
 
-#: googleanalytics.admin.inc:26
-msgid "The user account number (UA-xxxxxx-x) is unique to the websites domain. You can obtain a user account from the <a href=\"@url\">Google Analytics</a> website."
+#: piwik.admin.inc:26
+msgid "The user account number is unique to the websites domain."
 msgstr ""
 
-#: googleanalytics.admin.inc:32
+#: piwik.admin.inc:30;39
+msgid "Piwik HTTP URL"
+msgstr ""
+
+#: piwik.admin.inc:35
+msgid "The URL to your Piwik base directory. Example: http://www.example.com/piwik/."
+msgstr ""
+
+#: piwik.admin.inc:43
+msgid "The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: https://www.example.com/piwik/."
+msgstr ""
+
+#: piwik.admin.inc:49
 msgid "User specific tracking settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:37
+#: piwik.admin.inc:54
 msgid "Custom tracking settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:39
+#: piwik.admin.inc:56
 msgid "Users cannot control whether or not they add tracking."
 msgstr ""
 
-#: googleanalytics.admin.inc:40
+#: piwik.admin.inc:57
 msgid "Add tracking by default, but let individual users hide it."
 msgstr ""
 
-#: googleanalytics.admin.inc:41
+#: piwik.admin.inc:58
 msgid "Hide tracking by default, but let individual users add it."
 msgstr ""
 
-#: googleanalytics.admin.inc:43
+#: piwik.admin.inc:60
 msgid "Allow individual users to customize the visibility of tracking in their account settings."
 msgstr ""
 
-#: googleanalytics.admin.inc:50
+#: piwik.admin.inc:67
 msgid "Role specific tracking settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:61
+#: piwik.admin.inc:78
 msgid "Add tracking for specific roles"
 msgstr ""
 
-#: googleanalytics.admin.inc:64
+#: piwik.admin.inc:81
 msgid "Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users."
 msgstr ""
 
-#: googleanalytics.admin.inc:70
+#: piwik.admin.inc:87
 msgid "Page specific tracking settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:85
+#: piwik.admin.inc:102
 msgid "Add to every page except the listed pages."
 msgstr ""
 
-#: googleanalytics.admin.inc:85
+#: piwik.admin.inc:102
 msgid "Add to the listed pages only."
 msgstr ""
 
-#: googleanalytics.admin.inc:86
+#: piwik.admin.inc:103
 msgid "Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page."
 msgstr ""
 
-#: googleanalytics.admin.inc:89
+#: piwik.admin.inc:106
 msgid "Add if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only)."
 msgstr ""
 
-#: googleanalytics.admin.inc:90
+#: piwik.admin.inc:107
 msgid "If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site."
 msgstr ""
 
-#: googleanalytics.admin.inc:94
+#: piwik.admin.inc:111
 msgid "Add tracking to specific pages"
 msgstr ""
 
-#: googleanalytics.admin.inc:100
+#: piwik.admin.inc:117
 msgid "Pages"
 msgstr ""
 
-#: googleanalytics.admin.inc:109
-msgid "User segmentation settings"
-msgstr ""
-
-#: googleanalytics.admin.inc:115
-msgid "User identifier"
-msgstr ""
-
-#: googleanalytics.admin.inc:116
-msgid "User name"
-msgstr ""
-
-#: googleanalytics.admin.inc:117
-msgid "User roles"
-msgstr ""
-
-#: googleanalytics.admin.inc:128
-msgid "Track users based on"
-msgstr ""
-
-#: googleanalytics.admin.inc:129
-msgid "Segment users based on different properties, additionaly to the basic IP address based tracking provided by Google Analytics."
-msgstr ""
-
-#: googleanalytics.admin.inc:129
-msgid "<a href=\"@module_list\">Enable the profile module</a> to be able to use profile fields for more granular tracking."
-msgstr ""
-
-#: googleanalytics.admin.inc:129
-msgid "Selecting one or more values is supported. To select multiple items, hold down CTRL while selecting fields."
-msgstr ""
-
-#: googleanalytics.admin.inc:139
-msgid "Link tracking settings"
-msgstr ""
-
-#: googleanalytics.admin.inc:145
-msgid "Track outgoing links"
-msgstr ""
-
-#: googleanalytics.admin.inc:147
-msgid "Enables tracking of clicks on outgoing links."
-msgstr ""
-
-#: googleanalytics.admin.inc:151
-msgid "Track mailto links"
-msgstr ""
-
-#: googleanalytics.admin.inc:153
-msgid "Enables tracking of clicks on mailto links."
-msgstr ""
-
-#: googleanalytics.admin.inc:157
-msgid "Track download links"
-msgstr ""
-
-#: googleanalytics.admin.inc:159
-msgid "Enables tracking of clicks on links to files based on the file extensions list below."
-msgstr ""
-
-#: googleanalytics.admin.inc:163
-msgid "File extensions to track"
-msgstr ""
-
-#: googleanalytics.admin.inc:165
-msgid "A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions"
-msgstr ""
-
-#: googleanalytics.admin.inc:171
+#: piwik.admin.inc:159
 msgid "Advanced settings"
 msgstr ""
 
-#: googleanalytics.admin.inc:178
-msgid "Google Analytics version used"
-msgstr ""
-
-#: googleanalytics.admin.inc:181
-msgid "Latest (ga.js) tracking code"
-msgstr ""
-
-#: googleanalytics.admin.inc:182
-msgid "Legacy (urchin.js) tracking code"
-msgstr ""
-
-#: googleanalytics.admin.inc:184
-msgid "<a href=\"@ga_js_url\">On December 13, 2007, Google rolled out a new API</a> for its tracking code, and suggests all new sites to use this code. You should only use the older legacy code, if you have custom tracking code tied to that API. Otherwise it is suggested you use the latest API, as the legacy code will not receive feature updates and is not compatible with new features."
-msgstr ""
-
-#: googleanalytics.admin.inc:189
+#: piwik.admin.inc:166
 msgid "Cache tracking code file locally"
 msgstr ""
 
-#: googleanalytics.admin.inc:190
-msgid "If checked, the tracking code file is retrieved from Google Analytics and cached locally. It is updated daily from Google's servers to ensure updates to tracking code are reflected in the local copy. Do not activate this until after Google Analytics has confirmed your tracker!"
+#: piwik.admin.inc:167
+msgid "If checked, the tracking code file is retrieved from Piwik and cached locally. It is updated daily from your Piwik servers to ensure updates to tracking code are reflected in the local copy."
 msgstr ""
 
-#: googleanalytics.admin.inc:195
+#: piwik.admin.inc:172
 msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr ""
 
-#: googleanalytics.admin.inc:199
-msgid "Depends on: !dependencies"
-msgstr ""
-
-#: googleanalytics.admin.inc:199
-msgid " (<span class=\"admin-enabled\">enabled</span>)"
-msgstr ""
-
-#: googleanalytics.admin.inc:199
-msgid " (<span class=\"admin-disabled\">disabled</span>)"
-msgstr ""
-
-#: googleanalytics.admin.inc:206
-msgid "Track internal search"
-msgstr ""
-
-#: googleanalytics.admin.inc:207
-msgid "If checked, internal search keywords are tracked. You must configure your Google account to use the internal query parameter <em>search</em>. For more information see <a href=\"!url\">How do I set up Site Search for my profile</a>."
-msgstr ""
-
-#: googleanalytics.admin.inc:214
+#: piwik.admin.inc:191
 msgid "Custom JavaScript code"
 msgstr ""
 
-#: googleanalytics.admin.inc:217
-msgid "You can add custom Google Analytics <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Google Analytics appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+#: piwik.admin.inc:194
+msgid "You can add custom Piwik code snippets here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr ""
 
-#: googleanalytics.admin.inc:222
+#: piwik.admin.inc:199
 msgid "JavaScript scope"
 msgstr ""
 
-#: googleanalytics.admin.inc:223
-msgid "<strong>Warning:</strong> Google recommends adding the external JavaScript files to footer for performance reasons."
+#: piwik.admin.inc:200
+msgid "<strong>Warning:</strong> Adding the external JavaScript files to the footer region is recommended for performance reasons."
 msgstr ""
 
-#: googleanalytics.admin.inc:225
+#: piwik.admin.inc:202
 msgid "Footer"
 msgstr ""
 
-#: googleanalytics.admin.inc:226
+#: piwik.admin.inc:203
 msgid "Header"
 msgstr ""
 
-#: googleanalytics.admin.inc:236
-msgid "A valid Google Analytics account number is case sensitive and formated like UA-xxxxxx-x."
+#: piwik.admin.inc:213
+msgid "A valid Piwik site ID is an integer only."
 msgstr ""
 
-#: googleanalytics.admin.inc:241
+#: piwik.admin.inc:217
+msgid "A valid Piwik url is required. The provided URL was not accessible."
+msgstr ""
+
+#: piwik.admin.inc:222
+msgid "A valid Piwik url for SSL is required. The provided URL was not accessible."
+msgstr ""
+
+#: piwik.admin.inc:228
 msgid "Do not include the &lt;script&gt; tags in this field."
 msgstr ""
 
-#: googleanalytics.module:17
-msgid "<a href=\"@ga_url\">Google Analytics</a> is a free statistics package based on the excellent Urchin system. This module provides services to better integrate Drupal with Google Analytics."
+#: piwik.module:17
+msgid "<a href=\"@pk_url\">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to <a href=\"@ga_url\">Google Analytics</a>."
 msgstr ""
 
-#: googleanalytics.module:199
-msgid "Google Analytics configuration"
+#: piwik.module:158
+msgid "Piwik configuration"
 msgstr ""
 
-#: googleanalytics.module:206
+#: piwik.module:165
 msgid "User tracking"
 msgstr ""
 
-#: googleanalytics.module:227
-msgid "Google Analytics module"
+#: piwik.module:186
+msgid "Piwik module"
 msgstr ""
 
-#: googleanalytics.module:228
-msgid "Google Analytics module has not been configured yet. Please configure its settings from the <a href=\"@url\">Google Analytics settings page</a>."
+#: piwik.module:187
+msgid "Piwik module has not been configured yet. Please configure its settings from the <a href=\"@url\">Piwik settings page</a>."
 msgstr ""
 
-#: googleanalytics.module:230
+#: piwik.module:189
 msgid "Not configured"
 msgstr ""
 
-#: googleanalytics.module:22
-msgid "administer google analytics"
+#: piwik.module:22
+msgid "administer piwik"
 msgstr ""
 
-#: googleanalytics.module:22
+#: piwik.module:22
 msgid "administer own tracking configuration"
 msgstr ""
 
-#: googleanalytics.module:22
+#: piwik.module:22
 msgid "use PHP for tracking visibility"
 msgstr ""
 
-#: googleanalytics.module:27 googleanalytics.info:0
-msgid "Google Analytics"
+#: piwik.module:27
+msgid "Piwik"
 msgstr ""
 
-#: googleanalytics.module:28
-msgid "Configure the settings used to generate your Google Analytics tracking code."
+#: piwik.module:28
+msgid "Configure the settings used to generate your Piwik tracking code."
 msgstr ""
 
-#: googleanalytics.module:0
-msgid "googleanalytics"
+#: piwik.module:0
+msgid "piwik"
 msgstr ""
 
-#: googleanalytics.info:0
-msgid "Adds Google Analytics javascript tracking code to all your site's pages."
+#: piwik.info:0
+msgid "Piwik - Web analytics"
+msgstr ""
+
+#: piwik.info:0
+msgid "Adds Piwik javascript tracking code to all your site's pages."
 msgstr ""
 

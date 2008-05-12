@@ -32,7 +32,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#size' => 80,
     '#maxlength' => 255,
     '#required' => TRUE,
-    '#description' => t('The URL to your Piwik base directory. Example: http://www.example.com/piwik/'),
+    '#description' => t('The URL to your Piwik base directory. Example: http://www.example.com/piwik/.'),
   );
   $form['account']['piwik_url_https'] = array(
     '#type' => 'textfield',
@@ -40,7 +40,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#default_value' => variable_get('piwik_url_https', ''),
     '#size' => 80,
     '#maxlength' => 255,
-    '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website.  Example: https://www.example.com/piwik/'),
+    '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: https://www.example.com/piwik/.'),
   );
 
   // Standard tracking configurations.
