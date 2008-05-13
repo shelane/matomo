@@ -1,0 +1,166 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  referers-search.tpl.php: n/a
+#  visitors-overview.tpl.php: n/a
+#  visitors-settings.tpl.php: n/a
+#  visitors-times.tpl.php: n/a
+#  piwik_reports.pages.inc,v 1.1.2.1 2008/05/13 19:42:14 hass
+#  piwik_reports.module,v 1.1.2.1 2008/05/13 19:42:14 hass
+#  piwik_reports.info,v 1.1.2.1 2008/05/13 19:42:14 hass
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2008-05-13 21:52+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: referers-search.tpl.php:1
+msgid "Search engines"
+msgstr ""
+
+#: referers-search.tpl.php:9
+msgid "Keywords"
+msgstr ""
+
+#: visitors-overview.tpl.php:2
+msgid "Overview of the last @period"
+msgstr ""
+
+#: visitors-settings.tpl.php:1
+msgid "Browser families"
+msgstr ""
+
+#: visitors-settings.tpl.php:8
+msgid "Configurations"
+msgstr ""
+
+#: visitors-settings.tpl.php:16
+msgid "Operating systems"
+msgstr ""
+
+#: visitors-settings.tpl.php:24
+msgid "Resolutions"
+msgstr ""
+
+#: visitors-times.tpl.php:1
+msgid "Visit per local time"
+msgstr ""
+
+#: piwik_reports.pages.inc:20
+msgid "You do not have any reports."
+msgstr ""
+
+#: piwik_reports.pages.inc:28
+msgid "Today"
+msgstr ""
+
+#: piwik_reports.pages.inc:29
+msgid "Yesterday"
+msgstr ""
+
+#: piwik_reports.pages.inc:30
+msgid "Last week"
+msgstr ""
+
+#: piwik_reports.pages.inc:31
+msgid "Last month"
+msgstr ""
+
+#: piwik_reports.pages.inc:32
+msgid "Last year"
+msgstr ""
+
+#: piwik_reports.pages.inc:38
+msgid "Time period:"
+msgstr ""
+
+#: piwik_reports.pages.inc:43
+msgid "Change"
+msgstr ""
+
+#: piwik_reports.module:17
+msgid "Piwik reports"
+msgstr ""
+
+#: piwik_reports.module:21
+msgid "Reports on your website visitors, your popular pages, the search engines keywords they used... and so much more."
+msgstr ""
+
+#: piwik_reports.module:25
+msgid "Visitors"
+msgstr ""
+
+#: piwik_reports.module:33
+msgid "Overview"
+msgstr ""
+
+#: piwik_reports.module:42
+msgid "Settings"
+msgstr ""
+
+#: piwik_reports.module:51
+msgid "Times"
+msgstr ""
+
+#: piwik_reports.module:60
+msgid "Locations provider"
+msgstr ""
+
+#: piwik_reports.module:69
+msgid "Actions"
+msgstr ""
+
+#: piwik_reports.module:79
+msgid "Pages"
+msgstr ""
+
+#: piwik_reports.module:88
+msgid "Outlinks"
+msgstr ""
+
+#: piwik_reports.module:97
+msgid "Downloads"
+msgstr ""
+
+#: piwik_reports.module:106
+msgid "Referers"
+msgstr ""
+
+#: piwik_reports.module:116
+msgid "Evolution"
+msgstr ""
+
+#: piwik_reports.module:125
+msgid "Search engines & keywords"
+msgstr ""
+
+#: piwik_reports.module:134
+msgid "Websites"
+msgstr ""
+
+#: piwik_reports.module:0
+msgid "piwik_reports"
+msgstr ""
+
+#: piwik_reports.info:0
+msgid "Piwik - Reports"
+msgstr ""
+
+#: piwik_reports.info:0
+msgid "Adds Piwik reports to Drupal reports section."
+msgstr ""
+
+#: piwik_reports.info:0
+msgid "Piwik"
+msgstr ""
+
