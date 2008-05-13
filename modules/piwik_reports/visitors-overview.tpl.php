@@ -1,3 +1,6 @@
+<?php
+// $Id$
+?>
 <br />
 <h2><?php print t('Overview of the last @period', array('@period' => $period)) ?></h2>
 <div>

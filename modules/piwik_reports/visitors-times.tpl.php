@@ -1,3 +1,6 @@
+<?php
+// $Id$
+?>
 <h2><?php print t('Visit per local time') ?></h2>
 <div>
   <object codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="100%" height="250" id="VisitTimegetVisitInformationPerLocalTimeChart" >
