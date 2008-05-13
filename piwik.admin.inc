@@ -42,6 +42,16 @@ function piwik_admin_settings_form(&$form_state) {
     '#maxlength' => 255,
     '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik".'),
   );
+  $form['account']['piwik_auth'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Piwik authentication string'),
+    '#default_value' => variable_get('piwik_auth', ''),
+    '#size' => 40,
+    '#maxlength' => 40,
+    '#disabled' => module_exists('piwik_reports') ? FALSE : TRUE,
+    '#required' => module_exists('piwik_reports'),
+    '#description' => t('Required to request the reports data without being logged into Piwik. You can get this token in the Piwik Manage Users admin area.'),
+  );
 
   // Standard tracking configurations.
   $form['user_vis_settings'] = array(

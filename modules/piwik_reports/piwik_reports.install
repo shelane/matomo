@@ -1,0 +1,15 @@
+<?php
+// $Id$
+
+/**
+ * Drupal Module: Piwik Reports
+ * Sponsored by IO1, http://www.io1.biz
+ * All code is released under the GNU General Public License.
+ */
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function piwik_reports_uninstall() {
+  variable_del('piwik_reports_period');
+}
