@@ -227,7 +227,14 @@ function piwik_admin_settings_form() {
     '#collapsible' => TRUE,
   );
 
-  $roles = user_roles();
+  $default_role_options = array();
+  $default_roles = variable_get('googleanalytics_roles', array());
+  foreach ($default_roles as $default_rid => $checked) {
+    if ($checked) {
+      $default_role_options[] = $default_rid;
+    }
+  }
+  $roles = _piwik_user_roles();
   $role_options = array();
   foreach ($roles as $rid => $name) {
     $role_options[$rid] = $name;
@@ -235,7 +242,7 @@ function piwik_admin_settings_form() {
   $form['role_vis_settings']['piwik_roles'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Add tracking for specific roles'),
-    '#default_value' => variable_get('piwik_roles', array()),
+    '#default_value' => $default_role_options,
     '#options' => $role_options,
     '#description' => t('Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users.'),
   );
@@ -371,14 +378,18 @@ function piwik_admin_settings_form_validate($form_id, $form_values) {
   if (!preg_match('/^\d{1,}$/', $form_values['piwik_site_id'])) {
     form_set_error('piwik_site_id', t('A valid Piwik site ID is an integer only.'));
   }
-  if ($result = drupal_http_request($form_values['piwik_url_http'] .'/piwik.php')) {
-    if ($result->code != 200) {
-      form_set_error('piwik_url_http', t('A valid Piwik url is required. The provided URL was not accessible.'));
-    }
+
+  $url = $form_values['piwik_url_http'] .'/piwik.php';
+  $result = drupal_http_request($url);
+  if ($result->code != 200) {
+    form_set_error('piwik_url_http', t('The validation of "@url" failed with error "@error" (HTTP code @code).', array('@url' => check_url($url), '@error' => $result->error, '@code' => $result->code)));
   }
-  if (!empty($form_values['piwik_url_https']) && $result = drupal_http_request($form_values['piwik_url_https'] .'/piwik.php')) {
+
+  if (!empty($form_values['piwik_url_https'])) {
+    $url = $form_values['piwik_url_https'] .'/piwik.php';
+    $result = drupal_http_request($url);
     if ($result->code != 200) {
-      form_set_error('piwik_url_https', t('A valid Piwik url for SSL is required. The provided URL was not accessible.'));
+      form_set_error('piwik_url_https', t('The validation of "@url" failed with error "@error" (HTTP code @code).', array('@url' => check_url($url), '@error' => $result->error, '@code' => $result->code)));
     }
   }
 
