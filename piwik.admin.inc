@@ -163,6 +163,46 @@ function piwik_admin_settings_form(&$form_state) {
   );
 */
 
+  // Link specific configurations.
+  $form['linktracking'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Link tracking settings'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+  $form['linktracking']['piwik_track'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track download and outgoing links'),
+    '#default_value' => variable_get('piwik_track', 1),
+    '#description' => t('Enables tracking of clicks on download and outgoing links.')
+  );
+  /* TODO: For future use.
+  $form['linktracking']['piwik_trackoutgoing'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track outgoing links'),
+    '#default_value' => variable_get('piwik_trackoutgoing', 1),
+    '#description' => t('Enables tracking of clicks on outgoing links.')
+  );
+  $form['linktracking']['piwik_trackmailto'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track mailto links'),
+    '#default_value' => variable_get('piwik_trackmailto', 1),
+    '#description' => t('Enables tracking of clicks on mailto links.')
+  );
+  $form['linktracking']['piwik_trackfiles'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track download links'),
+    '#default_value' => variable_get('piwik_trackfiles', 1),
+    '#description' => t('Enables tracking of clicks on links to files based on the file extensions list below.')
+  );
+*/
+  $form['linktracking']['piwik_trackfiles_extensions'] = array(
+    '#type' => 'textfield',
+    '#title' => t('File extensions to track'),
+    '#default_value' => variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS),
+    '#description' => t('A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions', array('!extensions' => PK_TRACKFILES_EXTENSIONS))
+  );
+
   // Advanced feature configurations.
   $form['advanced'] = array(
     '#type' => 'fieldset',
@@ -201,7 +241,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#title' => t('Custom JavaScript code'),
     '#default_value' => variable_get('piwik_codesnippet', ''),
     '#rows' => 5,
-    '#description' => t('You can add custom Piwik code snippets here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).')
+    '#description' => t('You can add custom Piwik <a href="!snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://piwik.org/javascript-tag-documentation/'))
   );
 
   $form['advanced']['piwik_js_scope'] = array(

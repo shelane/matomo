@@ -9,7 +9,7 @@
  * @author: Alexander Hass <www.hass.de>
  */
 
-//define('PK_TRACKFILES_EXTENSIONS', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xml|zip');
+define('PK_TRACKFILES_EXTENSIONS', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xml|zip');
 
 function piwik_help($path, $arg) {
   switch ($path) {
@@ -120,11 +120,30 @@ function piwik_footer($main = 0) {
     // Add any custom code snippets if specified.
     $codesnippet = variable_get('piwik_codesnippet', '');
 
-    // Build settings code.
+    // Build settings code. See http://piwik.org/javascript-tag-documentation/
     $script = '';
     $script .= 'piwik_action_name = document.title;';
     $script .= 'piwik_site_id = '. drupal_to_js(variable_get('piwik_site_id', '')) .';';
     $script .= 'piwik_url = pkBaseURL + "/piwik.php";';
+
+    // Add link tracking.
+    if (!($trackOutgoing = variable_get('piwik_track', 1))) {
+      $script .= 'piwik_install_tracker = 0;';
+    }
+    /* TODO: For future use.
+    if ($trackOutgoing = variable_get('piwik_trackoutgoing', 1)) {
+      $script .= '';
+    }
+    if ($trackMailto = variable_get('piwik_trackmailto', 1)) {
+      $script .= '';
+    }
+    if (($trackDownload = variable_get('piwik_trackfiles', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
+    */
+    if (($trackDownload = variable_get('piwik_track', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
+      $script .= 'piwik_download_extensions = '. drupal_to_js($trackfiles_extensions) .';';  
+    }
+
+    // Add custom variables.
     if (!empty($piwik_vars)) {
       $piwik_vars_fields = array();
       foreach ($piwik_vars as $name => $value) {

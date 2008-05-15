@@ -20,6 +20,11 @@ function piwik_uninstall() {
   variable_del('piwik_auth');
   variable_del('piwik_codesnippet');
   //variable_del('piwik_segmentation');
+  variable_del('piwik_track'); // interrims solution
+  //variable_del('piwik_trackoutgoing');
+  //variable_del('piwik_trackmailto');
+  //variable_del('piwik_trackfiles');
+  variable_del('piwik_trackfiles_extensions');
   variable_del('piwik_cache');
   variable_del('piwik_last_cache');
   //variable_del('piwik_site_search');
