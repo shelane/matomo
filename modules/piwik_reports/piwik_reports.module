@@ -23,7 +23,8 @@ function piwik_reports_menu() {
   );
   $items['admin/reports/piwik_reports/visitors'] = array(
     'title' => 'Visitors',
-    'page callback' => 'piwik_reports_menu_block_page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('piwik_reports_overview'),
     'access arguments' => array('access site reports'),
     'file' => 'piwik_reports.pages.inc',
     'weight' => 1,
@@ -67,7 +68,6 @@ function piwik_reports_menu() {
   );
   $items['admin/reports/piwik_reports/actions'] = array(
     'title' => 'Actions',
-    //'page callback' => 'piwik_reports_menu_block_page',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('piwik_reports_pages'),
     'access arguments' => array('access site reports'),
@@ -104,7 +104,6 @@ function piwik_reports_menu() {
   );
   $items['admin/reports/piwik_reports/referers'] = array(
     'title' => 'Referers',
-    //'page callback' => 'piwik_reports_menu_block_page',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('piwik_reports_evolution'),
     'access arguments' => array('access site reports'),
@@ -139,6 +138,7 @@ function piwik_reports_menu() {
     'weight' => 3,
     'type' => MENU_LOCAL_TASK
   );
+
   return $items;
 }
 
@@ -157,7 +157,7 @@ function piwik_reports_theme() {
     'visitors_settings' => array(
       'template' => 'visitors-settings',
       'arguments' => array(
-        'url' => null,
+        'url1' => null,
         'url2' => null,
         'url3' => null,
         'url4' => null,
