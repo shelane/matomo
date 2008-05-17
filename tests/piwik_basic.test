@@ -26,7 +26,7 @@ class PiwikBasicTest extends DrupalTestCase {
     // Check for account code validation.
     $edit['piwik_site_id'] = $this->randomName(2);
     $this->drupalPost('admin/settings/piwik', $edit, 'Save configuration');
-    $this->assertWantedRaw(t('A valid Piwik account number is an integer only.'), "[testPiwik]: Account number validated.");
+    $this->assertWantedRaw(t('A valid Piwik site ID is an integer only.'), "[testPiwik]: Account number validated.");
   }
   
   function testPiwikTracking() {
@@ -66,12 +66,12 @@ class PiwikBasicTest extends DrupalTestCase {
     // Checking for tracking code URI here, as $ua_code is displayed in the form.
     $this->assertWantedRaw('/piwik.php', '[testPiwikTracking]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
-    $this->assertNoUnWantedRaw($ua_code, '[testPiwikTracking]: Tracking code is not displayed on front page.');
+    $this->assertNoUnWantedRaw('/piwik.php', '[testPiwikTracking]: Tracking code is not displayed on front page.');
   
     // Test whether tracking code is not display for anonymous.
     $this->drupalGet('logout');
     $this->drupalGet('');
-    $this->assertNoUnWantedRaw($ua_code, '[testPiwikTracking]: Tracking code is not displayed for anonymous.');
+    $this->assertNoUnWantedRaw('/piwik.php', '[testPiwikTracking]: Tracking code is not displayed for anonymous.');
   }
 
 }
