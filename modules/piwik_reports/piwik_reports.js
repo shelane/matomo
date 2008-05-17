@@ -14,7 +14,6 @@ $(document).ready(function(){
         header += "<th>" + Drupal.t('Visits') + "</th>";
       }
       header += "</tr>";
-
       var content = "";
       var footer = "</table>";
       var tr_class = "even";
