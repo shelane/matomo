@@ -3,7 +3,7 @@ $(document).ready(function(){
   var page = $("#edit-page").val();
   $.getJSON(url,
     function(data){
-      var header = "<table class='sticky-enabled sticky-table'><tr><th>" + Drupal.t('Label') + "</th>";
+      var header = "<table class='sticky-enabled sticky-table'><thead class='tableHeader-processed'><tr><th>" + Drupal.t('Label') + "</th>";
       if (page == "websites") {
         header += "<th>" + Drupal.t('Visitors') + "</th>";
       }
@@ -13,7 +13,7 @@ $(document).ready(function(){
       if (page == "search") {
         header += "<th>" + Drupal.t('Visits') + "</th>";
       }
-      header += "</tr>";
+      header += "</tr></thead><tbody>";
       var content = "";
       var footer = "</table>";
       var tr_class = "even";
@@ -30,7 +30,7 @@ $(document).ready(function(){
         if (page == "search") {
           content += "<td>" + item["nb_visits"] + "</td>";
         }
-        content += "</tr>";
+        content += "</tr></tbody>";
       });
       $("#pagestable").html('<br />' + header + content + footer);
     });
