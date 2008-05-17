@@ -49,7 +49,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#size' => 40,
     '#maxlength' => 40,
     '#disabled' => module_exists('piwik_reports') ? FALSE : TRUE,
-    '#required' => module_exists('piwik_reports'),
+    //'#required' => module_exists('piwik_reports'),
     '#description' => t('Required to request the reports data without being logged into Piwik. You can get this token in the Piwik Manage Users admin area.'),
   );
 
@@ -63,11 +63,11 @@ function piwik_admin_settings_form(&$form_state) {
     '#type' => 'radios',
     '#title' => t('Custom tracking settings'),
     '#options' => array(
-      t('Users cannot control whether or not they add tracking.'),
-      t('Add tracking by default, but let individual users hide it.'),
-      t('Hide tracking by default, but let individual users add it.')
+      t('Users cannot control whether they are tracked or not.'),
+      t('Track users by default, but let individual users to opt out.'),
+      t('Do not track users by default, but let individual users to opt in.')
     ),
-    '#description' => t('Allow individual users to customize the visibility of tracking in their account settings.'),
+    '#description' => t('Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference.', array('%permission' => t('opt-in or out of tracking'))),
     '#default_value' => variable_get('piwik_custom', 0),
   );
 
@@ -88,7 +88,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#title' => t('Add tracking for specific roles'),
     '#default_value' => variable_get('piwik_roles', array()),
     '#options' => $role_options,
-    '#description' => t('Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users.'),
+    '#description' => t('Add tracking only for the selected role(s). If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked.'),
   );
 
   // Page specific visibility configurations.
@@ -154,7 +154,7 @@ function piwik_admin_settings_form(&$form_state) {
 
   $form['segmentation']['piwik_segmentation'] = array(
     '#type' => 'select',
-    '#title' => t('Track users based on'),
+    '#title' => t('Add segmentation information to tracking code'),
     '#description' => t('Segment users based on different properties, additionaly to the basic IP address based tracking provided by Piwik.') . (!$profile_enabled ? ' '. t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Selecting one or more values is supported. To select multiple items, hold down CTRL while selecting fields.'),
     '#default_value' => variable_get('piwik_segmentation', ''),
     '#options' => $fields,

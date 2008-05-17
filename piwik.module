@@ -19,7 +19,7 @@ function piwik_help($path, $arg) {
 }
 
 function piwik_perm() {
-  return array('administer piwik', 'administer own tracking configuration', 'use PHP for tracking visibility');
+  return array('administer piwik', 'opt-in or out of tracking', 'use PHP for tracking visibility');
 }
 
 function piwik_menu() {
@@ -171,7 +171,7 @@ function piwik_footer($main = 0) {
 function piwik_user($type, $edit, &$account, $category = NULL) {
   switch ($type) {
     case 'form':
-      if ($category == 'account' && user_access('administer own tracking configuration') && ($custom = variable_get('piwik_custom', 0)) != 0 && _piwik_visibility_roles($account)) {
+      if ($category == 'account' && user_access('opt-in or out of tracking') && ($custom = variable_get('piwik_custom', 0)) != 0 && _piwik_visibility_roles($account)) {
         $form['piwik'] = array(
           '#type' => 'fieldset',
           '#title' => t('Piwik configuration'),
