@@ -31,7 +31,7 @@
   </object>
 </div>
 
-<h2><?php print t('Resolutions') ?></h2>
+<h2><?php print t('Screen resolutions') ?></h2>
 <div class="content">
   <object type="application/x-shockwave-flash" width="100%" height="250" data="<?php print $url4?>" id="UserSettingsgetResolutionChart">
     <param name="movie" value="<?php print $url4?>" />
