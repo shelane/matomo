@@ -14,12 +14,12 @@ define('PK_TRACKFILES_EXTENSIONS', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|m
 function piwik_help($section) {
   switch ($section) {
     case 'admin/settings/piwik':
-      return t('<a href="@pk_url">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to <a href="@ga_url">Google Analytics</a>.', array('@pk_url' => 'http://www.piwik.org/', '@ga_url' => 'http://www.google.com/analytics/'));
+      return t('<a href="@pk_url">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to Google Analytics.', array('@pk_url' => 'http://www.piwik.org/'));
   }
 }
 
 function piwik_perm() {
-  return array('administer piwik', 'administer own tracking configuration', 'use PHP for tracking visibility');
+  return array('administer piwik', 'opt-in or out of tracking', 'use PHP for tracking visibility');
 }
 
 function piwik_menu($may_cache) {
@@ -163,7 +163,7 @@ function piwik_footer($main = 0) {
 function piwik_user($type, $edit, &$account, $category = NULL) {
   switch ($type) {
     case 'form':
-      if ($category == 'account' && user_access('administer own tracking configuration') && ($custom = variable_get('piwik_custom', 0)) != 0 && _piwik_visibility_roles($account)) {
+      if ($category == 'account' && user_access('opt-in or out of tracking') && ($custom = variable_get('piwik_custom', 0)) != 0 && _piwik_visibility_roles($account)) {
         $form['piwik'] = array(
           '#type' => 'fieldset',
           '#title' => t('Piwik configuration'),
@@ -231,11 +231,11 @@ function piwik_admin_settings_form() {
     '#type' => 'radios',
     '#title' => t('Custom tracking settings'),
     '#options' => array(
-      t('Users cannot control whether or not they add tracking.'),
-      t('Add tracking by default, but let individual users hide it.'),
-      t('Hide tracking by default, but let individual users add it.')
+      t('Users cannot control whether they are tracked or not.'),
+      t('Track users by default, but let individual users to opt out.'),
+      t('Do not track users by default, but let individual users to opt in.')
     ),
-    '#description' => t('Allow individual users to customize the visibility of tracking in their account settings.'),
+    '#description' => t('Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference.', array('%permission' => t('opt-in or out of tracking'))),
     '#default_value' => variable_get('piwik_custom', 0),
   );
 
@@ -263,7 +263,7 @@ function piwik_admin_settings_form() {
     '#title' => t('Add tracking for specific roles'),
     '#default_value' => $default_role_options,
     '#options' => $role_options,
-    '#description' => t('Add tracking only for the selected role(s). If you select no roles, the tracking will be added to all users.'),
+    '#description' => t('Add tracking only for the selected role(s). If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked.'),
   );
 
   // Page specific visibility configurations.
@@ -329,7 +329,7 @@ function piwik_admin_settings_form() {
 
   $form['segmentation']['piwik_segmentation'] = array(
     '#type' => 'select',
-    '#title' => t('Track users based on'),
+    '#title' => '#title' => t('Add segmentation information to tracking code'),
     '#description' => t('Segment users based on different properties, additionaly to the basic IP address based tracking provided by Piwik.') . (!$profile_enabled ? ' '. t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Selecting one or more values is supported. To select multiple items, hold down CTRL while selecting fields.'),
     '#default_value' => variable_get('piwik_segmentation', ''),
     '#options' => $fields,
