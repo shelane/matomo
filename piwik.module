@@ -14,7 +14,7 @@ define('PK_TRACKFILES_EXTENSIONS', '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|m
 function piwik_help($path, $arg) {
   switch ($path) {
     case 'admin/settings/piwik':
-      return t('<a href="@pk_url">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to <a href="@ga_url">Google Analytics</a>.', array('@pk_url' => 'http://www.piwik.org/', '@ga_url' => 'http://www.google.com/analytics/'));
+      return t('<a href="@pk_url">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to Google Analytics.', array('@pk_url' => 'http://www.piwik.org/'));
   }
 }
 
