@@ -3,7 +3,7 @@ $(document).ready(function(){
   var page = $("#edit-page").val();
   $.getJSON(url,
     function(data){
-      var header = "<table class='dataTable' cellspacing='0'><tr><th>" + Drupal.t('Label') + "</th>";
+      var header = "<table class='sticky-enabled sticky-table'><tr><th>" + Drupal.t('Label') + "</th>";
       if (page == "websites") {
         header += "<th>" + Drupal.t('Visitors') + "</th>";
       }
@@ -14,10 +14,14 @@ $(document).ready(function(){
         header += "<th>" + Drupal.t('Visits') + "</th>";
       }
       header += "</tr>";
+
       var content = "";
-      var footer = "</table>"
+      var footer = "</table>";
+      var tr_class = "even";
       $.each(data, function(i,item){
-        content += "<tr><td>" + item["label"] + "</td>";
+        if (tr_class == "odd") { item_class = "even"; } else { item_class = "odd"; }      
+        tr_class = item_class;
+        content += "<tr class='" + item_class + "'><td>" + item["label"] + "</td>";
         if (page == "actions") {
           content += "<td>" + item["nb_uniq_visitors"] + "</td><td>" + item["nb_hits"] + "</td>";
         }
@@ -29,6 +33,6 @@ $(document).ready(function(){
         }
         content += "</tr>";
       });
-      $("#pagestable").html(header+content+footer);
+      $("#pagestable").html('<br />' + header + content + footer);
     });
 });

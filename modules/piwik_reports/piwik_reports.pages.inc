@@ -137,7 +137,6 @@ function piwik_reports_locations_submit($form, &$form_state) {
 }
 
 function piwik_reports_pages() {
-  drupal_add_css(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.css');
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
@@ -166,7 +165,6 @@ function piwik_reports_pages_submit($form, &$form_state) {
 }
 
 function piwik_reports_outlinks() {
-  drupal_add_css(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.css');
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
@@ -195,7 +193,6 @@ function piwik_reports_outlinks_submit($form, &$form_state) {
 }
 
 function piwik_reports_downloads() {
-  drupal_add_css(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.css');
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
@@ -245,7 +242,6 @@ function piwik_reports_evolution_submit($form, &$form_state) {
 }
 
 function piwik_reports_search() {
-  drupal_add_css(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.css');
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
@@ -281,7 +277,6 @@ function piwik_reports_search_submit($form, &$form_state) {
 }
 
 function piwik_reports_websites() {
-  drupal_add_css(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.css');
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
