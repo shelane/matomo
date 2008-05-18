@@ -143,7 +143,7 @@ function piwik_reports_pages() {
   $period = variable_get('piwik_reports_period', '');
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period  = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getActions&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '');
+  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getActions&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
   $form['page'] = array(
     '#type' => 'hidden',
     '#value' => 'actions',
@@ -171,7 +171,7 @@ function piwik_reports_outlinks() {
   $period = variable_get('piwik_reports_period', '');
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getOutlinks&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '');
+  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getOutlinks&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
   $form['page'] = array(
     '#type' => 'hidden',
     '#value' => 'actions',
@@ -199,7 +199,7 @@ function piwik_reports_downloads() {
   $period = variable_get('piwik_reports_period', '');
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getDownloads&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '');
+  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getDownloads&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
   $form['page'] = array(
     '#type' => 'hidden',
     '#value' => 'actions',
@@ -250,7 +250,7 @@ function piwik_reports_search() {
   $period = _piwik_reports_get_period_name($period);
   $url = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=Referers&action=getSearchEngines&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date=yesterday&viewDataTable=generateDataChartPie'. ($auth ? '&token_auth='. $auth : ''));
   $output = theme('referers_search', $url);
-  $url2 = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Referers.getKeywords&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_visits&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '');
+  $url2 = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Referers.getKeywords&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_visits&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
 
   $form['page'] = array(
     '#type' => 'hidden',
@@ -283,7 +283,7 @@ function piwik_reports_websites() {
   $period = variable_get('piwik_reports_period', '');
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Referers.getWebsites&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON'. ($auth ? '&token_auth='. $auth : '');
+  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Referers.getWebsites&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
   $form['url'] = array(
     '#type' => 'hidden',
     '#value' => $url,
