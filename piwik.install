@@ -34,3 +34,11 @@ function piwik_uninstall() {
   variable_del('piwik_visibility');
   variable_del('piwik_pages');
 }
+
+/**
+ * Remove cache directory if module is disabled (or uninstalled).
+ */
+function piwik_disable() {
+  file_delete(file_directory_path() .'/piwik/piwik.js');
+  rmdir(file_directory_path() .'/piwik');
+}
