@@ -278,7 +278,7 @@ function piwik_admin_settings_form_validate($form, &$form_state) {
   }
 
   // This is for the Newbie's who cannot read a text area description.
-  if (preg_match('/^(.*)<\/?script(.*)>(.*)/', $form_state['values']['piwik_codesnippet'])) {
+  if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['piwik_codesnippet'])) {
     form_set_error('piwik_codesnippet', t('Do not include the &lt;script&gt; tags in this field.'));
   }
 
