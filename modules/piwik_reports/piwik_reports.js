@@ -36,7 +36,7 @@ $(document).ready(function(){
         content += "<td>" + item["nb_uniq_visitors"] + "</td><td>" + item["nb_hits"] + "</td>";
       }
       if (page == "websites") {
-        content += "<td>" + item["nb_unique_visitors"] + "</td>";
+        content += "<td>" + item["nb_uniq_visitors"] + "</td>";
       }
       if (page == "search") {
         content += "<td>" + item["nb_visits"] + "</td>";
