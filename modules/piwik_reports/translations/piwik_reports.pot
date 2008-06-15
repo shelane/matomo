@@ -3,20 +3,20 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  referers-search.tpl.php,v 1.1.2.2 2008/05/13 20:04:02 hass
-#  visitors-overview.tpl.php,v 1.1.2.2 2008/05/13 20:04:02 hass
-#  visitors-settings.tpl.php,v 1.1.2.2 2008/05/13 20:04:02 hass
-#  visitors-times.tpl.php,v 1.1.2.2 2008/05/13 20:04:02 hass
-#  piwik_reports.pages.inc,v 1.1.2.1 2008/05/13 19:42:14 hass
-#  piwik_reports.module,v 1.1.2.2 2008/05/13 19:54:13 hass
-#  piwik_reports.js: n/a
+#  referers-search.tpl.php,v 1.1.2.3 2008/05/16 22:21:21 hass
+#  visitors-overview.tpl.php,v 1.1.2.3 2008/05/16 22:21:21 hass
+#  visitors-settings.tpl.php,v 1.1.2.4 2008/05/17 10:14:17 hass
+#  visitors-times.tpl.php,v 1.1.2.3 2008/05/16 22:21:21 hass
+#  piwik_reports.pages.inc,v 1.1.2.4 2008/05/18 19:02:59 hass
+#  piwik_reports.module,v 1.1.2.3 2008/05/16 22:21:21 hass
 #  piwik_reports.info,v 1.1.2.1 2008/05/13 19:42:14 hass
+#  piwik_reports.js: n/a
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-05-17 11:45+0200\n"
+"POT-Creation-Date: 2008-06-15 11:19+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -50,7 +50,7 @@ msgid "Operating systems"
 msgstr ""
 
 #: visitors-settings.tpl.php:34
-msgid "Resolutions"
+msgid "Screen resolutions"
 msgstr ""
 
 #: visitors-times.tpl.php:4
@@ -97,7 +97,7 @@ msgstr ""
 msgid "Reports on your website visitors, your popular pages, the search engines keywords they used... and so much more."
 msgstr ""
 
-#: piwik_reports.module:25 piwik_reports.js:0;0
+#: piwik_reports.module:25
 msgid "Visitors"
 msgstr ""
 
@@ -169,11 +169,19 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
+#: piwik_reports.js:0;0
+msgid "Unique visitors"
+msgstr ""
+
 #: piwik_reports.js:0
 msgid "Hits"
 msgstr ""
 
 #: piwik_reports.js:0
 msgid "Visits"
+msgstr ""
+
+#: piwik_reports.js:0
+msgid "Loading data..."
 msgstr ""
 

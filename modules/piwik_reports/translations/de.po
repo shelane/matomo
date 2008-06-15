@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Piwik reports module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-17 11:45+0200\n"
-"PO-Revision-Date: 2008-05-17 12:03+0100\n"
+"POT-Creation-Date: 2008-06-15 11:19+0200\n"
+"PO-Revision-Date: 2008-06-15 11:22+0100\n"
 "Last-Translator: Alexander Hass\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -46,8 +46,8 @@ msgid "Operating systems"
 msgstr "Betriebssysteme"
 
 #: visitors-settings.tpl.php:34
-msgid "Resolutions"
-msgstr "Auflösungen"
+msgid "Screen resolutions"
+msgstr "Bildschirmauflösungen"
 
 #: visitors-times.tpl.php:4
 msgid "Visit per local time"
@@ -96,7 +96,6 @@ msgid "Reports on your website visitors, your popular pages, the search engines 
 msgstr "Berichte über die Websitebesucher, die beliebtesten Seiten, die in Suchmaschinen verwendeten Schlüsselwörter... und vieles mehr."
 
 #: piwik_reports.module:25
-#: piwik_reports.js:0;0
 msgid "Visitors"
 msgstr "Besucher"
 
@@ -169,6 +168,10 @@ msgstr "Piwik"
 msgid "Label"
 msgstr "Bezeichnung"
 
+#: piwik_reports.js:0;0
+msgid "Unique visitors"
+msgstr "Eindeutige Besucher"
+
 #: piwik_reports.js:0
 msgid "Hits"
 msgstr "Zugriffe"
@@ -176,4 +179,8 @@ msgstr "Zugriffe"
 #: piwik_reports.js:0
 msgid "Visits"
 msgstr "Besuche"
+
+#: piwik_reports.js:0
+msgid "Loading data..."
+msgstr "Daten werden geladen..."
 
