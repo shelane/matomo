@@ -5,8 +5,9 @@ function piwik_install() {
   // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
   variable_set('piwik_visibility', 0);
   $pages = array(
-    'admin*',
-    'user*',
+    'admin',
+    'admin/*',
+    'user/*/*',
     'node/add*',
     'node/*/*',
   );
@@ -41,4 +42,39 @@ function piwik_uninstall() {
 function piwik_disable() {
   file_delete(file_directory_path() .'/piwik/piwik.js');
   rmdir(file_directory_path() .'/piwik');
+}
+
+
+/**
+ * Change visibility setting for paths.
+ */
+function piwik_update_6000() {
+  $ret = array();
+
+  // Orginal pages setting.
+  $pages = array(
+    'admin*',
+    'user*',
+    'node/add*',
+    'node/*/*',
+  );
+
+  $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('googleanalytics_pages', implode("\n", $pages))));
+  if (empty($diff)) {
+    // No diff to original settings found. Update with new settings.
+    $pages = array(
+      'admin',
+      'admin/*',
+      'user/*/*',
+      'node/add*',
+      'node/*/*',
+    );
+    variable_set('googleanalytics_pages', implode("\n", $pages));
+    $ret[] = array('success' => TRUE, 'query' => 'Path visibility filter setting changed from "admin*" to "admin, admin/*" and "user*" changed to "user/*/*".');
+  }
+  else {
+    $ret[] = array('success' => TRUE, 'query' => 'Custom path visibility filter setting found. Update skipped!');
+  }
+
+  return $ret;
 }
