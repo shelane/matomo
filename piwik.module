@@ -22,9 +22,11 @@ function piwik_perm() {
   return array('administer piwik', 'opt-in or out of tracking', 'use PHP for tracking visibility');
 }
 
-function piwik_menu($may_cache) {
+function piwik_menu($maycache) {
+  global $user;
   $items = array();
-  if ($may_cache) {
+
+  if ($maycache) {
     $items[] = array(
       'path' => 'admin/settings/piwik',
       'title' => t('Piwik'),
@@ -35,6 +37,30 @@ function piwik_menu($may_cache) {
       'type' => MENU_NORMAL_ITEM,
     );
   }
+  else {
+    $id = variable_get('piwik_site_id', '');
+
+    // 1. Check if the GA account number has a value.
+    // 2. Track page views based on visibility value.
+    // 3. Check if we should track the currently active user's role.
+    if (!empty($id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
+
+      $url_http = variable_get('piwik_url_http', '');
+      $url_https = variable_get('piwik_url_https', '');
+      $scope = variable_get('piwik_js_scope', 'footer');
+
+      // Should a local cached copy of piwik.js be used?
+      if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _piwik_cache($url_http .'/piwik.js')) {
+        drupal_add_js($source, 'module', $scope);
+      }
+      else {
+        $script = 'var pkBaseURL = (("https:" == document.location.protocol) ? "'. check_url($url_https) .'" : "'. check_url($url_http) .'");';
+        $script .= 'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "/piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));';
+        drupal_add_js($script, 'inline', $scope);
+      }
+    }
+  }
+
   return $items;
 }
 
@@ -50,20 +76,6 @@ function piwik_footer($main = 0) {
   // 2. Track page views based on visibility value.
   // 3. Check if we should track the currently active user's role.
   if (!empty($id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
-
-    $url_http = variable_get('piwik_url_http', '');
-    $url_https = variable_get('piwik_url_https', '');
-    $scope = variable_get('piwik_js_scope', 'footer');
-
-    // Should a local cached copy of piwik.js be used?
-    if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _piwik_cache($url_http .'/piwik.js')) {
-      drupal_add_js($source, 'module', $scope);
-    }
-    else {
-      $script = 'var pkBaseURL = (("https:" == document.location.protocol) ? "'. check_url($url_https) .'" : "'. check_url($url_http) .'");';
-      $script .= 'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "/piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));';
-      drupal_add_js($script, 'inline', $scope);
-    }
 
     $piwik_vars = array();
 
