@@ -58,7 +58,7 @@ function piwik_update_6000() {
     'node/*/*',
   );
 
-  $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('googleanalytics_pages', implode("\n", $pages))));
+  $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('piwik_pages', implode("\n", $pages))));
   if (empty($diff)) {
     // No diff to original settings found. Update with new settings.
     $pages = array(
@@ -68,7 +68,7 @@ function piwik_update_6000() {
       'node/add*',
       'node/*/*',
     );
-    variable_set('googleanalytics_pages', implode("\n", $pages));
+    variable_set('piwik_pages', implode("\n", $pages));
     $ret[] = array('success' => TRUE, 'query' => 'Path visibility filter setting changed from "admin*" to "admin, admin/*" and "user*" changed to "user/*/*".');
   }
   else {
