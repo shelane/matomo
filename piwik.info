@@ -1,3 +1,4 @@
 ; $Id$
 name = "Piwik - Web analytics"
 description = Adds Piwik javascript tracking code to all your site's pages.
+package = Statistics
