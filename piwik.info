@@ -2,4 +2,4 @@
 name = "Piwik - Web analytics"
 description = Adds Piwik javascript tracking code to all your site's pages.
 core = 6.x
-package = Piwik
+package = Statistics
