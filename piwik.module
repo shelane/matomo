@@ -259,7 +259,7 @@ function piwik_admin_settings_form() {
   );
 
   $default_role_options = array();
-  $default_roles = variable_get('googleanalytics_roles', array());
+  $default_roles = variable_get('piwik_roles', array());
   foreach ($default_roles as $default_rid => $checked) {
     if ($checked) {
       $default_role_options[] = $default_rid;
