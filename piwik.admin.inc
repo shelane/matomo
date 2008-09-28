@@ -219,7 +219,7 @@ function piwik_admin_settings_form(&$form_state) {
   );
   if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
     $form['advanced']['piwik_cache']['#disabled'] = TRUE;
-    $form['advanced']['piwik_cache']['#description'] .= ' '. t('<a href="!url">Public file transfers</a> must be enabled to allow local caching.', array('!url' => url('admin/settings/file-system', array('query' => drupal_get_destination()))));
+    $form['advanced']['piwik_cache']['#description'] .= ' '. t('<a href="@url">Public file transfers</a> must be enabled to allow local caching.', array('@url' => url('admin/settings/file-system', array('query' => drupal_get_destination()))));
   }
 
 /* TODO: For future use.
@@ -241,7 +241,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#title' => t('Custom JavaScript code'),
     '#default_value' => variable_get('piwik_codesnippet', ''),
     '#rows' => 5,
-    '#description' => t('You can add custom Piwik <a href="!snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('!snippets' => 'http://piwik.org/javascript-tag-documentation/'))
+    '#description' => t('You can add custom Piwik <a href="@snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://piwik.org/javascript-tag-documentation/'))
   );
 
   $form['advanced']['piwik_js_scope'] = array(

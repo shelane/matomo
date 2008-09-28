@@ -17,7 +17,7 @@ class PiwikBasicTest extends DrupalTestCase {
 
     parent::setUp();
   }
-  
+
   function testPiwik() {
     // Check for setting page's presence.
     $this->drupalGet('admin/settings/piwik');
@@ -28,7 +28,7 @@ class PiwikBasicTest extends DrupalTestCase {
     $this->drupalPost('admin/settings/piwik', $edit, 'Save configuration');
     $this->assertWantedRaw(t('A valid Piwik site ID is an integer only.'), "[testPiwik]: Account number validated.");
   }
-  
+
   function testPiwikTracking() {
     // Set visibility to hide tracking code on admin page only,
     // track authenticated users.
@@ -67,7 +67,7 @@ class PiwikBasicTest extends DrupalTestCase {
     $this->assertWantedRaw('/piwik.php', '[testPiwikTracking]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
     $this->assertNoUnWantedRaw('/piwik.php', '[testPiwikTracking]: Tracking code is not displayed on front page.');
-  
+
     // Test whether tracking code is not display for anonymous.
     $this->drupalGet('logout');
     $this->drupalGet('');

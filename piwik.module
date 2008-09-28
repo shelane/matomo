@@ -45,7 +45,7 @@ function piwik_init() {
   // 2. Track page views based on visibility value.
   // 3. Check if we should track the currently active user's role.
   if (!empty($id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
-    
+
     $url_http = variable_get('piwik_url_http', '');
     $url_https = variable_get('piwik_url_https', '');
     $scope = variable_get('piwik_js_scope', 'footer');
@@ -127,20 +127,20 @@ function piwik_footer($main = 0) {
     $script .= 'piwik_url = pkBaseURL + "/piwik.php";';
 
     // Add link tracking.
-    if (!($trackOutgoing = variable_get('piwik_track', 1))) {
+    if (!($track_outgoing = variable_get('piwik_track', 1))) {
       $script .= 'piwik_install_tracker = 0;';
     }
     /* TODO: For future use.
-    if ($trackOutgoing = variable_get('piwik_trackoutgoing', 1)) {
+    if ($track_outgoing = variable_get('piwik_trackoutgoing', 1)) {
       $script .= '';
     }
-    if ($trackMailto = variable_get('piwik_trackmailto', 1)) {
+    if ($track_mailto = variable_get('piwik_trackmailto', 1)) {
       $script .= '';
     }
-    if (($trackDownload = variable_get('piwik_trackfiles', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
+    if (($track_download = variable_get('piwik_trackfiles', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
     */
-    if (($trackDownload = variable_get('piwik_track', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
-      $script .= 'piwik_download_extensions = '. drupal_to_js($trackfiles_extensions) .';';  
+    if (($track_download = variable_get('piwik_track', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
+      $script .= 'piwik_download_extensions = '. drupal_to_js($trackfiles_extensions) .';';
     }
 
     // Add custom variables.
@@ -232,7 +232,7 @@ function piwik_cron() {
 
 /**
  * Download and cache the piwik.js file locally.
- * 
+ *
  * @param $location
  *   The full URL to the external javascript file.
  * @return mixed
@@ -309,7 +309,7 @@ function _piwik_visibility_roles($account) {
     }
   }
   else {
-    // No role is selected for tracking, therefor all roles should be tracked. 
+    // No role is selected for tracking, therefor all roles should be tracked.
     $enabled = TRUE;
   }
 
