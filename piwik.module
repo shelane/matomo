@@ -1,7 +1,7 @@
 <?php
 // $Id$
 
-/*
+/**
  * @file
  * Drupal Module: Piwik
  * Adds the required Javascript to the bottom of all your Drupal pages

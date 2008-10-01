@@ -1,7 +1,7 @@
 <?php
 // $Id$
 
-/*
+/**
  * @file
  * Drupal Module: Piwik Reports
  */
