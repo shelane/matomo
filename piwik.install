@@ -1,6 +1,11 @@
 <?php
 // $Id$
 
+/**
+ * @file
+ * Installation file for Piwik - Web analytics module.
+ */
+
 function piwik_install() {
   // Remove tracking from all administrative pages, see http://drupal.org/node/34970.
   variable_set('piwik_visibility', 0);

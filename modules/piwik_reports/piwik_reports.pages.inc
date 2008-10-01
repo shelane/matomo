@@ -1,10 +1,9 @@
 <?php
 // $Id$
 
-/**
+/*
+ * @file
  * Drupal Module: Piwik Reports
- * Sponsored by IO1, http://www.io1.biz
- * All code is released under the GNU General Public License.
  */
 
 /**
