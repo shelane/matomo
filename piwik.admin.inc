@@ -127,6 +127,7 @@ function piwik_admin_settings_form(&$form_state) {
       '#title' => t('Pages'),
       '#default_value' => $pages,
       '#description' => $description,
+      '#wysiwyg' => FALSE,
     );
   }
 
@@ -241,6 +242,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#title' => t('Custom JavaScript code'),
     '#default_value' => variable_get('piwik_codesnippet', ''),
     '#rows' => 5,
+    '#wysiwyg' => FALSE,
     '#description' => t('You can add custom Piwik <a href="@snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://piwik.org/javascript-tag-documentation/'))
   );
 
