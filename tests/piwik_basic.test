@@ -1,9 +1,13 @@
 <?php
 // $Id$
 
+/**
+ * @file
+ * Test file for Piwik module.
+ */
 class PiwikBasicTest extends DrupalWebTestCase {
 
-  function get_info() {
+  function getInfo() {
     return array(
       'name' => t('Piwik basic tests'),
       'desc' => t('Test basic Piwik module functionality.'),
