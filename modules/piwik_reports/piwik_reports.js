@@ -1,4 +1,7 @@
-$(document).ready(function(){
+// $Id$
+
+Drupal.behaviors.piwik_reports = function() {
+
   var url = $("#edit-url").val();
   var page = $("#edit-page").val();
 
@@ -6,15 +9,17 @@ $(document).ready(function(){
   var columns = 2;
   var header = "<table class='sticky-enabled sticky-table'><thead class='tableHeader-processed'>";
   header += "<tr><th>" + Drupal.t('Label') + "</th>";
-  if (page == "websites") {
-    header += "<th>" + Drupal.t('Unique visitors') + "</th>";
-  }
-  if (page == "actions") {
-    header += "<th>" + Drupal.t('Unique visitors') + "</th><th>" + Drupal.t('Hits') + "</th>";
-    columns = 3;
-  }
-  if (page == "search") {
-    header += "<th>" + Drupal.t('Visits') + "</th>";
+  switch (page) {
+    case "actions":
+      header += "<th>" + Drupal.t('Unique visitors') + "</th><th>" + Drupal.t('Hits') + "</th>";
+      columns = 3;
+      break;
+    case "websites":
+      header += "<th>" + Drupal.t('Unique visitors') + "</th>";
+      break;
+    case "search":
+      header += "<th>" + Drupal.t('Visits') + "</th>";
+      break;
   }
   header += "</tr></thead><tbody></tbody></table>";
 
@@ -32,20 +37,27 @@ $(document).ready(function(){
       tr_class = item_class;
 
       content += "<tr class='" + item_class + "'><td>" + item["label"] + "</td>";
-      if (page == "actions") {
-        content += "<td>" + item["nb_uniq_visitors"] + "</td><td>" + item["nb_hits"] + "</td>";
-      }
-      if (page == "websites") {
-        content += "<td>" + item["nb_uniq_visitors"] + "</td>";
-      }
-      if (page == "search") {
-        content += "<td>" + item["nb_visits"] + "</td>";
+      switch (page) {
+        case "actions":
+          content += "<td>" + item["nb_uniq_visitors"] + "</td><td>" + item["nb_hits"] + "</td>";
+          break;
+        case "websites":
+          content += "<td>" + item["nb_uniq_visitors"] + "</td>";
+          break;
+        case "search":
+          content += "<td>" + item["nb_visits"] + "</td>";
+          break;
       }
       content += "</tr>";
     });
 
     // Push data into table and replace "Loading data..." status message.
-    $("#pagestable > table > tbody").html(content);
+    if (content) {
+      $("#pagestable > table > tbody").html(content);
+    }
+    else {
+      $("#pagestable > table > tbody > tr.odd > td").html(Drupal.t('No data available.'));
+    }
   });
 
-});
+};
