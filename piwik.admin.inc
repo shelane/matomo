@@ -54,7 +54,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#size' => 40,
     '#maxlength' => 40,
     '#disabled' => module_exists('piwik_reports') ? FALSE : TRUE,
-    '#description' => t('Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Users</strong> tab and create a new user via <strong>Add a new user</strong>. Grant this user <strong>view</strong> permissions. Enter the users <em>token_auth</em> into this field.') . $piwik_reports_dependencies,
+    '#description' => t('Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Users</strong> tab and create a new user via <strong>Add a new user</strong>. Grant this user <strong>view</strong> permissions. Enter the users <strong>token_auth</strong> into this field.') . $piwik_reports_dependencies,
   );
 
   // Standard tracking configurations.
