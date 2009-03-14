@@ -76,48 +76,6 @@ function piwik_footer($main = 0) {
 
     $piwik_vars = array();
 
-    /* TODO: For future use.
-    // Add User profile segmentation values.
-    if (is_array($profile_fields = variable_get('piwik_segmentation', '')) && ($user->uid > 0)) {
-
-      $p = module_invoke('profile', 'load_profile', $user);
-
-      $fields = array();
-      foreach ($profile_fields as $field => $title) {
-        $value = $user->$field;
-
-        if (is_array($value)) {
-          $value = implode(',', $value);
-        }
-
-        $fields[$field] = $value;
-      }
-
-      // Only show segmentation variable if there are specified fields.
-      if (count($fields) > 0) {
-        $piwik_vars['user_segmentation'] = implode(':', $fields);
-      }
-    }
-
-    // Site search tracking support.
-    if (module_exists('search') && variable_get('piwik_site_search', FALSE) && arg(0) == 'search') {
-      $keys = search_get_keys();
-      $piwik_vars['search_type'] = arg(1);
-      $piwik_vars['search_keys'] = trim($keys);
-    }
-
-    // Track access denied (403) and file not found (404) pages.
-    if (function_exists('drupal_get_headers')) {
-      $headers = drupal_get_headers();
-      if (strstr($headers, 'HTTP/1.1 403 Forbidden')) {
-        $piwik_vars['status_code'] = '403';
-      }
-      elseif (strstr($headers, 'HTTP/1.1 404 Not Found')) {
-        $piwik_vars['status_code'] = '404';
-      }
-    }
-    */
-
     // Add any custom code snippets if specified.
     $codesnippet = variable_get('piwik_codesnippet', '');
 
@@ -131,15 +89,6 @@ function piwik_footer($main = 0) {
     if (!($track_outgoing = variable_get('piwik_track', 1))) {
       $script .= 'piwik_install_tracker = 0;';
     }
-    /* TODO: For future use.
-    if ($track_outgoing = variable_get('piwik_trackoutgoing', 1)) {
-      $script .= '';
-    }
-    if ($track_mailto = variable_get('piwik_trackmailto', 1)) {
-      $script .= '';
-    }
-    if (($track_download = variable_get('piwik_trackfiles', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
-    */
     if (($track_download = variable_get('piwik_track', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
       $script .= 'piwik_download_extensions = '. drupal_to_js($trackfiles_extensions) .';';
     }

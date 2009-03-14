@@ -135,39 +135,6 @@ function piwik_admin_settings_form(&$form_state) {
     );
   }
 
-/* TODO: For future use.
-  // Segmentation based user tracking.
-  $profile_enabled = module_exists('profile');
-  $form['segmentation'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('User segmentation settings'),
-    '#collapsible' => TRUE,
-  );
-
-  // Compile a list of fields to show.
-  $fields = array(
-    'uid' => t('User identifier'),
-    'name' => t('User name'),
-    'roles' => t('User roles')
-  );
-  if ($profile_enabled) {
-    $result = db_query('SELECT name, title, type, weight FROM {profile_fields} ORDER BY weight');
-    while ($record = db_fetch_object($result)) {
-      $fields[$record->name] = $record->title;
-    }
-  }
-
-  $form['segmentation']['piwik_segmentation'] = array(
-    '#type' => 'select',
-    '#title' => t('Add segmentation information to tracking code'),
-    '#description' => t('Segment users based on different properties, additionaly to the basic IP address based tracking provided by Piwik.') . (!$profile_enabled ? ' '. t('<a href="@module_list">Enable the profile module</a> to be able to use profile fields for more granular tracking.', array('@module_list' => url('admin/build/modules'))) : '') .' '. t('Selecting one or more values is supported. To select multiple items, hold down CTRL while selecting fields.'),
-    '#default_value' => variable_get('piwik_segmentation', ''),
-    '#options' => $fields,
-    '#size' => $profile_enabled ? 10 : 3,
-    '#multiple' => TRUE
-  );
-*/
-
   // Link specific configurations.
   $form['linktracking'] = array(
     '#type' => 'fieldset',
@@ -181,26 +148,6 @@ function piwik_admin_settings_form(&$form_state) {
     '#default_value' => variable_get('piwik_track', 1),
     '#description' => t('Enables tracking of clicks on download and outgoing links.')
   );
-  /* TODO: For future use.
-  $form['linktracking']['piwik_trackoutgoing'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Track outgoing links'),
-    '#default_value' => variable_get('piwik_trackoutgoing', 1),
-    '#description' => t('Enables tracking of clicks on outgoing links.')
-  );
-  $form['linktracking']['piwik_trackmailto'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Track mailto links'),
-    '#default_value' => variable_get('piwik_trackmailto', 1),
-    '#description' => t('Enables tracking of clicks on mailto links.')
-  );
-  $form['linktracking']['piwik_trackfiles'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Track download links'),
-    '#default_value' => variable_get('piwik_trackfiles', 1),
-    '#description' => t('Enables tracking of clicks on links to files based on the file extensions list below.')
-  );
-*/
   $form['linktracking']['piwik_trackfiles_extensions'] = array(
     '#type' => 'textfield',
     '#title' => t('File extensions to track'),
@@ -226,20 +173,6 @@ function piwik_admin_settings_form(&$form_state) {
     $form['advanced']['piwik_cache']['#disabled'] = TRUE;
     $form['advanced']['piwik_cache']['#description'] .= ' '. t('<a href="@url">Public file transfers</a> must be enabled to allow local caching.', array('@url' => url('admin/settings/file-system', array('query' => drupal_get_destination()))));
   }
-
-/* TODO: For future use.
-  $site_search_dependencies = '<div class="admin-dependencies">';
-  $site_search_dependencies .= t('Depends on: !dependencies', array('!dependencies' => (module_exists('search') ? 'Search'. t(' (<span class="admin-enabled">enabled</span>)') : 'Search'. t(' (<span class="admin-disabled">disabled</span>)'))));
-  $site_search_dependencies .= '</div>';
-
-  $form['advanced']['piwik_site_search'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Track internal search'),
-    '#description' => t('If checked, internal search keywords are tracked. You must configure your Piwik account to use the internal query parameter <em>search</em>.') . $site_search_dependencies,
-    '#default_value' => variable_get('piwik_site_search', FALSE),
-    '#disabled' => (module_exists('search') ? FALSE : TRUE),
-  );
-*/
 
   $form['advanced']['piwik_codesnippet'] = array(
     '#type' => 'textarea',

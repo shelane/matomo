@@ -25,20 +25,38 @@ function piwik_uninstall() {
   variable_del('piwik_url_https');
   variable_del('piwik_auth');
   variable_del('piwik_codesnippet');
-  //variable_del('piwik_segmentation');
   variable_del('piwik_track'); // interrims solution
-  //variable_del('piwik_trackoutgoing');
-  //variable_del('piwik_trackmailto');
-  //variable_del('piwik_trackfiles');
   variable_del('piwik_trackfiles_extensions');
   variable_del('piwik_cache');
   variable_del('piwik_last_cache');
-  //variable_del('piwik_site_search');
   variable_del('piwik_js_scope');
   variable_del('piwik_custom');
   variable_del('piwik_roles');
   variable_del('piwik_visibility');
   variable_del('piwik_pages');
+}
+
+/**
+ * Implementation of hook_requirements().
+ */
+function piwik_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  switch ($phase) {
+    case 'install' :
+      // Module cannot validate piwik URL without external HTTP requests.
+      if (variable_get('drupal_http_request_fails', FALSE)) {
+        $requirements['http requests'] = array(
+          'title' => $t('HTTP request status'),
+          'value' => $t('Fails'),
+          'severity' => REQUIREMENT_ERROR,
+          'description' => $t('Your system or network configuration does not allow Drupal to access web pages, resulting in reduced functionality. This could be due to your webserver configuration or PHP settings, and should be resolved in order to download information about available updates, fetch aggregator feeds, sign in via OpenID, or use other network-dependent services.'),
+        );
+      }
+      break;
+  }
+  return $requirements;
 }
 
 /**
