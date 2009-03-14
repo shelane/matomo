@@ -127,7 +127,7 @@ function piwik_footer($main = 0) {
     $codesnippet = variable_get('piwik_codesnippet', '');
 
     // Build settings code. See http://piwik.org/javascript-tag-documentation/
-    $script = 'try{';
+    $script = 'try {';
     $script .= 'piwik_action_name = document.title;';
     $script .= 'piwik_site_id = '. drupal_to_js(variable_get('piwik_site_id', '')) .';';
     $script .= 'piwik_url = pkBaseURL + "/piwik.php";';
