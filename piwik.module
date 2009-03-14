@@ -144,27 +144,6 @@ function piwik_user($type, $edit, &$account, $category = NULL) {
 }
 
 /**
- * Implementation of hook_requirements().
- */
-function piwik_requirements($phase) {
-  $requirements = array();
-
-  if ($phase == 'runtime') {
-    // Raise warning if Piwik user account has not been set yet.
-    if (!preg_match('/^\d{1,}$/', variable_get('piwik_site_id', ''))) {
-      $requirements['piwik'] = array(
-        'title' => t('Piwik module'),
-        'description' => t('Piwik module has not been configured yet. Please configure its settings from the <a href="@url">Piwik settings page</a>.', array('@url' => url('admin/settings/piwik'))),
-        'severity' => REQUIREMENT_ERROR,
-        'value' => t('Not configured'),
-      );
-    }
-  }
-
-  return $requirements;
-}
-
-/**
  * Implementation of hook_cron().
  */
 function piwik_cron() {
