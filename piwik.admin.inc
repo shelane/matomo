@@ -23,7 +23,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#size' => 15,
     '#maxlength' => 20,
     '#required' => TRUE,
-    '#description' => t('The user account number is unique to the websites domain.'),
+    '#description' => t('The user account number is unique to the websites domain. Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Sites</strong> tab and enter the <strong>ID</strong> into this field.'),
   );
   $form['account']['piwik_url_http'] = array(
     '#type' => 'textfield',
@@ -42,6 +42,11 @@ function piwik_admin_settings_form(&$form_state) {
     '#maxlength' => 255,
     '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik".'),
   );
+
+  $piwik_reports_dependencies = '<div class="admin-dependencies">';
+  $piwik_reports_dependencies .= t('Depends on: !dependencies', array('!dependencies' => (module_exists('piwik_reports') ? t('@module (<span class="admin-enabled">enabled</span>)', array('@module' => 'Piwik - Reports')) : t('@module (<span class="admin-disabled">disabled</span>)', array('@module' => 'Piwik - Reports')))));
+  $piwik_reports_dependencies .= '</div>';
+
   $form['account']['piwik_auth'] = array(
     '#type' => 'textfield',
     '#title' => t('Piwik authentication string'),
@@ -49,8 +54,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#size' => 40,
     '#maxlength' => 40,
     '#disabled' => module_exists('piwik_reports') ? FALSE : TRUE,
-    //'#required' => module_exists('piwik_reports'),
-    '#description' => t('Required to request the reports data without being logged into Piwik. You can get this token in the Piwik Manage Users admin area.'),
+    '#description' => t('Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Users</strong> tab and create a new user via <strong>Add a new user</strong>. Grant this user <strong>view</strong> permissions. Enter the users <em>token_auth</em> into this field.') . $piwik_reports_dependencies,
   );
 
   // Standard tracking configurations.
