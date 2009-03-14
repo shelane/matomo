@@ -44,7 +44,7 @@ function piwik_reports_dateselect_form() {
   $form['basic']['inline']['period'] = array(
     '#type' => 'select',
     '#title' => '',
-    '#default_value' => variable_get('piwik_reports_period', ''), // TODO: Should be user specific.
+    '#default_value' => isset($_SESSION['piwik_reports_period']) ? $_SESSION['piwik_reports_period'] : 0, 
     '#options' => $period,
   );
   $form['basic']['inline']['submit'] = array(
@@ -57,7 +57,7 @@ function piwik_reports_dateselect_form() {
 
 function piwik_reports_overview() {
   $form = piwik_reports_dateselect_form();
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   $date = _piwik_reports_select_period($period);
   $now = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
@@ -72,12 +72,12 @@ function piwik_reports_overview() {
 }
 
 function piwik_reports_overview_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_settings() {
   $form = piwik_reports_dateselect_form();
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
   $auth = variable_get('piwik_auth', '');
@@ -94,12 +94,12 @@ function piwik_reports_settings() {
 }
 
 function piwik_reports_settings_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_times() {
   $form = piwik_reports_dateselect_form();
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
   $auth = variable_get('piwik_auth', '');
@@ -113,12 +113,12 @@ function piwik_reports_times() {
 }
 
 function piwik_reports_times_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_locations() {
   $form = piwik_reports_dateselect_form();
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
   $auth = variable_get('piwik_auth', '');
@@ -132,16 +132,16 @@ function piwik_reports_locations() {
 }
 
 function piwik_reports_locations_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_pages() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
-  $period  = _piwik_reports_get_period_name($period);
+  $period = _piwik_reports_get_period_name($period);
   $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getActions&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
   $form['page'] = array(
     '#type' => 'hidden',
@@ -160,14 +160,14 @@ function piwik_reports_pages() {
 }
 
 function piwik_reports_pages_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_outlinks() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
   $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getOutlinks&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
@@ -188,14 +188,14 @@ function piwik_reports_outlinks() {
 }
 
 function piwik_reports_outlinks_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_downloads() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
   $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getDownloads&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
@@ -216,12 +216,12 @@ function piwik_reports_downloads() {
 }
 
 function piwik_reports_downloads_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_evolution() {
   $form = piwik_reports_dateselect_form();
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   $date = _piwik_reports_select_period($period);
   $now = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
@@ -237,14 +237,14 @@ function piwik_reports_evolution() {
 }
 
 function piwik_reports_evolution_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_search() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
   $url = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=Referers&action=getSearchEngines&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date=yesterday&viewDataTable=generateDataChartPie'. ($auth ? '&token_auth='. $auth : ''));
@@ -272,14 +272,14 @@ function piwik_reports_search() {
 }
 
 function piwik_reports_search_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function piwik_reports_websites() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
   $form = piwik_reports_dateselect_form();
   $auth = variable_get('piwik_auth', '');
-  $period = variable_get('piwik_reports_period', '');
+  $period = $_SESSION['piwik_reports_period'];
   ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
   $period = _piwik_reports_get_period_name($period);
   $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Referers.getWebsites&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
@@ -300,7 +300,7 @@ function piwik_reports_websites() {
 }
 
 function piwik_reports_websites_submit($form, &$form_state) {
-  variable_set('piwik_reports_period', $form_state['clicked_button']['#post']['period']);
+  $_SESSION['piwik_reports_period'] = $form_state['clicked_button']['#post']['period'];
 }
 
 function _piwik_reports_select_period($period) {
