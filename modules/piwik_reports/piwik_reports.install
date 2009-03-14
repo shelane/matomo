@@ -9,7 +9,7 @@
 /**
  * Remove dead global period setting, moved into user $_SESSION['piwik_reports_period'] value.
  */
-function piwik_update_6000() {
+function piwik_reports_update_6000() {
   $ret = array();
 
   variable_del('piwik_reports_period');
