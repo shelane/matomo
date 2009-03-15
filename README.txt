@@ -48,3 +48,24 @@ you include.
 To speed up page loading you may also cache the piwik.js
 file locally. You need to make sure the site file system is in public
 download mode.
+
+
+Known issues
+============
+Drupal requirements (http://drupal.org/requirements) tell you to configure 
+PHP with "session.save_handler = user", but your Piwik installation will
+not work with this configuration and gives you a server error 500.
+
+1. You are able to workaround with the PHP default in your php.ini:
+
+   [Session]
+   session.save_handler = files
+
+2. With Apache you may overwrite the PHP setting for the Piwik directory only.
+   If Piwik is installed in /piwik you are able to create a .htaccess file in
+   this directory with the below code:
+
+   <IfModule mod_rewrite.c>
+     RewriteEngine on
+     php_value session.save_handler files
+   </IfModule>
