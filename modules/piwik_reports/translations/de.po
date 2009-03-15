@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Piwik reports module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-15 00:58+0100\n"
-"PO-Revision-Date: 2009-03-15 01:18+0100\n"
+"PO-Revision-Date: 2009-03-15 02:19+0100\n"
 "Last-Translator: Alexander Haß\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgstr "Seiten"
 
 #: piwik_reports.module:88
 msgid "Outlinks"
-msgstr "Ausgehende Verweise"
+msgstr "Ausgehende Links"
 
 #: piwik_reports.module:97
 msgid "Downloads"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-15 01:01+0100\n"
-"PO-Revision-Date: 2009-03-15 01:16+0100\n"
+"PO-Revision-Date: 2009-03-15 02:19+0100\n"
 "Last-Translator: Alexander Haß\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -144,15 +144,15 @@ msgstr "Seiten"
 
 #: piwik.admin.inc:141
 msgid "Link tracking settings"
-msgstr "Einstellungen für das Tracking von Verweisen"
+msgstr "Einstellungen für das Tracking von Links"
 
 #: piwik.admin.inc:147
 msgid "Track download and outgoing links"
-msgstr "Downloads und ausgehende Verweise tracken"
+msgstr "Downloads und ausgehende Links tracken"
 
 #: piwik.admin.inc:149
 msgid "Enables tracking of clicks on download and outgoing links."
-msgstr "Aktiviert das Tracking von Klicks auf Downloads und ausgehende Verweise."
+msgstr "Aktiviert das Tracking von Klicks auf Downloads und ausgehende Links."
 
 #: piwik.admin.inc:153
 msgid "File extensions to track"
