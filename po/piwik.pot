@@ -3,14 +3,15 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  piwik.module,v 1.2.2.8 2008/05/31 09:29:22 hass
-#  piwik.info,v 1.2.2.2 2008/05/12 15:35:22 hass
+#  piwik.module,v 1.2.2.18 2009/03/14 18:49:47 hass
+#  piwik.install,v 1.2.2.9 2009/03/14 18:49:47 hass
+#  piwik.info,v 1.2.2.3 2008/09/14 15:55:55 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-06-15 11:50+0200\n"
+"POT-Creation-Date: 2009-03-15 01:19+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -19,220 +20,220 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: piwik.module:17
+#: piwik.module:18
 msgid "<a href=\"@pk_url\">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to Google Analytics."
 msgstr ""
 
-#: piwik.module:30
+#: piwik.module:33
 msgid "Piwik"
 msgstr ""
 
-#: piwik.module:31
+#: piwik.module:34
 msgid "Configure the settings used to generate your Piwik tracking code."
 msgstr ""
 
-#: piwik.module:169
+#: piwik.module:133
 msgid "Piwik configuration"
 msgstr ""
 
-#: piwik.module:176
+#: piwik.module:140
 msgid "User tracking"
 msgstr ""
 
-#: piwik.module:193
+#: piwik.module:157
 msgid "General settings"
 msgstr ""
 
-#: piwik.module:199
+#: piwik.module:163
 msgid "Piwik site ID"
 msgstr ""
 
-#: piwik.module:204
-msgid "The user account number is unique to the websites domain."
+#: piwik.module:168
+msgid "The user account number is unique to the websites domain. Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Sites</strong> tab and enter the <strong>ID</strong> into this field."
 msgstr ""
 
-#: piwik.module:208
+#: piwik.module:172
 msgid "Piwik HTTP URL"
 msgstr ""
 
-#: piwik.module:213
+#: piwik.module:177
 msgid "The URL to your Piwik base directory. Example: \"http://www.example.com/piwik\"."
 msgstr ""
 
-#: piwik.module:217
+#: piwik.module:181
 msgid "Piwik HTTPS URL"
 msgstr ""
 
-#: piwik.module:221
+#: piwik.module:185
 msgid "The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: \"https://www.example.com/piwik\"."
 msgstr ""
 
-#: piwik.module:227
+#: piwik.module:191
 msgid "User specific tracking settings"
 msgstr ""
 
-#: piwik.module:232
+#: piwik.module:196
 msgid "Custom tracking settings"
 msgstr ""
 
-#: piwik.module:234
+#: piwik.module:198
 msgid "Users cannot control whether they are tracked or not."
 msgstr ""
 
-#: piwik.module:235
+#: piwik.module:199
 msgid "Track users by default, but let individual users to opt out."
 msgstr ""
 
-#: piwik.module:236
+#: piwik.module:200
 msgid "Do not track users by default, but let individual users to opt in."
 msgstr ""
 
-#: piwik.module:238
+#: piwik.module:202
 msgid "Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference."
 msgstr ""
 
-#: piwik.module:238;22
+#: piwik.module:202;23
 msgid "opt-in or out of tracking"
 msgstr ""
 
-#: piwik.module:245
+#: piwik.module:209
 msgid "Role specific tracking settings"
 msgstr ""
 
-#: piwik.module:263
+#: piwik.module:227
 msgid "Add tracking for specific roles"
 msgstr ""
 
-#: piwik.module:266
+#: piwik.module:230
 msgid "Add tracking only for the selected role(s). If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked."
 msgstr ""
 
-#: piwik.module:272
+#: piwik.module:236
 msgid "Page specific tracking settings"
 msgstr ""
 
-#: piwik.module:287
+#: piwik.module:251
 msgid "Add to every page except the listed pages."
 msgstr ""
 
-#: piwik.module:287
+#: piwik.module:251
 msgid "Add to the listed pages only."
 msgstr ""
 
-#: piwik.module:288
+#: piwik.module:252
 msgid "Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page."
 msgstr ""
 
-#: piwik.module:291
+#: piwik.module:255
 msgid "Add if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only)."
 msgstr ""
 
-#: piwik.module:292
+#: piwik.module:256
 msgid "If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site."
 msgstr ""
 
-#: piwik.module:296
+#: piwik.module:260
 msgid "Add tracking to specific pages"
 msgstr ""
 
-#: piwik.module:302
+#: piwik.module:266
 msgid "Pages"
 msgstr ""
 
-#: piwik.module:344
+#: piwik.module:276
 msgid "Link tracking settings"
 msgstr ""
 
-#: piwik.module:350
+#: piwik.module:282
 msgid "Track download and outgoing links"
 msgstr ""
 
-#: piwik.module:352
+#: piwik.module:284
 msgid "Enables tracking of clicks on download and outgoing links."
 msgstr ""
 
-#: piwik.module:376
+#: piwik.module:288
 msgid "File extensions to track"
 msgstr ""
 
-#: piwik.module:378
+#: piwik.module:290
 msgid "A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions"
 msgstr ""
 
-#: piwik.module:384
+#: piwik.module:296
 msgid "Advanced settings"
 msgstr ""
 
-#: piwik.module:391
+#: piwik.module:303
 msgid "Cache tracking code file locally"
 msgstr ""
 
-#: piwik.module:392
+#: piwik.module:304
 msgid "If checked, the tracking code file is retrieved from Piwik and cached locally. It is updated daily from your Piwik servers to ensure updates to tracking code are reflected in the local copy."
 msgstr ""
 
-#: piwik.module:397
-msgid "<a href=\"!url\">Public file transfers</a> must be enabled to allow local caching."
+#: piwik.module:309
+msgid "<a href=\"@url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr ""
 
-#: piwik.module:416
+#: piwik.module:314
 msgid "Custom JavaScript code"
 msgstr ""
 
-#: piwik.module:419
-msgid "You can add custom Piwik <a href=\"!snippets\">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+#: piwik.module:318
+msgid "You can add custom Piwik <a href=\"@snippets\">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr ""
 
-#: piwik.module:424
+#: piwik.module:323
 msgid "JavaScript scope"
 msgstr ""
 
-#: piwik.module:425
+#: piwik.module:324
 msgid "<strong>Warning:</strong> Adding the external JavaScript files to the footer region is recommended for performance reasons."
 msgstr ""
 
-#: piwik.module:427
+#: piwik.module:326
 msgid "Footer"
 msgstr ""
 
-#: piwik.module:428
+#: piwik.module:327
 msgid "Header"
 msgstr ""
 
-#: piwik.module:438
+#: piwik.module:337
 msgid "A valid Piwik site ID is an integer only."
 msgstr ""
 
-#: piwik.module:444;451
+#: piwik.module:343;350
 msgid "The validation of \"@url\" failed with error \"@error\" (HTTP code @code)."
 msgstr ""
 
-#: piwik.module:457
+#: piwik.module:356
 msgid "Do not include the &lt;script&gt; tags in this field."
 msgstr ""
 
-#: piwik.module:478
-msgid "Piwik module"
-msgstr ""
-
-#: piwik.module:479
-msgid "Piwik module has not been configured yet. Please configure its settings from the <a href=\"@url\">Piwik settings page</a>."
-msgstr ""
-
-#: piwik.module:481
-msgid "Not configured"
-msgstr ""
-
-#: piwik.module:22
+#: piwik.module:23
 msgid "administer piwik"
 msgstr ""
 
-#: piwik.module:22
+#: piwik.module:23
 msgid "use PHP for tracking visibility"
 msgstr ""
 
 #: piwik.module:0
 msgid "piwik"
+msgstr ""
+
+#: (duplicate) piwik.install:50 
+msgid "Piwik module"
+msgstr ""
+
+#: (duplicate) piwik.install:51 
+msgid "Piwik module has not been configured yet. Please configure its settings from the <a href=\"@url\">Piwik settings page</a>."
+msgstr ""
+
+#: (duplicate) piwik.install:53 
+msgid "Not configured"
 msgstr ""
 
 #: piwik.info:0
@@ -241,5 +242,9 @@ msgstr ""
 
 #: piwik.info:0
 msgid "Adds Piwik javascript tracking code to all your site's pages."
+msgstr ""
+
+#: piwik.info:0
+msgid "Statistics"
 msgstr ""
 
