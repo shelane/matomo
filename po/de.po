@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-15 01:19+0100\n"
-"PO-Revision-Date: 2009-03-15 02:18+0100\n"
+"PO-Revision-Date: 2009-03-15 02:21+0100\n"
 "Last-Translator: Alexander Haß\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgstr "Piwik-Website-ID"
 
 #: piwik.module:168
 msgid "The user account number is unique to the websites domain. Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Sites</strong> tab and enter the <strong>ID</strong> into this field."
-msgstr "Die Site-ID ist eindeutig für die Website-Domain. Klicken Sie im Piwik-Konto auf <strong>Einstellungen</strong>, dann auf den <strong>Webseiten</strong>-Reiter und geben die <strong>ID</strong> der jeweiligen Website in dieses Feld ein."
+msgstr "Die Website-ID ist eindeutig für die Website-Domain. Klicken Sie im Piwik-Konto auf <strong>Einstellungen</strong>, dann auf den <strong>Webseiten</strong>-Reiter und geben die <strong>ID</strong> der jeweiligen Website in dieses Feld ein."
 
 #: piwik.module:172
 msgid "Piwik HTTP URL"
