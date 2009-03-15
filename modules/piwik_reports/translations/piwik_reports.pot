@@ -7,16 +7,16 @@
 #  visitors-overview.tpl.php,v 1.1.2.3 2008/05/16 22:21:21 hass
 #  visitors-settings.tpl.php,v 1.1.2.4 2008/05/17 10:14:17 hass
 #  visitors-times.tpl.php,v 1.1.2.3 2008/05/16 22:21:21 hass
-#  piwik_reports.pages.inc,v 1.1.2.4 2008/05/18 19:02:59 hass
-#  piwik_reports.module,v 1.1.2.3 2008/05/16 22:21:21 hass
-#  piwik_reports.info,v 1.1.2.1 2008/05/13 19:42:14 hass
-#  piwik_reports.js: n/a
+#  piwik_reports.pages.inc,v 1.1.2.7 2009/03/14 23:37:50 hass
+#  piwik_reports.module,v 1.1.2.7 2008/10/22 18:03:21 hass
+#  piwik_reports.info,v 1.1.2.2 2008/09/14 15:52:20 hass
+#  piwik_reports.js,v 1.1.2.8 2009/03/14 12:24:37 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-06-15 11:19+0200\n"
+"POT-Creation-Date: 2009-03-15 00:58+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -57,35 +57,35 @@ msgstr ""
 msgid "Visit per local time"
 msgstr ""
 
-#: piwik_reports.pages.inc:20
+#: piwik_reports.pages.inc:19
 msgid "You do not have any reports."
 msgstr ""
 
-#: piwik_reports.pages.inc:29
+#: piwik_reports.pages.inc:28
 msgid "Today"
 msgstr ""
 
-#: piwik_reports.pages.inc:30
+#: piwik_reports.pages.inc:29
 msgid "Yesterday"
 msgstr ""
 
-#: piwik_reports.pages.inc:31
+#: piwik_reports.pages.inc:30
 msgid "Last week"
 msgstr ""
 
-#: piwik_reports.pages.inc:32
+#: piwik_reports.pages.inc:31
 msgid "Last month"
 msgstr ""
 
-#: piwik_reports.pages.inc:33
+#: piwik_reports.pages.inc:32
 msgid "Last year"
 msgstr ""
 
-#: piwik_reports.pages.inc:39
+#: piwik_reports.pages.inc:38
 msgid "Filter time period"
 msgstr ""
 
-#: piwik_reports.pages.inc:53
+#: piwik_reports.pages.inc:52
 msgid "Filter"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgid "Adds Piwik reports to Drupal reports section."
 msgstr ""
 
 #: piwik_reports.info:0
-msgid "Piwik"
+msgid "Statistics"
 msgstr ""
 
 #: piwik_reports.js:0
@@ -183,5 +183,9 @@ msgstr ""
 
 #: piwik_reports.js:0
 msgid "Loading data..."
+msgstr ""
+
+#: piwik_reports.js:0
+msgid "No data available."
 msgstr ""
 
