@@ -65,7 +65,17 @@ not work with this configuration and gives you a server error 500.
    If Piwik is installed in /piwik you are able to create a .htaccess file in
    this directory with the below code:
 
-   <IfModule mod_rewrite.c>
-     RewriteEngine on
+   # PHP 4, Apache 1.
+   <IfModule mod_php4.c>
+     php_value session.save_handler files
+   </IfModule>
+
+   # PHP 4, Apache 2.
+   <IfModule sapi_apache2.c>
+     php_value session.save_handler files
+   </IfModule>
+
+   # PHP 5, Apache 1 and 2.
+   <IfModule mod_php5.c>
      php_value session.save_handler files
    </IfModule>
