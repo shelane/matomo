@@ -28,11 +28,6 @@ In the settings page enter your Piwik website ID.
 You will also need to define what user roles should be tracked.
 Simply tick the roles you would like to monitor.
 
-You can also track the username and/or user ID who visits each page.
-This data will be visible in Piwik as segmentation data.
-If you enable the profile.module you can also add more detailed
-information about each user to the segmentation tracking.
-
 All pages will now have the required JavaScript added to the
 HTML footer can confirm this by viewing the page source from
 your browser.
