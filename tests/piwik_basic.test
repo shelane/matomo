@@ -7,7 +7,7 @@
  */
 class PiwikBasicTest extends DrupalWebTestCase {
 
-  function getInfo() {
+  public static function getInfo() {
     return array(
       'name' => t('Piwik basic tests'),
       'desc' => t('Test basic Piwik module functionality.'),
