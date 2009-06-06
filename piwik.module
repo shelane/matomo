@@ -81,16 +81,11 @@ function piwik_footer($main = 0) {
 
     // Build settings code. See http://piwik.org/javascript-tag-documentation/
     $script = 'try {';
-    $script .= 'piwik_action_name = document.title;';
-    $script .= 'piwik_site_id = '. drupal_to_js(variable_get('piwik_site_id', '')) .';';
-    $script .= 'piwik_url = pkBaseURL + "/piwik.php";';
+    $script .= 'var piwikTracker = Piwik.getTracker(pkBaseURL + "/piwik.php",'. drupal_to_js(variable_get('piwik_site_id', '')) .');';
+    $script .= 'piwikTracker.setDocumentTitle(document.title);';
 
-    // Add link tracking.
-    if (!($track_outgoing = variable_get('piwik_track', 1))) {
-      $script .= 'piwik_install_tracker = 0;';
-    }
-    if (($track_download = variable_get('piwik_track', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
-      $script .= 'piwik_download_extensions = '. drupal_to_js($trackfiles_extensions) .';';
+    if ((variable_get('piwik_track', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
+      $script .= 'piwikTracker.setDownloadExtensions('. drupal_to_js($trackfiles_extensions) .');';
     }
 
     // Add custom variables.
@@ -99,15 +94,19 @@ function piwik_footer($main = 0) {
       foreach ($piwik_vars as $name => $value) {
         $piwik_vars_fields[] = drupal_to_js($name) .':'. drupal_to_js($value);
       }
-      $script .= 'piwik_vars = { '. implode(', ', $piwik_vars_fields) .' };';
-    }
-    else {
-      $script .= 'piwik_vars = "";';
+      if (count($piwik_vars_fields) > 0) {
+        $script .= 'piwikTracker.setCustomVars({ '. implode(', ', $piwik_vars_fields) .' });';
+      }
     }
     if (!empty($codesnippet)) {
       $script .= $codesnippet;
     }
-    $script .= 'piwik_log(piwik_action_name, piwik_site_id, piwik_url, piwik_vars);';
+    $script .= 'piwikTracker.trackPageView();';
+
+    // Add link tracking.
+    if (variable_get('piwik_track', 1)) {
+      $script .= 'piwikTracker.enableLinkTracking();';
+    }    
     $script .= '} catch(err) {}';
 
     drupal_add_js($script, 'inline', 'footer');
