@@ -113,3 +113,19 @@ function piwik_update_6000() {
 
   return $ret;
 }
+
+/**
+ * Upgrade custom javascript settings.
+ */
+function piwik_update_6001() {
+  $ret = array();
+
+  $piwik_codesnippet = variable_get('piwik_codesnippet', '');
+  if ($piwik_codesnippet != '') {
+    variable_set('piwik_codesnippet_before', $piwik_codesnippet);
+    variable_del('piwik_codesnippet');
+    $ret[] = array('success' => TRUE, 'query' => 'Upgraded custom javascript codesnippet setting.');
+  }
+
+  return $ret;
+}

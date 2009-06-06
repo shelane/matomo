@@ -77,7 +77,8 @@ function piwik_footer($main = 0) {
     $piwik_vars = array();
 
     // Add any custom code snippets if specified.
-    $codesnippet = variable_get('piwik_codesnippet', '');
+    $codesnippet_before = variable_get('piwik_codesnippet_before', '');
+    $codesnippet_after = variable_get('piwik_codesnippet_after', '');
 
     // Build settings code. See http://piwik.org/javascript-tag-documentation/
     $script = 'try {';
@@ -98,15 +99,18 @@ function piwik_footer($main = 0) {
         $script .= 'piwikTracker.setCustomVars({ '. implode(', ', $piwik_vars_fields) .' });';
       }
     }
-    if (!empty($codesnippet)) {
-      $script .= $codesnippet;
+    if (!empty($codesnippet_before)) {
+      $script .= $codesnippet_before;
     }
     $script .= 'piwikTracker.trackPageView();';
 
     // Add link tracking.
     if (variable_get('piwik_track', 1)) {
       $script .= 'piwikTracker.enableLinkTracking();';
-    }    
+    }
+    if (!empty($codesnippet_after)) {
+      $script .= $codesnippet_after;
+    }
     $script .= '} catch(err) {}';
 
     drupal_add_js($script, 'inline', 'footer');

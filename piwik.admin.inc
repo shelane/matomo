@@ -174,13 +174,28 @@ function piwik_admin_settings_form(&$form_state) {
     $form['advanced']['piwik_cache']['#description'] .= ' '. t('<a href="@url">Public file transfers</a> must be enabled to allow local caching.', array('@url' => url('admin/settings/file-system', array('query' => drupal_get_destination()))));
   }
 
-  $form['advanced']['piwik_codesnippet'] = array(
-    '#type' => 'textarea',
+  $form['advanced']['codesnippet'] = array(
+    '#type' => 'fieldset',
     '#title' => t('Custom JavaScript code'),
-    '#default_value' => variable_get('piwik_codesnippet', ''),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' => t('You can add custom Piwik <a href="@snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://piwik.org/javascript-tag-documentation/'))
+  );
+  $form['advanced']['codesnippet']['piwik_codesnippet_before'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Code snippet (before)'),
+    '#default_value' => variable_get('piwik_codesnippet_before', ''),
     '#rows' => 5,
     '#wysiwyg' => FALSE,
-    '#description' => t('You can add custom Piwik <a href="@snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', array('@snippets' => 'http://piwik.org/javascript-tag-documentation/'))
+    '#description' => t('Code in this textarea will be added <strong>before</strong> piwikTracker.trackPageView().')
+  );
+  $form['advanced']['codesnippet']['piwik_codesnippet_after'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Code snippet (after)'),
+    '#default_value' => variable_get('piwik_codesnippet_after', ''),
+    '#rows' => 5,
+    '#wysiwyg' => FALSE,
+    '#description' => t("Code in this textarea will be added <strong>after</strong> piwikTracker.trackPageView(). This is useful if you'd like to track a site in two accounts.")
   );
 
   $form['advanced']['piwik_js_scope'] = array(
@@ -217,11 +232,15 @@ function piwik_admin_settings_form_validate($form, &$form_state) {
   }
 
   // This is for the Newbie's who cannot read a text area description.
-  if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['piwik_codesnippet'])) {
-    form_set_error('piwik_codesnippet', t('Do not include the &lt;script&gt; tags in this field.'));
+  if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['piwik_codesnippet_before'])) {
+    form_set_error('piwik_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+  }
+  if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state['values']['piwik_codesnippet_after'])) {
+    form_set_error('piwik_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
   }
 
   // Trim some text area values.
   $form_state['values']['piwik_pages'] = trim($form_state['values']['piwik_pages']);
-  $form_state['values']['piwik_codesnippet'] = trim($form_state['values']['piwik_codesnippet']);
+  $form_state['values']['piwik_codesnippet_before'] = trim($form_state['values']['piwik_codesnippet_before']);
+  $form_state['values']['piwik_codesnippet_after'] = trim($form_state['values']['piwik_codesnippet_after']);
 }
