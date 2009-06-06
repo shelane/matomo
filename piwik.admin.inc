@@ -174,6 +174,16 @@ function piwik_admin_settings_form(&$form_state) {
     $form['advanced']['piwik_cache']['#description'] .= ' '. t('<a href="@url">Public file transfers</a> must be enabled to allow local caching.', array('@url' => url('admin/settings/file-system', array('query' => drupal_get_destination()))));
   }
 
+  // Allow for tracking of the originating node when viewing translation sets.
+  if (module_exists('translation')) {
+    $form['advanced']['piwik_translation_set'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Track translation sets as one unit'),
+      '#description' => t('When a node is part of a translation set, record statistics for the originating node instead. This allows for a translation set to be treated as a single unit.'),
+      '#default_value' => variable_get('piwik_translation_set', 0),
+    );
+  }
+
   $form['advanced']['codesnippet'] = array(
     '#type' => 'fieldset',
     '#title' => t('Custom JavaScript code'),

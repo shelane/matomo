@@ -76,6 +76,30 @@ function piwik_footer($main = 0) {
 
     $piwik_vars = array();
 
+    // If this node is a translation of another node, pass the original
+    // node instead.
+    if (module_exists('translation') && variable_get('piwik_translation_set', 0)) {
+      // Check we have a node object, it supports translation, and its
+      // translated node ID (tnid) doesn't match its own node ID.
+      $node = menu_get_object();
+      if ($node && translation_supported_type($node->type) && isset($node->tnid) && ($node->tnid != $node->nid)) {
+        $source_node = node_load($node->tnid);
+        $languages = language_list();
+        $url_custom = drupal_to_js(url('node/'. $source_node->nid, array('language' => $languages[$source_node->language])));
+      }
+    }
+
+    // Track access denied (403) and file not found (404) pages.
+    if (function_exists('drupal_get_headers')) {
+      $headers = drupal_get_headers();
+      if (strstr($headers, 'HTTP/1.1 403 Forbidden')) {
+        $url_custom = '"/403/URL=" + document.location.pathname + document.location.search + "/From=" + document.referrer';
+      }
+      elseif (strstr($headers, 'HTTP/1.1 404 Not Found')) {
+        $url_custom = '"/404/URL=" + document.location.pathname + document.location.search + "/From=" + document.referrer';
+      }
+    }
+
     // Add any custom code snippets if specified.
     $codesnippet_before = variable_get('piwik_codesnippet_before', '');
     $codesnippet_after = variable_get('piwik_codesnippet_after', '');
@@ -83,7 +107,10 @@ function piwik_footer($main = 0) {
     // Build settings code. See http://piwik.org/javascript-tag-documentation/
     $script = 'try {';
     $script .= 'var piwikTracker = Piwik.getTracker(pkBaseURL + "/piwik.php",'. drupal_to_js(variable_get('piwik_site_id', '')) .');';
-    $script .= 'piwikTracker.setDocumentTitle(document.title);';
+
+    if (!empty($url_custom)) {
+      $script .= 'piwikTracker.setDocumentTitle('. $url_custom .');';
+    }
 
     if ((variable_get('piwik_track', 1)) && ($trackfiles_extensions = variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS))) {
       $script .= 'piwikTracker.setDownloadExtensions('. drupal_to_js($trackfiles_extensions) .');';
