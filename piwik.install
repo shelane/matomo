@@ -120,13 +120,9 @@ function piwik_update_6000() {
 function piwik_update_6001() {
   $ret = array();
 
-  // Prevent deleting of advanced D5 code snippet settings.
-  $piwik_codesnippet = variable_get('piwik_codesnippet', '');
-  if ($piwik_codesnippet != '') {
-    variable_set('piwik_codesnippet_before', $piwik_codesnippet);
-    variable_del('piwik_codesnippet');
-    $ret[] = array('success' => TRUE, 'query' => 'Upgraded custom javascript codesnippet setting.');
-  }
+  variable_set('piwik_codesnippet_before', variable_get('piwik_codesnippet', ''));
+  variable_del('piwik_codesnippet');
+  $ret[] = array('success' => TRUE, 'query' => 'Upgraded custom javascript codesnippet setting.');
 
   return $ret;
 }
