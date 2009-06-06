@@ -50,14 +50,15 @@ class PiwikBasicTest extends DrupalWebTestCase {
     $this->assertRaw($ua_code, '[testPiwikTracking]: Tracking code is displayed for authenticated.');
 
     /* Sample JS code as added to page:
-    <script language="javascript" src="http://piwik.org/demo/piwik.js" type="text/javascript"></script>
     <script type="text/javascript">
-    <!--
-    piwik_action_name = document.title;
-    piwik_site_id = 1;
-    piwik_url = 'http://piwik.org/demo/piwik.php';
-    piwik_log(piwik_action_name, piwik_site_id, piwik_url);
-    //-->
+    var pkBaseURL = (("https:" == document.location.protocol) ? "https://{$piwikUrl}” : “http://{$piwikUrl}");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", {$idSite});
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch(err) {}
     </script>
     */
 
