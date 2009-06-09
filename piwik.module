@@ -96,7 +96,7 @@ function piwik_footer($main = 0) {
     $codesnippet_before = variable_get('piwik_codesnippet_before', '');
     $codesnippet_after = variable_get('piwik_codesnippet_after', '');
 
-    // Build settings code. See http://piwik.org/javascript-tag-documentation/
+    // Build settings code. See http://piwik.org/docs/javascript-tracking/
     $script = 'try {';
     $script .= 'var piwikTracker = Piwik.getTracker(pkBaseURL + "/piwik.php",'. drupal_to_js(variable_get('piwik_site_id', '')) .');';
 
