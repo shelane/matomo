@@ -56,18 +56,72 @@ function piwik_reports_dateselect_form() {
 }
 
 function piwik_reports_overview() {
-  $form = piwik_reports_dateselect_form();
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  $date = _piwik_reports_select_period($period);
+
   $now = _piwik_reports_select_period(0);
-  $period = _piwik_reports_get_period_name($period);
-  $auth = variable_get('piwik_auth', '');
-  $url = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=VisitsSummary&action=getLastVisitsGraph&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'%2C'. $now .'&viewDataTable=generateDataChartEvolution'. ($auth ? '&token_auth='. $auth : ''));
-  $output = theme('visitors_overview', $url, $period);
+  $date = _piwik_reports_select_period($period);
+
+  // Granuarity of measuring points in graph.
+  switch ($period) {
+    case 4:
+      $period = "week";
+      break;
+
+    default:
+      $period = "day";
+  }
+
+  // Create an array of URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'VisitsSummary';
+  $data1_params['action'] = 'getEvolutionGraph';
+  $data1_params['columns[]'] = 'nb_visits';
+  $data1_params['moduleToWidgetize'] = 'VisitsSummary';
+  $data1_params['actionToWidgetize'] = 'getEvolutionGraph';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date . ',' . $now;
+  $data1_params['disableLink'] = 1;
+  $data1_params['viewDataTable'] = 'generateDataChartEvolution';
+  $data1_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+
+  // Build the data URL with all params and urlencode it.
+  // Note: drupal_urlencode() doesn't work here!
+  $data1_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data1_params));
+
+  $widget1_params = array();
+  $widget1_params['module'] = 'Widgetize';
+  $widget1_params['action'] = 'iframe';
+  $widget1_params['columns[]'] = 'nb_visits';
+  $widget1_params['moduleToWidgetize'] = 'VisitsSummary';
+  $widget1_params['actionToWidgetize'] = 'getEvolutionGraph';
+  $widget1_params['idSite'] = $piwik_site_id;
+  $widget1_params['period'] = $period;
+  $widget1_params['date'] = $date . ',' . $now;
+  $widget1_params['disableLink'] = 1;
+  if (!empty($piwik_auth)) {
+    $widget1_params['token_auth'] = $piwik_auth;
+  }
+
+  // Build the iframe widget URL with all params.
+  $widget1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget1_params);
+
+  // Render HTML code.
+  $output = theme('visitors_overview', $piwik_url, $data1_url, $widget1_url, $period);
+
+  $form = piwik_reports_dateselect_form();
   $form['content'] = array(
     '#type' => 'markup',
     '#value' => $output,
   );
+
   return $form;
 }
 
@@ -76,20 +130,184 @@ function piwik_reports_overview_submit($form, &$form_state) {
 }
 
 function piwik_reports_settings() {
-  $form = piwik_reports_dateselect_form();
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
+
+  $date = _piwik_reports_select_period($period);
   $period = _piwik_reports_get_period_name($period);
-  $auth = variable_get('piwik_auth', '');
-  $url1 = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=UserSettings&action=getBrowserType&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&viewDataTable=generateDataChartPie'. ($auth ? '&token_auth='. $auth : ''));
-  $url2 = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=UserSettings&action=getConfiguration&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&viewDataTable=generateDataChartVerticalBar'. ($auth ? '&token_auth='. $auth : ''));
-  $url3 = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=UserSettings&action=getOS&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&viewDataTable=generateDataChartVerticalBar'. ($auth ? '&token_auth='. $auth : ''));
-  $url4 = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=UserSettings&action=getResolution&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&viewDataTable=generateDataChartVerticalBar'. ($auth ? '&token_auth='. $auth : ''));
-  $output = theme('visitors_settings', $url1, $url2, $url3, $url4);
+
+  // Create an array of data URL parameters for easier maintaince.
+
+  // Browser families
+  $data1_params = array();
+  $data1_params['module'] = 'UserSettings';
+  $data1_params['action'] = 'getBrowserType';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date;
+  $data1_params['filter_limit'] = 5;
+  $data1_params['filter_sort_column'] = 'nb_uniq_visitors';
+  $data1_params['filter_sort_order'] = 'desc';
+  $data1_params['viewDataTable'] = 'generateDataChartPie';
+  $data1_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+
+  // Client configurations
+  $data2_params = array();
+  $data2_params['module'] = 'UserSettings';
+  $data2_params['action'] = 'getConfiguration';
+  $data2_params['idSite'] = $piwik_site_id;
+  $data2_params['period'] = $period;
+  $data2_params['date'] = $date;
+  $data2_params['enable_sort'] = 1;
+  $data2_params['filter_limit'] = 5;
+  $data2_params['filter_sort_column'] = 'nb_uniq_visitors';
+  $data2_params['filter_sort_order'] = 'desc';
+  $data2_params['viewDataTable'] = 'generateDataChartPie';
+  $data2_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data2_params['token_auth'] = $piwik_auth;
+  }
+
+  // Operating systems
+  $data3_params = array();
+  $data3_params['module'] = 'UserSettings';
+  $data3_params['action'] = 'getOS';
+  $data3_params['idSite'] = $piwik_site_id;
+  $data3_params['period'] = $period;
+  $data3_params['date'] = $date;
+  $data3_params['filter_limit'] = 10;
+  $data3_params['filter_sort_column'] = 'nb_uniq_visitors';
+  $data3_params['filter_sort_order'] = 'desc';
+  $data3_params['viewDataTable'] = 'generateDataChartPie';
+  $data3_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data3_params['token_auth'] = $piwik_auth;
+  }
+
+  // Screen resolutions
+  $data4_params = array();
+  $data4_params['module'] = 'UserSettings';
+  $data4_params['action'] = 'getResolution';
+  $data4_params['idSite'] = $piwik_site_id;
+  $data4_params['period'] = $period;
+  $data4_params['date'] = $date;
+  $data4_params['filter_limit'] = 10;
+  $data4_params['filter_sort_column'] = 'nb_uniq_visitors';
+  $data4_params['filter_sort_order'] = 'desc';
+  $data4_params['viewDataTable'] = 'generateDataChartPie';
+  $data4_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data4_params['token_auth'] = $piwik_auth;
+  }
+
+  // Build the data URL with all params and urlencode it.
+  // Note: drupal_urlencode() doesn't work with Flash variables!
+  $data1_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data1_params));
+  $data2_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data2_params));
+  $data3_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data3_params));
+  $data4_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data4_params));
+
+  // Browser families
+  $widget1_params = array();
+  $widget1_params['module'] = 'Widgetize';
+  $widget1_params['action'] = 'iframe';
+  $widget1_params['moduleToWidgetize'] = 'UserSettings';
+  //$widget1_params['actionToWidgetize'] = 'getBrowser'; // Table view
+  $widget1_params['actionToWidgetize'] = 'getBrowserType'; // Pie chart
+  $widget1_params['idSite'] = $piwik_site_id;
+  $widget1_params['period'] = $period;
+  $widget1_params['date'] = $date;
+  $widget1_params['disableLink'] = 1;
+  $widget1_params['filter_limit'] = 8;
+  $widget1_params['filter_sort_column'] = 'nb_uniq_visitors';
+  $widget1_params['filter_sort_order'] = 'desc';
+  if (!empty($piwik_auth)) {
+    $widget1_params['token_auth'] = $piwik_auth;
+  }
+
+  // Client configurations
+  $widget2_params = array();
+  $widget2_params['module'] = 'Widgetize';
+  $widget2_params['action'] = 'iframe';
+  $widget2_params['moduleToWidgetize'] = 'UserSettings';
+  $widget2_params['actionToWidgetize'] = 'getConfiguration';
+  $widget2_params['idSite'] = $piwik_site_id;
+  $widget2_params['period'] = $period;
+  $widget2_params['date'] = $date;
+  $widget1_params['disableLink'] = 1;
+  $widget2_params['filter_limit'] = 8;
+  $widget2_params['filter_sort_column'] = 'nb_uniq_visitors';
+  $widget2_params['filter_sort_order'] = 'desc';
+  if (!empty($piwik_auth)) {
+    $widget2_params['token_auth'] = $piwik_auth;
+  }
+
+  // Operating systems
+  $widget3_params = array();
+  $widget3_params['module'] = 'Widgetize';
+  $widget3_params['action'] = 'iframe';
+  $widget3_params['moduleToWidgetize'] = 'UserSettings';
+  $widget3_params['actionToWidgetize'] = 'getOS';
+  $widget3_params['idSite'] = $piwik_site_id;
+  $widget3_params['period'] = $period;
+  $widget3_params['date'] = $date;
+  $widget1_params['disableLink'] = 1;
+  $widget3_params['filter_limit'] = 8;
+  $widget3_params['filter_sort_column'] = 'nb_uniq_visitors';
+  $widget3_params['filter_sort_order'] = 'desc';
+  if (!empty($piwik_auth)) {
+    $widget3_params['token_auth'] = $piwik_auth;
+  }
+
+  // Screen resolutions
+  $widget4_params = array();
+  $widget4_params['module'] = 'Widgetize';
+  $widget4_params['action'] = 'iframe';
+  $widget4_params['moduleToWidgetize'] = 'UserSettings';
+  $widget4_params['actionToWidgetize'] = 'getResolution';
+  $widget4_params['idSite'] = $piwik_site_id;
+  $widget4_params['period'] = $period;
+  $widget4_params['date'] = $date;
+  $widget1_params['disableLink'] = 1;
+  $widget4_params['filter_limit'] = 8;
+  $widget4_params['filter_sort_column'] = 'nb_uniq_visitors';
+  $widget4_params['filter_sort_order'] = 'desc';
+  if (!empty($piwik_auth)) {
+    $widget4_params['token_auth'] = $piwik_auth;
+  }
+
+  // Build the iframe widget URL with all params.
+  $widget1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget1_params);
+  $widget2_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget2_params);
+  $widget3_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget3_params);
+  $widget4_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget4_params);
+
+  // Render HTML code.
+  $output = theme(
+    'visitors_settings',
+    $piwik_url,
+    $data1_url,
+    $data2_url,
+    $data3_url,
+    $data4_url,
+    $widget1_url,
+    $widget2_url,
+    $widget3_url,
+    $widget4_url
+  );
+
+  $form = piwik_reports_dateselect_form();
   $form['content'] = array(
     '#type' => 'markup',
     '#value' => $output,
   );
+
   return $form;
 }
 
@@ -98,17 +316,39 @@ function piwik_reports_settings_submit($form, &$form_state) {
 }
 
 function piwik_reports_times() {
-  $form = piwik_reports_dateselect_form();
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
+
+  $date = _piwik_reports_select_period($period);
   $period = _piwik_reports_get_period_name($period);
-  $auth = variable_get('piwik_auth', '');
-  $url = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=VisitTime&action=getVisitInformationPerLocalTime&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&viewDataTable=generateDataChartVerticalBar'. ($auth ? '&token_auth='. $auth : ''));
-  $output = theme('visitors_times', $url);
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'VisitTime';
+  $data1_params['action'] = 'getVisitInformationPerLocalTime';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date;
+  $data1_params['viewDataTable'] = 'generateDataChartVerticalBar';
+  $data1_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+
+  // Build the data URL with all params and urlencode it.
+  // Note: drupal_urlencode() doesn't work with Flash variables!
+  $data1_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data1_params));
+
+  $form = piwik_reports_dateselect_form();
+  $output = theme('visitors_times', $piwik_url, $data1_url);
   $form['content'] = array(
     '#type' => 'markup',
     '#value' => $output,
   );
+
   return $form;
 }
 
@@ -117,17 +357,41 @@ function piwik_reports_times_submit($form, &$form_state) {
 }
 
 function piwik_reports_locations() {
-  $form = piwik_reports_dateselect_form();
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
+
+  $date = _piwik_reports_select_period($period);
   $period = _piwik_reports_get_period_name($period);
-  $auth = variable_get('piwik_auth', '');
-  $url = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=UserCountry&action=getCountry&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&viewDataTable=generateDataChartPie'. ($auth ? '&token_auth='. $auth : ''));
-  $output = theme('visitors_locations', $url);
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'UserCountry';
+  $data1_params['action'] = 'getCountry';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date;
+  // FIXME: filter_limit seems broken.
+  $data1_params['filter_limit'] = 10;
+  $data1_params['viewDataTable'] = 'generateDataChartPie';
+  $data1_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+
+  // Build the data URL with all params and urlencode it.
+  // Note: drupal_urlencode() doesn't work with Flash variables!
+  $data1_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data1_params));
+
+  $form = piwik_reports_dateselect_form();
+  $output = theme('visitors_locations', $piwik_url, $data1_url);
   $form['content'] = array(
     '#type' => 'markup',
     '#value' => $output,
   );
+
   return $form;
 }
 
@@ -137,19 +401,40 @@ function piwik_reports_locations_submit($form, &$form_state) {
 
 function piwik_reports_pages() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
-  $form = piwik_reports_dateselect_form();
-  $auth = variable_get('piwik_auth', '');
+
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
+
+  $date = _piwik_reports_select_period($period);
   $period = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getActions&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'API';
+  $data1_params['method'] = 'Actions.getActions';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date;
+  $data1_params['format'] = 'JSON';
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+  $data1_params['jsoncallback'] = '?';
+
+  // Build the data URL with all params.
+  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params);
+
+  $form = piwik_reports_dateselect_form();
   $form['page'] = array(
     '#type' => 'hidden',
     '#value' => 'actions',
   );
   $form['url'] = array(
     '#type' => 'hidden',
-    '#value' => $url,
+    '#value' => $data1_url,
   );
   $form['content'] = array(
     '#type' => 'markup',
@@ -165,19 +450,40 @@ function piwik_reports_pages_submit($form, &$form_state) {
 
 function piwik_reports_outlinks() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
-  $form = piwik_reports_dateselect_form();
-  $auth = variable_get('piwik_auth', '');
+
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
+
+  $date = _piwik_reports_select_period($period);
   $period = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getOutlinks&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'API';
+  $data1_params['method'] = 'Actions.getOutlinks';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date;
+  $data1_params['format'] = 'JSON';
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+  $data1_params['jsoncallback'] = '?';
+
+  // Build the data URL with all params.
+  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params);
+
+  $form = piwik_reports_dateselect_form();
   $form['page'] = array(
     '#type' => 'hidden',
     '#value' => 'actions',
   );
   $form['url'] = array(
     '#type' => 'hidden',
-    '#value' => $url,
+    '#value' => $data1_url,
   );
   $form['content'] = array(
     '#type' => 'markup',
@@ -193,19 +499,40 @@ function piwik_reports_outlinks_submit($form, &$form_state) {
 
 function piwik_reports_downloads() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
-  $form = piwik_reports_dateselect_form();
-  $auth = variable_get('piwik_auth', '');
+
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
+
+  $date = _piwik_reports_select_period($period);
   $period = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Actions.getDownloads&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_uniq_visitors&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'API';
+  $data1_params['method'] = 'Actions.getDownloads';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date;
+  $data1_params['format'] = 'JSON';
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+  $data1_params['jsoncallback'] = '?';
+
+  // Build the data URL with all params.
+  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params);
+
+  $form = piwik_reports_dateselect_form();
   $form['page'] = array(
     '#type' => 'hidden',
     '#value' => 'actions',
   );
   $form['url'] = array(
     '#type' => 'hidden',
-    '#value' => $url,
+    '#value' => $data1_url,
   );
   $form['content'] = array(
     '#type' => 'markup',
@@ -220,14 +547,48 @@ function piwik_reports_downloads_submit($form, &$form_state) {
 }
 
 function piwik_reports_evolution() {
-  $form = piwik_reports_dateselect_form();
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  $date = _piwik_reports_select_period($period);
+
   $now = _piwik_reports_select_period(0);
+  $date = _piwik_reports_select_period($period);
   $period = _piwik_reports_get_period_name($period);
-  $auth = variable_get('piwik_auth', '');
-  $url = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=Referers&action=getLastDirectEntryGraph&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'%2C'. $now .'&viewDataTable=generateDataChartEvolution'. ($auth ? '&token_auth='. $auth : ''));
-  $output = theme('referers_evolution', $url);
+
+  // Granuarity of measuring points in graph.
+  switch ($period) {
+    case 4:
+      $period = "week";
+      break;
+
+    default:
+      $period = "day";
+  }
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'Referers';
+  $data1_params['action'] = 'getRefererType';
+  $data1_params['columns[]'] = 'nb_visits';
+  $data1_params['moduleToWidgetize'] = 'Referers';
+  $data1_params['actionToWidgetize'] = 'getRefererType';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date . ',' . $now;
+  $data1_params['viewDataTable'] = 'generateDataChartEvolution';
+  $data1_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+
+  // Build the data URL with all params and urlencode it.
+  // Note: drupal_urlencode() doesn't work with Flash variables!
+  $data1_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data1_params));
+
+  $form = piwik_reports_dateselect_form();
+  $output = theme('referers_evolution', $piwik_url, $data1_url);
   $form['content'] = array(
     '#type' => 'markup',
     '#value' => $output,
@@ -242,22 +603,59 @@ function piwik_reports_evolution_submit($form, &$form_state) {
 
 function piwik_reports_search() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
-  $form = piwik_reports_dateselect_form();
-  $auth = variable_get('piwik_auth', '');
-  $period = $_SESSION['piwik_reports_period'];
-  ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
-  $period = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/libs/open-flash-chart/open-flash-chart.swf?data='. urlencode(variable_get('piwik_url_http', '') .'/?module=Referers&action=getSearchEngines&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date=yesterday&viewDataTable=generateDataChartPie'. ($auth ? '&token_auth='. $auth : ''));
-  $output = theme('referers_search', $url);
-  $url2 = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Referers.getKeywords&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON&filter_sort_column=nb_visits&filter_sort_order=desc'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
 
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
+  $period = $_SESSION['piwik_reports_period'];
+
+  $now = _piwik_reports_select_period(0);
+  $date = _piwik_reports_select_period($period);
+  $period = _piwik_reports_get_period_name($period);
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'Referers';
+  $data1_params['action'] = 'getSearchEngines';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date;
+  $data1_params['viewDataTable'] = 'generateDataChartPie';
+  $data1_params['loading'] = t('Loading data...');
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+
+  // Build the data URL with all params and urlencode it.
+  // Note: drupal_urlencode() doesn't work with Flash variables!
+  $data1_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data1_params));
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data2_params = array();
+  $data2_params['module'] = 'API';
+  $data2_params['method'] = 'Referers.getKeywords';
+  $data2_params['idSite'] = $piwik_site_id;
+  $data2_params['period'] = $period;
+  $data2_params['date'] = $date;
+  $data2_params['format'] = 'JSON';
+  if (!empty($piwik_auth)) {
+    $data2_params['token_auth'] = $piwik_auth;
+  }
+  $data2_params['jsoncallback'] = '?';
+
+  // Build the data URL with all params.
+  $data2_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data2_params);
+
+  $form = piwik_reports_dateselect_form();
+  $output = theme('referers_search', $piwik_url, $data1_url);
   $form['page'] = array(
     '#type' => 'hidden',
     '#value' => 'search',
   );
   $form['url'] = array(
     '#type' => 'hidden',
-    '#value' => $url2,
+    '#value' => $data2_url,
   );
   $form['content'] = array(
     '#type' => 'markup',
@@ -277,19 +675,41 @@ function piwik_reports_search_submit($form, &$form_state) {
 
 function piwik_reports_websites() {
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
-  $form = piwik_reports_dateselect_form();
-  $auth = variable_get('piwik_auth', '');
+
+  // Get basic configuration variables.
+  $piwik_url = variable_get('piwik_url_http', '');
+  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
-  ($period == 1) ? $date = _piwik_reports_select_period($period) : $date = _piwik_reports_select_period(0);
+
+  $now = _piwik_reports_select_period(0);
+  $date = _piwik_reports_select_period($period);
   $period = _piwik_reports_get_period_name($period);
-  $url = variable_get('piwik_url_http', '') .'/index.php?module=API&method=Referers.getWebsites&idSite='. variable_get('piwik_site_id', '') .'&period='. $period .'&date='. $date .'&format=JSON'. ($auth ? '&token_auth='. $auth : '') .'&jsoncallback=?';
-  $form['url'] = array(
-    '#type' => 'hidden',
-    '#value' => $url,
-  );
+
+  // Create an array of data URL parameters for easier maintaince.
+  $data1_params = array();
+  $data1_params['module'] = 'API';
+  $data1_params['method'] = 'Referers.getWebsites';
+  $data1_params['idSite'] = $piwik_site_id;
+  $data1_params['period'] = $period;
+  $data1_params['date'] = $date;
+  $data1_params['format'] = 'JSON';
+  if (!empty($piwik_auth)) {
+    $data1_params['token_auth'] = $piwik_auth;
+  }
+  $data1_params['jsoncallback'] = '?';
+
+  // Build the data URL with all params.
+  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params);
+
+  $form = piwik_reports_dateselect_form();
   $form['page'] = array(
     '#type' => 'hidden',
     '#value' => 'websites',
+  );
+  $form['url'] = array(
+    '#type' => 'hidden',
+    '#value' => $data1_url,
   );
   $form['content'] = array(
     '#type' => 'markup',
@@ -320,7 +740,7 @@ function _piwik_reports_select_period($period) {
       break;
 
     case 3:
-      $d = mktime(0, 0, 0, date("m") - 2, date("d"), date("Y"));
+      $d = mktime(0, 0, 0, date("m") - 1, date("d"), date("Y"));
       $date = date("Y-m-d", $d);
       break;
 
@@ -333,6 +753,7 @@ function _piwik_reports_select_period($period) {
 }
 
 function _piwik_reports_get_period_name($period) {
+  // Possible periods are day, week, month, year.
   switch ($period) {
     case 0:
       $p = "day";
@@ -356,4 +777,3 @@ function _piwik_reports_get_period_name($period) {
   }
   return $p;
 }
-

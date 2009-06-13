@@ -150,41 +150,52 @@ function piwik_reports_theme() {
     'visitors_overview' => array(
       'template' => 'visitors-overview',
       'arguments' => array(
-        'url' => NULL,
+        'piwik_url' => NULL,
+        'data1_url' => NULL,
+        'widget1_url' => NULL,
         'period' => NULL,
       ),
     ),
     'visitors_settings' => array(
       'template' => 'visitors-settings',
       'arguments' => array(
-        'url1' => NULL,
-        'url2' => NULL,
-        'url3' => NULL,
-        'url4' => NULL,
+        'piwik_url' => NULL,
+        'data1_url' => NULL,
+        'data2_url' => NULL,
+        'data3_url' => NULL,
+        'data4_url' => NULL,
+        'widget1_url' => NULL,
+        'widget2_url' => NULL,
+        'widget3_url' => NULL,
+        'widget4_url' => NULL,
       ),
     ),
     'visitors_times' => array(
       'template' => 'visitors-times',
       'arguments' => array(
-        'url' => NULL,
+        'piwik_url' => NULL,
+        'data1_url' => NULL,
       ),
     ),
     'visitors_locations' => array(
       'template' => 'visitors-locations',
       'arguments' => array(
-        'url' => NULL,
+        'piwik_url' => NULL,
+        'data1_url' => NULL,
       ),
     ),
     'referers_evolution' => array(
       'template' => 'referers-evolution',
       'arguments' => array(
-        'url' => NULL,
+        'piwik_url' => NULL,
+        'data1_url' => NULL,
       ),
     ),
     'referers_search' => array(
       'template' => 'referers-search',
       'arguments' => array(
-        'url' => NULL,
+        'piwik_url' => NULL,
+        'data1_url' => NULL,
       ),
     ),
   );

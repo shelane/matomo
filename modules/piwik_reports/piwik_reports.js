@@ -11,11 +11,11 @@ Drupal.behaviors.piwik_reports = function() {
   header += "<tr><th>" + Drupal.t('Label') + "</th>";
   switch (page) {
     case "actions":
-      header += "<th>" + Drupal.t('Unique visitors') + "</th><th>" + Drupal.t('Hits') + "</th>";
+      header += "<th>" + Drupal.t('Visitors') + "</th><th>" + Drupal.t('Hits') + "</th>";
       columns = 3;
       break;
     case "websites":
-      header += "<th>" + Drupal.t('Unique visitors') + "</th>";
+      header += "<th>" + Drupal.t('Visitors') + "</th>";
       break;
     case "search":
       header += "<th>" + Drupal.t('Visits') + "</th>";
@@ -39,10 +39,10 @@ Drupal.behaviors.piwik_reports = function() {
       content += "<tr class='" + item_class + "'><td>" + item["label"] + "</td>";
       switch (page) {
         case "actions":
-          content += "<td>" + item["nb_uniq_visitors"] + "</td><td>" + item["nb_hits"] + "</td>";
+          content += "<td>" + item["nb_visits"] + "</td><td>" + item["nb_hits"] + "</td>";
           break;
         case "websites":
-          content += "<td>" + item["nb_uniq_visitors"] + "</td>";
+          content += "<td>" + item["nb_visits"] + "</td>";
           break;
         case "search":
           content += "<td>" + item["nb_visits"] + "</td>";
