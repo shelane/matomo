@@ -75,7 +75,7 @@ function piwik_reports_overview() {
       $period = "day";
   }
 
-  // Create an array of URL parameters for easier maintaince.
+  // Create an array of URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'VisitsSummary';
   $data1_params['action'] = 'getEvolutionGraph';
@@ -136,17 +136,25 @@ function piwik_reports_settings() {
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
-  $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // The yesterday date value is required.
+    $date = _piwik_reports_select_period($period);
+  }
+  else {
+    // Otherwise it returns the today date value.
+    $date = _piwik_reports_select_period(0);
+  }
+  $period_name = _piwik_reports_get_period_name($period);
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
 
   // Browser families
   $data1_params = array();
   $data1_params['module'] = 'UserSettings';
   $data1_params['action'] = 'getBrowserType';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date;
   $data1_params['filter_limit'] = 5;
   $data1_params['filter_sort_column'] = 'nb_uniq_visitors';
@@ -162,7 +170,7 @@ function piwik_reports_settings() {
   $data2_params['module'] = 'UserSettings';
   $data2_params['action'] = 'getConfiguration';
   $data2_params['idSite'] = $piwik_site_id;
-  $data2_params['period'] = $period;
+  $data2_params['period'] = $period_name;
   $data2_params['date'] = $date;
   $data2_params['enable_sort'] = 1;
   $data2_params['filter_limit'] = 5;
@@ -179,7 +187,7 @@ function piwik_reports_settings() {
   $data3_params['module'] = 'UserSettings';
   $data3_params['action'] = 'getOS';
   $data3_params['idSite'] = $piwik_site_id;
-  $data3_params['period'] = $period;
+  $data3_params['period'] = $period_name;
   $data3_params['date'] = $date;
   $data3_params['filter_limit'] = 10;
   $data3_params['filter_sort_column'] = 'nb_uniq_visitors';
@@ -195,7 +203,7 @@ function piwik_reports_settings() {
   $data4_params['module'] = 'UserSettings';
   $data4_params['action'] = 'getResolution';
   $data4_params['idSite'] = $piwik_site_id;
-  $data4_params['period'] = $period;
+  $data4_params['period'] = $period_name;
   $data4_params['date'] = $date;
   $data4_params['filter_limit'] = 10;
   $data4_params['filter_sort_column'] = 'nb_uniq_visitors';
@@ -221,7 +229,7 @@ function piwik_reports_settings() {
   //$widget1_params['actionToWidgetize'] = 'getBrowser'; // Table view
   $widget1_params['actionToWidgetize'] = 'getBrowserType'; // Pie chart
   $widget1_params['idSite'] = $piwik_site_id;
-  $widget1_params['period'] = $period;
+  $widget1_params['period'] = $period_name;
   $widget1_params['date'] = $date;
   $widget1_params['disableLink'] = 1;
   $widget1_params['filter_limit'] = 8;
@@ -238,7 +246,7 @@ function piwik_reports_settings() {
   $widget2_params['moduleToWidgetize'] = 'UserSettings';
   $widget2_params['actionToWidgetize'] = 'getConfiguration';
   $widget2_params['idSite'] = $piwik_site_id;
-  $widget2_params['period'] = $period;
+  $widget2_params['period'] = $period_name;
   $widget2_params['date'] = $date;
   $widget1_params['disableLink'] = 1;
   $widget2_params['filter_limit'] = 8;
@@ -255,7 +263,7 @@ function piwik_reports_settings() {
   $widget3_params['moduleToWidgetize'] = 'UserSettings';
   $widget3_params['actionToWidgetize'] = 'getOS';
   $widget3_params['idSite'] = $piwik_site_id;
-  $widget3_params['period'] = $period;
+  $widget3_params['period'] = $period_name;
   $widget3_params['date'] = $date;
   $widget1_params['disableLink'] = 1;
   $widget3_params['filter_limit'] = 8;
@@ -272,7 +280,7 @@ function piwik_reports_settings() {
   $widget4_params['moduleToWidgetize'] = 'UserSettings';
   $widget4_params['actionToWidgetize'] = 'getResolution';
   $widget4_params['idSite'] = $piwik_site_id;
-  $widget4_params['period'] = $period;
+  $widget4_params['period'] = $period_name;
   $widget4_params['date'] = $date;
   $widget1_params['disableLink'] = 1;
   $widget4_params['filter_limit'] = 8;
@@ -322,15 +330,23 @@ function piwik_reports_times() {
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
-  $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // The yesterday date value is required.
+    $date = _piwik_reports_select_period($period);
+  }
+  else {
+    // Otherwise it returns the today date value.
+    $date = _piwik_reports_select_period(0);
+  }
+  $period_name = _piwik_reports_get_period_name($period);
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'VisitTime';
   $data1_params['action'] = 'getVisitInformationPerLocalTime';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date;
   $data1_params['viewDataTable'] = 'generateDataChartVerticalBar';
   $data1_params['loading'] = t('Loading data...');
@@ -363,15 +379,23 @@ function piwik_reports_locations() {
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
-  $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // The yesterday date value is required.
+    $date = _piwik_reports_select_period($period);
+  }
+  else {
+    // Otherwise it returns the today date value.
+    $date = _piwik_reports_select_period(0);
+  }
+  $period_name = _piwik_reports_get_period_name($period);
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'UserCountry';
   $data1_params['action'] = 'getCountry';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date;
   // FIXME: filter_limit seems broken.
   $data1_params['filter_limit'] = 10;
@@ -408,15 +432,23 @@ function piwik_reports_pages() {
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
-  $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // The yesterday date value is required.
+    $date = _piwik_reports_select_period($period);
+  }
+  else {
+    // Otherwise it returns the today date value.
+    $date = _piwik_reports_select_period(0);
+  }
+  $period_name = _piwik_reports_get_period_name($period);
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'API';
   $data1_params['method'] = 'Actions.getActions';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date;
   $data1_params['format'] = 'JSON';
   if (!empty($piwik_auth)) {
@@ -457,15 +489,23 @@ function piwik_reports_outlinks() {
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
-  $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // The yesterday date value is required.
+    $date = _piwik_reports_select_period($period);
+  }
+  else {
+    // Otherwise it returns the today date value.
+    $date = _piwik_reports_select_period(0);
+  }
+  $period_name = _piwik_reports_get_period_name($period);
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'API';
   $data1_params['method'] = 'Actions.getOutlinks';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date;
   $data1_params['format'] = 'JSON';
   if (!empty($piwik_auth)) {
@@ -506,15 +546,23 @@ function piwik_reports_downloads() {
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
-  $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // The yesterday date value is required.
+    $date = _piwik_reports_select_period($period);
+  }
+  else {
+    // Otherwise it returns the today date value.
+    $date = _piwik_reports_select_period(0);
+  }
+  $period_name = _piwik_reports_get_period_name($period);
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'API';
   $data1_params['method'] = 'Actions.getDownloads';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date;
   $data1_params['format'] = 'JSON';
   if (!empty($piwik_auth)) {
@@ -555,19 +603,19 @@ function piwik_reports_evolution() {
 
   $now = _piwik_reports_select_period(0);
   $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  $period_name = _piwik_reports_get_period_name($period);
 
   // Granuarity of measuring points in graph.
-  switch ($period) {
+  switch ($period_name) {
     case 4:
-      $period = "week";
+      $period_name = "week";
       break;
 
     default:
-      $period = "day";
+      $period_name = "day";
   }
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'Referers';
   $data1_params['action'] = 'getRefererType';
@@ -575,7 +623,7 @@ function piwik_reports_evolution() {
   $data1_params['moduleToWidgetize'] = 'Referers';
   $data1_params['actionToWidgetize'] = 'getRefererType';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date . ',' . $now;
   $data1_params['viewDataTable'] = 'generateDataChartEvolution';
   $data1_params['loading'] = t('Loading data...');
@@ -610,16 +658,23 @@ function piwik_reports_search() {
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
-  $now = _piwik_reports_select_period(0);
-  $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // The yesterday date value is required.
+    $date = _piwik_reports_select_period($period);
+  }
+  else {
+    // Otherwise it returns the today date value.
+    $date = _piwik_reports_select_period(0);
+  }
+  $period_name = _piwik_reports_get_period_name($period);
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'Referers';
   $data1_params['action'] = 'getSearchEngines';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date;
   $data1_params['viewDataTable'] = 'generateDataChartPie';
   $data1_params['loading'] = t('Loading data...');
@@ -631,12 +686,12 @@ function piwik_reports_search() {
   // Note: drupal_urlencode() doesn't work with Flash variables!
   $data1_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data1_params));
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data2_params = array();
   $data2_params['module'] = 'API';
   $data2_params['method'] = 'Referers.getKeywords';
   $data2_params['idSite'] = $piwik_site_id;
-  $data2_params['period'] = $period;
+  $data2_params['period'] = $period_name;
   $data2_params['date'] = $date;
   $data2_params['format'] = 'JSON';
   if (!empty($piwik_auth)) {
@@ -682,16 +737,23 @@ function piwik_reports_websites() {
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
-  $now = _piwik_reports_select_period(0);
-  $date = _piwik_reports_select_period($period);
-  $period = _piwik_reports_get_period_name($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // The yesterday date value is required.
+    $date = _piwik_reports_select_period($period);
+  }
+  else {
+    // Otherwise it returns the today date value.
+    $date = _piwik_reports_select_period(0);
+  }
+  $period_name = _piwik_reports_get_period_name($period);
 
-  // Create an array of data URL parameters for easier maintaince.
+  // Create an array of data URL parameters for easier maintenance.
   $data1_params = array();
   $data1_params['module'] = 'API';
   $data1_params['method'] = 'Referers.getWebsites';
   $data1_params['idSite'] = $piwik_site_id;
-  $data1_params['period'] = $period;
+  $data1_params['period'] = $period_name;
   $data1_params['date'] = $date;
   $data1_params['format'] = 'JSON';
   if (!empty($piwik_auth)) {
