@@ -58,7 +58,7 @@ function piwik_reports_dateselect_form() {
 function piwik_reports_overview() {
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -132,7 +132,7 @@ function piwik_reports_overview_submit($form, &$form_state) {
 function piwik_reports_settings() {
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -318,7 +318,7 @@ function piwik_reports_settings_submit($form, &$form_state) {
 function piwik_reports_times() {
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -359,7 +359,7 @@ function piwik_reports_times_submit($form, &$form_state) {
 function piwik_reports_locations() {
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -404,7 +404,7 @@ function piwik_reports_pages() {
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -453,7 +453,7 @@ function piwik_reports_outlinks() {
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -502,7 +502,7 @@ function piwik_reports_downloads() {
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -549,7 +549,7 @@ function piwik_reports_downloads_submit($form, &$form_state) {
 function piwik_reports_evolution() {
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -606,7 +606,7 @@ function piwik_reports_search() {
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
@@ -678,7 +678,7 @@ function piwik_reports_websites() {
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
-  $piwik_site_id = variable_get('piwik_site_id', 0);
+  $piwik_site_id = variable_get('piwik_site_id', '');
   $piwik_auth = variable_get('piwik_auth', '');
   $period = $_SESSION['piwik_reports_period'];
 
