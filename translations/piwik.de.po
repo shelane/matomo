@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Google Analytics module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-15 01:01+0100\n"
-"PO-Revision-Date: 2009-03-15 02:20+0100\n"
+"POT-Creation-Date: 2009-06-16 00:19+0200\n"
+"PO-Revision-Date: 2009-06-16 00:30+0100\n"
 "Last-Translator: Alexander Haß\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -137,10 +137,6 @@ msgstr "Falls der PHP-Modus gewählt ist, geben Sie bitte PHP-Code zwischen %php
 msgid "Add tracking to specific pages"
 msgstr "Das Tracking zu bestimmten Seiten hinzufügen"
 
-#: piwik.admin.inc:131
-msgid "Pages"
-msgstr "Seiten"
-
 #: piwik.admin.inc:141
 msgid "Link tracking settings"
 msgstr "Einstellungen für das Tracking von Links"
@@ -177,65 +173,85 @@ msgstr "Sobald aktiviert, wird die Datei mit Tracking-Code von Piwik heruntergel
 msgid "<a href=\"@url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr "Zum lokalen Cachen muss die <a href=\"@url\">öffentliche Download-Methode</a> aktiviert sein."
 
-#: piwik.admin.inc:179
+#: piwik.admin.inc:181
+msgid "Track translation sets as one unit"
+msgstr "Übersetzungssatz als eine Einheit tracken"
+
+#: piwik.admin.inc:182
+msgid "When a node is part of a translation set, record statistics for the originating node instead. This allows for a translation set to be treated as a single unit."
+msgstr "Sollte ein Beitrag zu einem Übersetzungssatz gehören, werden Statistiken für den ursprünglichen Beitrag aufgezeichnet. Dies ermöglicht einen Übersetzungsatz als eine Einheit zu behandeln."
+
+#: piwik.admin.inc:189
 msgid "Custom JavaScript code"
 msgstr "Benutzerdefinierter JavaScript-Code"
 
-#: piwik.admin.inc:183
+#: piwik.admin.inc:192
 msgid "You can add custom Piwik <a href=\"@snippets\">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
 msgstr "Hier können spezielle Piwik-<a href=\"@snippets\">Codeausschnitte</a> eingefügt werden. Diese werden zu jeder Seite auf der Piwik erscheint hinzugefügt. <strong>Die &lt;script&gt; Tags dürfen nicht eingefügt werden</strong> und der Code muss immer mit einem Semikolon (;) abschließen."
 
-#: piwik.admin.inc:188
+#: piwik.admin.inc:196
+msgid "Code snippet (before)"
+msgstr "Codeausschnitt (vorher)"
+
+#: piwik.admin.inc:200
+msgid "Code in this textarea will be added <strong>before</strong> piwikTracker.trackPageView()."
+msgstr "Code in diesem Textfeld wird <strong>vor</strong> piwikTracker.trackPageView() eingefügt."
+
+#: piwik.admin.inc:204
+msgid "Code snippet (after)"
+msgstr "Codeausschnitt (nachher)"
+
+#: piwik.admin.inc:208
+msgid "Code in this textarea will be added <strong>after</strong> piwikTracker.trackPageView(). This is useful if you'd like to track a site in two accounts."
+msgstr "Code in diesem Textfeld wird <strong>nach</strong> piwikTracker.trackPageView() eingefügt. Dies ist nützlich, um eine Website in zwei Accounts zu tracken."
+
+#: piwik.admin.inc:213
 msgid "JavaScript scope"
 msgstr "JavaScript-Bereich"
 
-#: piwik.admin.inc:189
+#: piwik.admin.inc:214
 msgid "<strong>Warning:</strong> Adding the external JavaScript files to the footer region is recommended for performance reasons."
 msgstr "<strong>Warnung:</strong> Aus Performancegründen wird empfohlen die externen JavaScript-Dateien im Fußbereich einzufügen."
 
-#: piwik.admin.inc:191
+#: piwik.admin.inc:216
 msgid "Footer"
 msgstr "Fußbereich"
 
-#: piwik.admin.inc:192
+#: piwik.admin.inc:217
 msgid "Header"
 msgstr "Kopfbereich"
 
-#: piwik.admin.inc:202
+#: piwik.admin.inc:227
 msgid "A valid Piwik site ID is an integer only."
 msgstr "Eine zulässige Piwik-Website-ID ist nur eine Ganzzahl."
 
-#: piwik.admin.inc:208;215
+#: piwik.admin.inc:233;240
 msgid "The validation of \"@url\" failed with error \"@error\" (HTTP code @code)."
 msgstr "Die Überprüfung von „@url“ ist mit dem Fehler „@error“ fehlgeschlagen (HTTP-Code @code)."
 
-#: piwik.admin.inc:221
-msgid "Do not include the &lt;script&gt; tags in this field."
-msgstr "Die &lt;script&gt; Tags dürfen in dieses Feld nicht eingefügt werden."
-
-#: piwik.info:0
-msgid "Piwik - Web analytics"
-msgstr "Piwik - Webanalyse"
-
-#: piwik.info:0
-msgid "Adds Piwik javascript tracking code to all your site's pages."
-msgstr "Fügt den Piwik-JavaScript-Trackingcode in alle Seiten der Website ein."
-
-#: piwik.info:0
-msgid "Statistics"
-msgstr "Statistiken"
+#: piwik.admin.inc:246;249
+msgid "Do not include the &lt;script&gt; tags in the javascript code snippets."
+msgstr "Die &lt;script&gt; Tags dürfen in die JavaScript-Codeausschnitte nicht eingefügt werden."
 
 #: piwik.module:18
 msgid "<a href=\"@pk_url\">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to Google Analytics."
 msgstr "<a href=\"@pk_url\">Piwik - Webanalyse</a> ist eine Open-Source-Webanalyse-Software unter der GPL-Lizenz. Es bietet interessante Reports über die Websitebesucher, die beliebtesten Seiten, die verwendeten Suchmaschinen-Schlüsselwörter, die Sprache die sie sprechen... und vieles mehr. Piwik hat das Ziel eine Open-Source-Alternative zu Google Analytics zu sein."
 
-#: piwik.module:128
+#: piwik.module:158
 msgid "Piwik configuration"
 msgstr "Piwik-Konfiguration"
 
-#: piwik.module:135
-msgid "User tracking"
-msgstr "Benutzertracking"
+#: piwik.module:166
+msgid "Users are tracked by default, but you are able to opt out."
+msgstr "Die Benutzer werden standardmäßig getrackt, können dies aber abschalten."
+
+#: piwik.module:170
+msgid "Users are <em>not</em> tracked by default, but you are able to opt in."
+msgstr "Die Benutzer werden standardmäßig <em>nicht</em> getrackt, können dies aber einschalten."
+
+#: piwik.module:176
+msgid "Enable user tracking"
+msgstr "Benutzertracking aktivieren"
 
 #: piwik.module:23
 msgid "administer piwik"
@@ -256,4 +272,41 @@ msgstr "Die Einstellungen konfigurieren, welche zur Generierung des Piwik-Tracki
 #: piwik.module:0
 msgid "piwik"
 msgstr "piwik"
+
+#: (duplicate) piwik.install:51
+msgid "HTTP request status"
+msgstr "HTTP-Anfragestatus"
+
+#: (duplicate) piwik.install:52
+msgid "Fails"
+msgstr "Fehlgeschlagen"
+
+#: (duplicate) piwik.install:54
+msgid "Your system or network configuration does not allow Drupal to access web pages, resulting in reduced functionality. This could be due to your webserver configuration or PHP settings, and should be resolved in order to download information about available updates, fetch aggregator feeds, sign in via OpenID, or use other network-dependent services."
+msgstr "Die Funktionalität der Website ist eingeschränkt, da Drupal nicht auf externe Internetseiten zugreifen kann. Grund dafür sind die aktuellen System- oder Netzwerkeinstellungen wie etwa die Konfiguration des Webservers oder die PHP-Einstellungen. Der Zugriff wird benötigt, um netzbasierte Dienste nutzen zu können. Beispiele hierfür sind der Abruf verfügbarer Aktualisierungen, der Abruf von Aggregator-Feeds oder die Anmeldung via OpenID."
+
+#: (duplicate) piwik.install:63
+msgid "Piwik module"
+msgstr "Piwik-Modul"
+
+#: (duplicate) piwik.install:64
+msgid "Piwik module has not been configured yet. Please configure its settings from the <a href=\"@url\">Piwik settings page</a>."
+msgstr "Das Piwik-Modul wurde noch nicht konfiguriert. Die Einstellungen können in den <a href=\"@url\">Piwik-Einstellungen</a> vorgenommen werden."
+
+#: (duplicate) piwik.install:66
+msgid "Not configured"
+msgstr "Nicht konfiguriert"
+
+#: piwik.info:0
+msgid "Piwik - Web analytics"
+msgstr "Piwik - Webanalyse"
+
+#: piwik.info:0
+msgid "Adds Piwik javascript tracking code to all your site's pages."
+msgstr "Fügt den Piwik-JavaScript-Trackingcode in alle Seiten der Website ein."
+
+#: piwik.info:0
+#: modules/piwik_reports/piwik_reports.info:0
+msgid "Statistics"
+msgstr "Statistiken"
 

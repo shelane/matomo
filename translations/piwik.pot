@@ -1,17 +1,19 @@
 # $Id$
 #
-# LANGUAGE translation of Drupal (general)
+# LANGUAGE translation of Drupal (root)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  piwik.admin.inc,v 1.1.2.15 2009/03/14 18:53:22 hass
-#  piwik.module,v 1.1.2.15 2009/03/14 18:44:58 hass
+#  piwik.admin.inc,v 1.1.2.18 2009/06/09 22:49:25 hass
+#  piwik.module,v 1.1.2.22 2009/06/15 19:59:21 hass
+#  piwik.install,v 1.1.2.16 2009/06/06 23:29:46 hass
 #  piwik.info,v 1.1.2.4 2008/09/14 15:52:20 hass
+#  piwik_reports.info,v 1.1.2.2 2008/09/14 15:52:20 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2009-03-15 01:01+0100\n"
+"POT-Creation-Date: 2009-06-16 00:19+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -136,10 +138,6 @@ msgstr ""
 msgid "Add tracking to specific pages"
 msgstr ""
 
-#: piwik.admin.inc:131
-msgid "Pages"
-msgstr ""
-
 #: piwik.admin.inc:141
 msgid "Link tracking settings"
 msgstr ""
@@ -176,64 +174,84 @@ msgstr ""
 msgid "<a href=\"@url\">Public file transfers</a> must be enabled to allow local caching."
 msgstr ""
 
-#: piwik.admin.inc:179
-msgid "Custom JavaScript code"
+#: piwik.admin.inc:181
+msgid "Track translation sets as one unit"
 msgstr ""
 
-#: piwik.admin.inc:183
-msgid "You can add custom Piwik <a href=\"@snippets\">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
-msgstr ""
-
-#: piwik.admin.inc:188
-msgid "JavaScript scope"
+#: piwik.admin.inc:182
+msgid "When a node is part of a translation set, record statistics for the originating node instead. This allows for a translation set to be treated as a single unit."
 msgstr ""
 
 #: piwik.admin.inc:189
-msgid "<strong>Warning:</strong> Adding the external JavaScript files to the footer region is recommended for performance reasons."
-msgstr ""
-
-#: piwik.admin.inc:191
-msgid "Footer"
+msgid "Custom JavaScript code"
 msgstr ""
 
 #: piwik.admin.inc:192
+msgid "You can add custom Piwik <a href=\"@snippets\">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;)."
+msgstr ""
+
+#: piwik.admin.inc:196
+msgid "Code snippet (before)"
+msgstr ""
+
+#: piwik.admin.inc:200
+msgid "Code in this textarea will be added <strong>before</strong> piwikTracker.trackPageView()."
+msgstr ""
+
+#: piwik.admin.inc:204
+msgid "Code snippet (after)"
+msgstr ""
+
+#: piwik.admin.inc:208
+msgid "Code in this textarea will be added <strong>after</strong> piwikTracker.trackPageView(). This is useful if you'd like to track a site in two accounts."
+msgstr ""
+
+#: piwik.admin.inc:213
+msgid "JavaScript scope"
+msgstr ""
+
+#: piwik.admin.inc:214
+msgid "<strong>Warning:</strong> Adding the external JavaScript files to the footer region is recommended for performance reasons."
+msgstr ""
+
+#: piwik.admin.inc:216
+msgid "Footer"
+msgstr ""
+
+#: piwik.admin.inc:217
 msgid "Header"
 msgstr ""
 
-#: piwik.admin.inc:202
+#: piwik.admin.inc:227
 msgid "A valid Piwik site ID is an integer only."
 msgstr ""
 
-#: piwik.admin.inc:208;215
+#: piwik.admin.inc:233;240
 msgid "The validation of \"@url\" failed with error \"@error\" (HTTP code @code)."
 msgstr ""
 
-#: piwik.admin.inc:221
-msgid "Do not include the &lt;script&gt; tags in this field."
-msgstr ""
-
-#: piwik.info:0
-msgid "Piwik - Web analytics"
-msgstr ""
-
-#: piwik.info:0
-msgid "Adds Piwik javascript tracking code to all your site's pages."
-msgstr ""
-
-#: piwik.info:0
-msgid "Statistics"
+#: piwik.admin.inc:246;249
+msgid "Do not include the &lt;script&gt; tags in the javascript code snippets."
 msgstr ""
 
 #: piwik.module:18
 msgid "<a href=\"@pk_url\">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to Google Analytics."
 msgstr ""
 
-#: piwik.module:128
+#: piwik.module:158
 msgid "Piwik configuration"
 msgstr ""
 
-#: piwik.module:135
-msgid "User tracking"
+#: piwik.module:166
+msgid "Users are tracked by default, but you are able to opt out."
+msgstr ""
+
+#: piwik.module:170
+msgid "Users are <em>not</em> tracked by default, but you are able to opt in."
+msgstr ""
+
+#: piwik.module:176
+msgid "Enable user tracking"
 msgstr ""
 
 #: piwik.module:23
@@ -254,5 +272,41 @@ msgstr ""
 
 #: piwik.module:0
 msgid "piwik"
+msgstr ""
+
+#: (duplicate) piwik.install:51 
+msgid "HTTP request status"
+msgstr ""
+
+#: (duplicate) piwik.install:52 
+msgid "Fails"
+msgstr ""
+
+#: (duplicate) piwik.install:54 
+msgid "Your system or network configuration does not allow Drupal to access web pages, resulting in reduced functionality. This could be due to your webserver configuration or PHP settings, and should be resolved in order to download information about available updates, fetch aggregator feeds, sign in via OpenID, or use other network-dependent services."
+msgstr ""
+
+#: (duplicate) piwik.install:63 
+msgid "Piwik module"
+msgstr ""
+
+#: (duplicate) piwik.install:64 
+msgid "Piwik module has not been configured yet. Please configure its settings from the <a href=\"@url\">Piwik settings page</a>."
+msgstr ""
+
+#: (duplicate) piwik.install:66 
+msgid "Not configured"
+msgstr ""
+
+#: piwik.info:0
+msgid "Piwik - Web analytics"
+msgstr ""
+
+#: piwik.info:0
+msgid "Adds Piwik javascript tracking code to all your site's pages."
+msgstr ""
+
+#: piwik.info:0 modules/piwik_reports/piwik_reports.info:0
+msgid "Statistics"
 msgstr ""
 

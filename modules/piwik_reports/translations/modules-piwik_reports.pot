@@ -1,0 +1,179 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (modules-piwik_reports)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  referers-search.tpl.php,v 1.1.2.4 2009/06/13 13:19:43 hass
+#  visitors-overview.tpl.php,v 1.1.2.4 2009/06/13 13:19:43 hass
+#  visitors-settings.tpl.php,v 1.1.2.5 2009/06/13 13:19:43 hass
+#  visitors-times.tpl.php,v 1.1.2.4 2009/06/13 13:19:43 hass
+#  piwik_reports.pages.inc,v 1.1.2.11 2009/06/15 22:15:45 hass
+#  piwik_reports.js,v 1.1.2.9 2009/06/13 13:19:43 hass
+#  piwik_reports.module,v 1.1.2.8 2009/06/13 13:19:43 hass
+#  piwik_reports.info,v 1.1.2.2 2008/09/14 15:52:20 hass
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2009-06-16 00:19+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: modules/piwik_reports/referers-search.tpl.php:4
+msgid "Search engines"
+msgstr ""
+
+#: modules/piwik_reports/referers-search.tpl.php:13
+msgid "Keywords"
+msgstr ""
+
+#: modules/piwik_reports/visitors-overview.tpl.php:4
+msgid "Visitors in time period by @period"
+msgstr ""
+
+#: modules/piwik_reports/visitors-settings.tpl.php:4
+msgid "Browser families"
+msgstr ""
+
+#: modules/piwik_reports/visitors-settings.tpl.php:17
+msgid "Configurations"
+msgstr ""
+
+#: modules/piwik_reports/visitors-settings.tpl.php:29
+msgid "Operating systems"
+msgstr ""
+
+#: modules/piwik_reports/visitors-settings.tpl.php:41
+msgid "Screen resolutions"
+msgstr ""
+
+#: modules/piwik_reports/visitors-times.tpl.php:4
+msgid "Visit per local time"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:19
+msgid "You do not have any reports."
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:28
+msgid "Today"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:29
+msgid "Yesterday"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:30
+msgid "Last week"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:31
+msgid "Last month"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:32
+msgid "Last year"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:38
+msgid "Filter time period"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:52
+msgid "Filter"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.pages.inc:99;172;189;205;221;361;412;644;695 modules/piwik_reports/piwik_reports.js:0
+msgid "Loading data..."
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:17
+msgid "Piwik reports"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:21
+msgid "Reports on your website visitors, your popular pages, the search engines keywords they used... and so much more."
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:25 modules/piwik_reports/piwik_reports.js:0;0
+msgid "Visitors"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:34
+msgid "Overview"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:43
+msgid "Settings"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:52
+msgid "Times"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:61
+msgid "Locations provider"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:70
+msgid "Actions"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:88
+msgid "Outlinks"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:97
+msgid "Downloads"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:106
+msgid "Referers"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:115
+msgid "Evolution"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:124
+msgid "Search engines & keywords"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:133
+msgid "Websites"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.module:0
+msgid "piwik_reports"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.info:0
+msgid "Piwik - Reports"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.info:0
+msgid "Adds Piwik reports to Drupal reports section."
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.js:0
+msgid "Label"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.js:0
+msgid "Hits"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.js:0
+msgid "Visits"
+msgstr ""
+
+#: modules/piwik_reports/piwik_reports.js:0
+msgid "No data available."
+msgstr ""
+
