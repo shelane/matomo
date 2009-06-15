@@ -63,7 +63,16 @@ function piwik_reports_overview() {
   $period = $_SESSION['piwik_reports_period'];
 
   $now = _piwik_reports_select_period(0);
-  $date = _piwik_reports_select_period($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // Set yesterday date value for "from" and "to" date.
+    $date = _piwik_reports_select_period($period);
+    $now = $date;
+  }
+  else {
+    // Otherwise it returns the start date value.
+    $date = _piwik_reports_select_period($period);
+  }
 
   // Granuarity of measuring points in graph.
   switch ($period) {
@@ -454,10 +463,9 @@ function piwik_reports_pages() {
   if (!empty($piwik_auth)) {
     $data1_params['token_auth'] = $piwik_auth;
   }
-  $data1_params['jsoncallback'] = '?';
 
   // Build the data URL with all params.
-  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params);
+  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params) . '&jsoncallback=?';
 
   $form = piwik_reports_dateselect_form();
   $form['page'] = array(
@@ -511,10 +519,9 @@ function piwik_reports_outlinks() {
   if (!empty($piwik_auth)) {
     $data1_params['token_auth'] = $piwik_auth;
   }
-  $data1_params['jsoncallback'] = '?';
 
   // Build the data URL with all params.
-  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params);
+  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params) . '&jsoncallback=?';
 
   $form = piwik_reports_dateselect_form();
   $form['page'] = array(
@@ -568,10 +575,9 @@ function piwik_reports_downloads() {
   if (!empty($piwik_auth)) {
     $data1_params['token_auth'] = $piwik_auth;
   }
-  $data1_params['jsoncallback'] = '?';
 
   // Build the data URL with all params.
-  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params);
+  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params) . '&jsoncallback=?';
 
   $form = piwik_reports_dateselect_form();
   $form['page'] = array(
@@ -602,7 +608,16 @@ function piwik_reports_evolution() {
   $period = $_SESSION['piwik_reports_period'];
 
   $now = _piwik_reports_select_period(0);
-  $date = _piwik_reports_select_period($period);
+  if ($period == 1) {
+    // Special handling for "yesterday" = 1.
+    // Set yesterday date value for "from" and "to" date.
+    $date = _piwik_reports_select_period($period);
+    $now = $date;
+  }
+  else {
+    // Otherwise it returns the start date value.
+    $date = _piwik_reports_select_period($period);
+  }
   $period_name = _piwik_reports_get_period_name($period);
 
   // Granuarity of measuring points in graph.
@@ -697,10 +712,9 @@ function piwik_reports_search() {
   if (!empty($piwik_auth)) {
     $data2_params['token_auth'] = $piwik_auth;
   }
-  $data2_params['jsoncallback'] = '?';
 
   // Build the data URL with all params.
-  $data2_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data2_params);
+  $data2_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data2_params) . '&jsoncallback=?';
 
   $form = piwik_reports_dateselect_form();
   $output = theme('referers_search', $piwik_url, $data1_url);
@@ -759,10 +773,9 @@ function piwik_reports_websites() {
   if (!empty($piwik_auth)) {
     $data1_params['token_auth'] = $piwik_auth;
   }
-  $data1_params['jsoncallback'] = '?';
 
   // Build the data URL with all params.
-  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params);
+  $data1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($data1_params) . '&jsoncallback=?';
 
   $form = piwik_reports_dateselect_form();
   $form['page'] = array(
