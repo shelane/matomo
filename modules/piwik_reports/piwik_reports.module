@@ -14,7 +14,7 @@ function piwik_reports_help($path, $arg) {
   switch ($path) {
     case (arg(0) == 'admin' && arg(1) == 'reports' && arg(2) == 'piwik_reports'):
       if ($user->uid && empty($user->piwik['piwik_token_auth'])) {
-        drupal_set_message(t('You need to configure your <em>Piwik authentication string</em> on the <a href="@user-edit">My account</a> page or the reports may not show up.', array('@user-edit' => url('user/' . $user->uid . '/edit'))), 'warning', FALSE);
+        drupal_set_message(t('You need to configure your <em>Piwik authentication string</em> on the <a href="@user-edit">My account</a> page.', array('@user-edit' => url('user/' . $user->uid . '/edit'))), 'warning', FALSE);
       }
   }
 }

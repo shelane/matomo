@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: German translation for Piwik reports module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-16 00:19+0200\n"
-"PO-Revision-Date: 2009-06-16 04:16+0100\n"
+"POT-Creation-Date: 2009-06-16 12:56+0200\n"
+"PO-Revision-Date: 2009-06-16 13:05+0100\n"
 "Last-Translator: Alexander Haß\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -27,10 +27,13 @@ msgstr "Suchmaschinen"
 msgid "Keywords"
 msgstr "Schlüsselwörter"
 
-#: modules/piwik_reports/visitors-overview.tpl.php:4
-#, fuzzy
-msgid "Visitors in time period by @period"
-msgstr "Besucher im Zeitraum nach @period"
+#: modules/piwik_reports/visitors-overview.tpl.php:7
+msgid "Visitors in time period by week"
+msgstr "Besucher im Zeitraum nach Woche"
+
+#: modules/piwik_reports/visitors-overview.tpl.php:11
+msgid "Visitors in time period by day"
+msgstr "Besucher im Zeitraum nach Tag"
 
 #: modules/piwik_reports/visitors-settings.tpl.php:4
 msgid "Browser families"
@@ -52,99 +55,112 @@ msgstr "Bildschirmauflösungen"
 msgid "Visit per local time"
 msgstr "Besuche nach lokaler Zeit"
 
-#: modules/piwik_reports/piwik_reports.pages.inc:19
+#: modules/piwik_reports/piwik_reports.pages.inc:18
 msgid "You do not have any reports."
 msgstr "Derzeit gibt es keine Berichte."
 
-#: modules/piwik_reports/piwik_reports.pages.inc:28
+#: modules/piwik_reports/piwik_reports.pages.inc:27
 msgid "Today"
 msgstr "Heute"
 
-#: modules/piwik_reports/piwik_reports.pages.inc:29
+#: modules/piwik_reports/piwik_reports.pages.inc:28
 msgid "Yesterday"
 msgstr "Gestern"
 
-#: modules/piwik_reports/piwik_reports.pages.inc:30
+#: modules/piwik_reports/piwik_reports.pages.inc:29
 msgid "Last week"
 msgstr "Letzte Woche"
 
-#: modules/piwik_reports/piwik_reports.pages.inc:31
+#: modules/piwik_reports/piwik_reports.pages.inc:30
 msgid "Last month"
 msgstr "Letzter Monat"
 
-#: modules/piwik_reports/piwik_reports.pages.inc:32
+#: modules/piwik_reports/piwik_reports.pages.inc:31
 msgid "Last year"
 msgstr "Letztes Jahr"
 
-#: modules/piwik_reports/piwik_reports.pages.inc:38
+#: modules/piwik_reports/piwik_reports.pages.inc:37
 msgid "Filter time period"
 msgstr "Zeitraum filtern"
 
-#: modules/piwik_reports/piwik_reports.pages.inc:52
+#: modules/piwik_reports/piwik_reports.pages.inc:51
 msgid "Filter"
 msgstr "Filter"
 
-#: modules/piwik_reports/piwik_reports.pages.inc:99;172;189;205;221;361;412;644;695
+#: modules/piwik_reports/piwik_reports.pages.inc:100;175;192;208;224;366;419;656;708
 #: modules/piwik_reports/piwik_reports.js:0
 msgid "Loading data..."
 msgstr "Daten werden geladen..."
 
 #: modules/piwik_reports/piwik_reports.module:17
+#, fuzzy
+msgid "You need to configure your <em>Piwik authentication string</em> on the <a href=\"@user-edit\">My account</a> page."
+msgstr "Der <em>Piwik-Authentifizierungsschlüssel</em> muss unter <a href=\"@user-edit\">Mein Konto</a> konfiguriert werden."
+
+#: modules/piwik_reports/piwik_reports.module:238
+msgid "Piwik authentication string"
+msgstr "Piwik-Authentifizierungsschlüssel"
+
+#: modules/piwik_reports/piwik_reports.module:242
+msgid "Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Users</strong> tab and copy and paste your personal <strong>token_auth</strong> value into this field. If anonymous users have view permissions in Piwik you can set this value to <strong>anonymous</strong>."
+msgstr "Klicken Sie im Piwik-Konto auf <strong>Einstellungen</strong>, dann auf den <strong>Benutzer</strong>-Reiter und kopieren Ihren persönlichen <strong>token_auth</strong> in dieses Feld. Sollten Gäste die Piwik-Berechtigung \"Anzeigen\" haben, kann dieser Wert auf <strong>anonymous</strong> eingestellt werden."
+
+#: modules/piwik_reports/piwik_reports.module:28
 msgid "Piwik reports"
 msgstr "Piwik-Berichte"
 
 # beliebtesten => wichtigsten?
-#: modules/piwik_reports/piwik_reports.module:21
+#: modules/piwik_reports/piwik_reports.module:32
 #, fuzzy
 msgid "Reports on your website visitors, your popular pages, the search engines keywords they used... and so much more."
 msgstr "Berichte über die Websitebesucher, die beliebtesten Seiten, die in Suchmaschinen verwendeten Schlüsselwörter... und vieles mehr."
 
-#: modules/piwik_reports/piwik_reports.module:25
+#: modules/piwik_reports/piwik_reports.module:36
 #: modules/piwik_reports/piwik_reports.js:0;0
 msgid "Visitors"
 msgstr "Besucher"
 
-#: modules/piwik_reports/piwik_reports.module:34
+#: modules/piwik_reports/piwik_reports.module:45
 msgid "Overview"
 msgstr "Übersicht"
 
-#: modules/piwik_reports/piwik_reports.module:43
+#: modules/piwik_reports/piwik_reports.module:54
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: modules/piwik_reports/piwik_reports.module:52
+#: modules/piwik_reports/piwik_reports.module:63
 msgid "Times"
 msgstr "Zeiten"
 
-#: modules/piwik_reports/piwik_reports.module:61
+#: modules/piwik_reports/piwik_reports.module:72
 msgid "Locations provider"
 msgstr "Herkunftsländer"
 
-#: modules/piwik_reports/piwik_reports.module:70
+#: modules/piwik_reports/piwik_reports.module:81
 msgid "Actions"
 msgstr "Aktionen"
 
-#: modules/piwik_reports/piwik_reports.module:88
+#: modules/piwik_reports/piwik_reports.module:99
 msgid "Outlinks"
 msgstr "Ausgehende Links"
 
-#: modules/piwik_reports/piwik_reports.module:97
+#: modules/piwik_reports/piwik_reports.module:108
 msgid "Downloads"
 msgstr "Downloads"
 
-#: modules/piwik_reports/piwik_reports.module:106
+#: modules/piwik_reports/piwik_reports.module:117
 msgid "Referers"
 msgstr "Referrer"
 
-#: modules/piwik_reports/piwik_reports.module:115
+#: modules/piwik_reports/piwik_reports.module:126
 msgid "Evolution"
 msgstr "Entwicklung"
 
-#: modules/piwik_reports/piwik_reports.module:124
+#: modules/piwik_reports/piwik_reports.module:135
 msgid "Search engines & keywords"
 msgstr "Suchmaschinen & Schlüsselwörter"
 
-#: modules/piwik_reports/piwik_reports.module:133
+#: modules/piwik_reports/piwik_reports.module:144
 msgid "Websites"
 msgstr "Websites"
 
