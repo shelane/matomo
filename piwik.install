@@ -20,19 +20,20 @@ function piwik_install() {
 }
 
 function piwik_uninstall() {
+  variable_del('piwik_cache');
+  variable_del('piwik_custom');
+  variable_del('piwik_codesnippet_before');
+  variable_del('piwik_codesnippet_after');
+  variable_del('piwik_js_scope');
+  variable_del('piwik_last_cache');
+  variable_del('piwik_pages');
+  variable_del('piwik_roles');
   variable_del('piwik_site_id');
-  variable_del('piwik_url_http');
-  variable_del('piwik_url_https');
-  variable_del('piwik_codesnippet');
   variable_del('piwik_track'); // interrims solution
   variable_del('piwik_trackfiles_extensions');
-  variable_del('piwik_cache');
-  variable_del('piwik_last_cache');
-  variable_del('piwik_js_scope');
-  variable_del('piwik_custom');
-  variable_del('piwik_roles');
+  variable_del('piwik_url_http');
+  variable_del('piwik_url_https');
   variable_del('piwik_visibility');
-  variable_del('piwik_pages');
 }
 
 /**
