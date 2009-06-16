@@ -1,7 +1,16 @@
 <?php
 // $Id$
 ?>
-<h2><?php print t('Visitors in time period by @period', array('@period' => $period)) ?></h2>
+<h2><?php
+  switch ($period) {
+    case 'week':
+      print t('Visitors in time period by week');
+      break;
+
+    default:
+      print t('Visitors in time period by day');
+  }
+?></h2>
 <!-- 
 <div id="VisitsSummarygetLastVisitsGraphChart">
   <iframe width="100%" height="200" src="<?php print $widget1_url ?>" scrolling="no" frameborder="0" marginheight="0" marginwidth="0"></iframe>
