@@ -10,7 +10,6 @@
  * Report menu links
  */
 function piwik_reports_menu_block_page() {
-
   $item = menu_get_item();
   if ($content = system_admin_menu_block($item)) {
     $output = theme('admin_block_content', $content);
@@ -56,10 +55,12 @@ function piwik_reports_dateselect_form() {
 }
 
 function piwik_reports_overview() {
+  global $user;
+
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   $now = _piwik_reports_select_period(0);
@@ -139,10 +140,12 @@ function piwik_reports_overview_submit($form, &$form_state) {
 }
 
 function piwik_reports_settings() {
+  global $user;
+
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   if ($period == 1) {
@@ -333,10 +336,12 @@ function piwik_reports_settings_submit($form, &$form_state) {
 }
 
 function piwik_reports_times() {
+  global $user;
+
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   if ($period == 1) {
@@ -382,10 +387,12 @@ function piwik_reports_times_submit($form, &$form_state) {
 }
 
 function piwik_reports_locations() {
+  global $user;
+
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   if ($period == 1) {
@@ -433,12 +440,13 @@ function piwik_reports_locations_submit($form, &$form_state) {
 }
 
 function piwik_reports_pages() {
+  global $user;
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   if ($period == 1) {
@@ -489,12 +497,13 @@ function piwik_reports_pages_submit($form, &$form_state) {
 }
 
 function piwik_reports_outlinks() {
+  global $user;
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   if ($period == 1) {
@@ -545,12 +554,13 @@ function piwik_reports_outlinks_submit($form, &$form_state) {
 }
 
 function piwik_reports_downloads() {
+  global $user;
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   if ($period == 1) {
@@ -601,10 +611,12 @@ function piwik_reports_downloads_submit($form, &$form_state) {
 }
 
 function piwik_reports_evolution() {
+  global $user;
+
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   $now = _piwik_reports_select_period(0);
@@ -665,12 +677,13 @@ function piwik_reports_evolution_submit($form, &$form_state) {
 }
 
 function piwik_reports_search() {
+  global $user;
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   if ($period == 1) {
@@ -743,12 +756,13 @@ function piwik_reports_search_submit($form, &$form_state) {
 }
 
 function piwik_reports_websites() {
+  global $user;
   drupal_add_js(drupal_get_path('module', 'piwik_reports') .'/piwik_reports.js');
 
   // Get basic configuration variables.
   $piwik_url = variable_get('piwik_url_http', '');
   $piwik_site_id = variable_get('piwik_site_id', '');
-  $piwik_auth = variable_get('piwik_auth', '');
+  $piwik_auth = $user->piwik['piwik_token_auth'];
   $period = $_SESSION['piwik_reports_period'];
 
   if ($period == 1) {

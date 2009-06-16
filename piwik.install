@@ -127,3 +127,15 @@ function piwik_update_6001() {
 
   return $ret;
 }
+
+/**
+ * Remove obsolte token auth.
+ */
+function piwik_update_6002() {
+  $ret = array();
+
+  variable_del('piwik_auth');
+  $ret[] = array('success' => TRUE, 'query' => 'The global token_auth setting has been deleted. Users need to configure their personal token_auth.');
+
+  return $ret;
+}

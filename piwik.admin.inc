@@ -43,20 +43,6 @@ function piwik_admin_settings_form(&$form_state) {
     '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik".'),
   );
 
-  $piwik_reports_dependencies = '<div class="admin-dependencies">';
-  $piwik_reports_dependencies .= t('Depends on: !dependencies', array('!dependencies' => (module_exists('piwik_reports') ? t('@module (<span class="admin-enabled">enabled</span>)', array('@module' => 'Piwik - Reports')) : t('@module (<span class="admin-disabled">disabled</span>)', array('@module' => 'Piwik - Reports')))));
-  $piwik_reports_dependencies .= '</div>';
-
-  $form['account']['piwik_auth'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Piwik authentication string'),
-    '#default_value' => variable_get('piwik_auth', ''),
-    '#size' => 40,
-    '#maxlength' => 40,
-    '#disabled' => module_exists('piwik_reports') ? FALSE : TRUE,
-    '#description' => t('Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Users</strong> tab and create a new user via <strong>Add a new user</strong>. Grant this user <strong>view</strong> permissions. Enter the users <strong>token_auth</strong> value into this field.') . $piwik_reports_dependencies,
-  );
-
   // Standard tracking configurations.
   $form['user_vis_settings'] = array(
     '#type' => 'fieldset',
