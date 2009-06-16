@@ -3,14 +3,15 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  piwik.admin.inc,v 1.1.2.18 2009/06/09 22:49:25 hass
-#  piwik_reports.module,v 1.1.2.8 2009/06/13 13:19:43 hass
+#  piwik.admin.inc,v 1.1.2.19 2009/06/16 10:43:26 hass
+#  piwik_reports.module,v 1.1.2.9 2009/06/16 10:43:26 hass
+#  piwik.module,v 1.1.2.22 2009/06/15 19:59:21 hass
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2009-06-16 00:19+0200\n"
+"POT-Creation-Date: 2009-06-16 12:56+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -19,7 +20,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: piwik.admin.inc:131 modules/piwik_reports/piwik_reports.module:79
+#: piwik.admin.inc:117 modules/piwik_reports/piwik_reports.module:90
 msgid "Pages"
+msgstr ""
+
+#: piwik.module:158 modules/piwik_reports/piwik_reports.module:229
+msgid "Piwik configuration"
 msgstr ""
 
