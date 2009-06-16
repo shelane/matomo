@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: German translation for Piwik reports module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-16 00:19+0200\n"
-"PO-Revision-Date: 2009-06-16 00:30+0100\n"
+"PO-Revision-Date: 2009-06-16 04:16+0100\n"
 "Last-Translator: Alexander Haß\n"
 "Language-Team: Alexander Hass\n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,7 @@ msgid "Keywords"
 msgstr "Schlüsselwörter"
 
 #: modules/piwik_reports/visitors-overview.tpl.php:4
+#, fuzzy
 msgid "Visitors in time period by @period"
 msgstr "Besucher im Zeitraum nach @period"
 
@@ -90,7 +91,7 @@ msgstr "Daten werden geladen..."
 
 #: modules/piwik_reports/piwik_reports.module:17
 msgid "Piwik reports"
-msgstr "Piwikberichte"
+msgstr "Piwik-Berichte"
 
 # beliebtesten => wichtigsten?
 #: modules/piwik_reports/piwik_reports.module:21
