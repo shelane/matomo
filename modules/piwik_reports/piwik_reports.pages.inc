@@ -223,7 +223,7 @@ function piwik_reports_settings() {
     $data1_url,
     $data2_url,
     $data3_url,
-    $data4_url,
+    $data4_url
   );
 
   $form = piwik_reports_dateselect_form();
