@@ -163,7 +163,6 @@ function piwik_reports_theme() {
       'arguments' => array(
         'piwik_url' => NULL,
         'data1_url' => NULL,
-        'widget1_url' => NULL,
         'period' => NULL,
       ),
     ),
@@ -175,10 +174,6 @@ function piwik_reports_theme() {
         'data2_url' => NULL,
         'data3_url' => NULL,
         'data4_url' => NULL,
-        'widget1_url' => NULL,
-        'widget2_url' => NULL,
-        'widget3_url' => NULL,
-        'widget4_url' => NULL,
       ),
     ),
     'visitors_times' => array(

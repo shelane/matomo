@@ -106,25 +106,8 @@ function piwik_reports_overview() {
   // Note: drupal_urlencode() doesn't work here!
   $data1_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data1_params));
 
-  $widget1_params = array();
-  $widget1_params['module'] = 'Widgetize';
-  $widget1_params['action'] = 'iframe';
-  $widget1_params['columns[]'] = 'nb_visits';
-  $widget1_params['moduleToWidgetize'] = 'VisitsSummary';
-  $widget1_params['actionToWidgetize'] = 'getEvolutionGraph';
-  $widget1_params['idSite'] = $piwik_site_id;
-  $widget1_params['period'] = $period;
-  $widget1_params['date'] = $date . ',' . $now;
-  $widget1_params['disableLink'] = 1;
-  if (!empty($piwik_auth)) {
-    $widget1_params['token_auth'] = $piwik_auth;
-  }
-
-  // Build the iframe widget URL with all params.
-  $widget1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget1_params);
-
   // Render HTML code.
-  $output = theme('visitors_overview', $piwik_url, $data1_url, $widget1_url, $period);
+  $output = theme('visitors_overview', $piwik_url, $data1_url, $period);
 
   $form = piwik_reports_dateselect_form();
   $form['content'] = array(
@@ -233,81 +216,6 @@ function piwik_reports_settings() {
   $data3_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data3_params));
   $data4_url = rawurlencode($piwik_url . '/index.php?' . drupal_query_string_encode($data4_params));
 
-  // Browser families
-  $widget1_params = array();
-  $widget1_params['module'] = 'Widgetize';
-  $widget1_params['action'] = 'iframe';
-  $widget1_params['moduleToWidgetize'] = 'UserSettings';
-  //$widget1_params['actionToWidgetize'] = 'getBrowser'; // Table view
-  $widget1_params['actionToWidgetize'] = 'getBrowserType'; // Pie chart
-  $widget1_params['idSite'] = $piwik_site_id;
-  $widget1_params['period'] = $period_name;
-  $widget1_params['date'] = $date;
-  $widget1_params['disableLink'] = 1;
-  $widget1_params['filter_limit'] = 8;
-  $widget1_params['filter_sort_column'] = 'nb_uniq_visitors';
-  $widget1_params['filter_sort_order'] = 'desc';
-  if (!empty($piwik_auth)) {
-    $widget1_params['token_auth'] = $piwik_auth;
-  }
-
-  // Client configurations
-  $widget2_params = array();
-  $widget2_params['module'] = 'Widgetize';
-  $widget2_params['action'] = 'iframe';
-  $widget2_params['moduleToWidgetize'] = 'UserSettings';
-  $widget2_params['actionToWidgetize'] = 'getConfiguration';
-  $widget2_params['idSite'] = $piwik_site_id;
-  $widget2_params['period'] = $period_name;
-  $widget2_params['date'] = $date;
-  $widget1_params['disableLink'] = 1;
-  $widget2_params['filter_limit'] = 8;
-  $widget2_params['filter_sort_column'] = 'nb_uniq_visitors';
-  $widget2_params['filter_sort_order'] = 'desc';
-  if (!empty($piwik_auth)) {
-    $widget2_params['token_auth'] = $piwik_auth;
-  }
-
-  // Operating systems
-  $widget3_params = array();
-  $widget3_params['module'] = 'Widgetize';
-  $widget3_params['action'] = 'iframe';
-  $widget3_params['moduleToWidgetize'] = 'UserSettings';
-  $widget3_params['actionToWidgetize'] = 'getOS';
-  $widget3_params['idSite'] = $piwik_site_id;
-  $widget3_params['period'] = $period_name;
-  $widget3_params['date'] = $date;
-  $widget1_params['disableLink'] = 1;
-  $widget3_params['filter_limit'] = 8;
-  $widget3_params['filter_sort_column'] = 'nb_uniq_visitors';
-  $widget3_params['filter_sort_order'] = 'desc';
-  if (!empty($piwik_auth)) {
-    $widget3_params['token_auth'] = $piwik_auth;
-  }
-
-  // Screen resolutions
-  $widget4_params = array();
-  $widget4_params['module'] = 'Widgetize';
-  $widget4_params['action'] = 'iframe';
-  $widget4_params['moduleToWidgetize'] = 'UserSettings';
-  $widget4_params['actionToWidgetize'] = 'getResolution';
-  $widget4_params['idSite'] = $piwik_site_id;
-  $widget4_params['period'] = $period_name;
-  $widget4_params['date'] = $date;
-  $widget1_params['disableLink'] = 1;
-  $widget4_params['filter_limit'] = 8;
-  $widget4_params['filter_sort_column'] = 'nb_uniq_visitors';
-  $widget4_params['filter_sort_order'] = 'desc';
-  if (!empty($piwik_auth)) {
-    $widget4_params['token_auth'] = $piwik_auth;
-  }
-
-  // Build the iframe widget URL with all params.
-  $widget1_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget1_params);
-  $widget2_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget2_params);
-  $widget3_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget3_params);
-  $widget4_url = $piwik_url . '/index.php?' . drupal_query_string_encode($widget4_params);
-
   // Render HTML code.
   $output = theme(
     'visitors_settings',
@@ -316,10 +224,6 @@ function piwik_reports_settings() {
     $data2_url,
     $data3_url,
     $data4_url,
-    $widget1_url,
-    $widget2_url,
-    $widget3_url,
-    $widget4_url
   );
 
   $form = piwik_reports_dateselect_form();
