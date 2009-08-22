@@ -143,7 +143,7 @@ function piwik_update_6002() {
 /**
  * Update list of default extensions
  */
-function piwik_update_6100() {
+function piwik_update_6003() {
   $ret = array();
   
   if (variable_get('piwik_trackfiles_extensions', '') == '7z|aac|avi|csv|doc|exe|flv|gif|gz|jpe?g|js|mp(3|4|e?g)|mov|pdf|phps|png|ppt|rar|sit|tar|torrent|txt|wma|wmv|xls|xml|zip') {
