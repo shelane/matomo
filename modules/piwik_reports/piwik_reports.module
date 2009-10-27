@@ -211,8 +211,8 @@ function piwik_reports_theme() {
  * Implementation of hook_form_alter().
  */
 function piwik_reports_form_alter(&$form, $form_state, $form_id) {
-  // Extend the form in "user/{userid}/edit".
-  if ('user_profile_form' == $form_id && user_access('access site reports')) {
+  // Extend the form in "user/{userid}/edit/account".
+  if ($form_id == 'user_profile_form' && $form['_category']['#value'] == 'account' && user_access('access site reports')) {
     global $user;
 
     // Make sure the fieldset is also visible if user do not have permission
