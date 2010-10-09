@@ -38,6 +38,13 @@ function piwik_uninstall() {
 }
 
 /**
+ * Remove cache directory if module is disabled (or uninstalled).
+ */
+function piwik_disable() {
+  piwik_clear_js_cache();
+}
+
+/**
  * Implementation of hook_requirements().
  */
 function piwik_requirements($phase) {
@@ -79,14 +86,6 @@ function piwik_requirements($phase) {
       break;
   }
   return $requirements;
-}
-
-/**
- * Remove cache directory if module is disabled (or uninstalled).
- */
-function piwik_disable() {
-  file_delete(file_directory_path() .'/piwik/piwik.js');
-  rmdir(file_directory_path() .'/piwik');
 }
 
 

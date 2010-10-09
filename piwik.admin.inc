@@ -139,7 +139,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#title' => t('File extensions to track'),
     '#default_value' => variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS),
     '#description' => t('A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions', array('!extensions' => PK_TRACKFILES_EXTENSIONS)),
-    '#maxlength' => 255,    
+    '#maxlength' => 255,
   );
 
   // Advanced feature configurations.
@@ -226,6 +226,11 @@ function piwik_admin_settings_form_validate($form, &$form_state) {
     if ($result->code != 200) {
       form_set_error('piwik_url_https', t('The validation of "@url" failed with error "@error" (HTTP code @code).', array('@url' => check_url($url), '@error' => $result->error, '@code' => $result->code)));
     }
+  }
+
+  // Delete obsolete local cache file.
+  if (empty($form_state['values']['piwik_cache']) && $form['advanced']['piwik_cache']['#default_value']) {
+    piwik_clear_js_cache();
   }
 
   // This is for the Newbie's who cannot read a text area description.
