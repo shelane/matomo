@@ -161,7 +161,7 @@ function piwik_admin_settings_form(&$form_state) {
   $form['advanced']['piwik_cache'] = array(
     '#type' => 'checkbox',
     '#title' => t('Locally cache tracking code file'),
-    '#description' => t("If checked, the tracking code file is retrieved from your Piwik site and cached locally. It is updated daily to ensure updates to tracking code are reflected in the local copy."),
+    '#description' => t('If checked, the tracking code file is retrieved from your Piwik site and cached locally. It is updated daily to ensure updates to tracking code are reflected in the local copy.'),
     '#default_value' => variable_get('piwik_cache', 0),
   );
 
