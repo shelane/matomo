@@ -255,14 +255,14 @@ function _piwik_cache($location, $sync_cached_file = FALSE) {
           watchdog('piwik', 'Locally cached tracking code file has been saved.', array(), WATCHDOG_INFO);
 
           // Return the local JS file path.
-          return file_create_url(file_unmanaged_save_data($result->data, $file_destination, FILE_EXISTS_REPLACE));
+          return file_create_url($file_destination);
         }
       }
     }
   }
   else {
     // Return the local JS file path.
-    return file_create_url(file_unmanaged_save_data($result->data, $file_destination, FILE_EXISTS_REPLACE));
+    return file_create_url($file_destination);
   }
 }
 
