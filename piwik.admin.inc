@@ -160,14 +160,10 @@ function piwik_admin_settings_form(&$form_state) {
 
   $form['advanced']['piwik_cache'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Cache tracking code file locally'),
-    '#description' => t("If checked, the tracking code file is retrieved from Piwik and cached locally. It is updated daily from your Piwik servers to ensure updates to tracking code are reflected in the local copy."),
+    '#title' => t('Locally cache tracking code file'),
+    '#description' => t("If checked, the tracking code file is retrieved from your Piwik site and cached locally. It is updated daily from your Piwik servers to ensure updates to tracking code are reflected in the local copy."),
     '#default_value' => variable_get('piwik_cache', 0),
   );
-  if (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PRIVATE) {
-    $form['advanced']['piwik_cache']['#disabled'] = TRUE;
-    $form['advanced']['piwik_cache']['#description'] .= ' '. t('<a href="@url">Public file transfers</a> must be enabled to allow local caching.', array('@url' => url('admin/settings/file-system', array('query' => drupal_get_destination()))));
-  }
 
   // Allow for tracking of the originating node when viewing translation sets.
   if (module_exists('translation')) {

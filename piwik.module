@@ -76,7 +76,7 @@ function piwik_page_alter(&$page) {
 
     // Should a local cached copy of the tracking code be used?
     $script = 'var pkBaseURL = (("https:" == document.location.protocol) ? "'. check_url($url_https) .'" : "'. check_url($url_http) .'");';
-    if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $url = _piwik_cache($url_http .'/piwik.js')) {
+    if (variable_get('piwik_cache', 0) && $url = _piwik_cache($url_http .'/piwik.js')) {
       $page['footer']['googleanalytics']['#attached']['js'][$url] = array('scope' => $scope);
     }
     else {
