@@ -234,8 +234,8 @@ function _piwik_cache($location, $sync_cached_file = FALSE) {
     if ($result->code == 200) {
       if (file_exists($file_destination)) {
         // Synchronize tracking code and and replace local file if outdated.
-        $data_hash_local = md5(file_get_contents($file_destination));
-        $data_hash_remote = md5($result->data);
+        $data_hash_local = drupal_hash_base64(file_get_contents($file_destination));
+        $data_hash_remote = drupal_hash_base64($result->data);
         // Check that the files directory is writable.
         if ($data_hash_local != $data_hash_remote && file_prepare_directory($path)) {
           // Save updated tracking code file to disk.
