@@ -1,7 +1,7 @@
 // $Id$
 
 Module: Piwik - Web analytics
-Author: Alexander Hass <www.hass.de>
+Author: Alexander Hass <http://www.hass.de>
 
 
 Description
