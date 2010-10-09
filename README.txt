@@ -1,7 +1,7 @@
 // $Id$
 
 Module: Piwik - Web analytics
-Author: Alexander Hass <http://www.hass.de>
+Author: Alexander Hass <http://www.hass.de/>
 
 
 Description
@@ -48,7 +48,7 @@ download mode.
 Known issues
 ============
 Drupal requirements (http://drupal.org/requirements) tell you to configure 
-PHP with "session.save_handler = user", but your Piwik installation will
+PHP with "session.save_handler = user", but your Piwik installation may
 not work with this configuration and gives you a server error 500.
 
 1. You are able to workaround with the PHP default in your php.ini:

@@ -13,7 +13,6 @@ function piwik_admin_settings_form(&$form_state) {
   $form['account'] = array(
     '#type' => 'fieldset',
     '#title' => t('General settings'),
-    '#collapsible' => FALSE,
   );
 
   $form['account']['piwik_site_id'] = array(
@@ -43,78 +42,91 @@ function piwik_admin_settings_form(&$form_state) {
     '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik".'),
   );
 
-  // Standard tracking configurations.
-  $form['user_vis_settings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('User specific tracking settings'),
-    '#collapsible' => TRUE,
+  // Visibility settings.
+  $form['tracking_title'] = array(
+    '#type' => 'item',
+    '#title' => t('Tracking scope'),
   );
-  $form['user_vis_settings']['piwik_custom'] = array(
-    '#type' => 'radios',
-    '#title' => t('Custom tracking settings'),
-    '#options' => array(
-      t('Users cannot control whether they are tracked or not.'),
-      t('Track users by default, but let individual users to opt out.'),
-      t('Do not track users by default, but let individual users to opt in.')
+  $form['tracking'] = array(
+    '#type' => 'vertical_tabs',
+    '#attached' => array(
+      'js' => array(drupal_get_path('module', 'piwik') . '/piwik.admin.js'),
     ),
-    '#description' => t('Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference.', array('%permission' => t('opt-in or out of tracking'))),
+  );
+
+  // Standard tracking configurations.
+  $form['tracking']['user_vis_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Users'),
+  );
+  $t_permission = array('%permission' => t('opt-in or out of tracking'));
+  $form['tracking']['user_vis_settings']['piwik_custom'] = array(
+    '#type' => 'radios',
+    '#title' => t('Allow users to customize tracking on their account page'),
+    '#options' => array(
+      t('No customization allowed'),
+      t('Tracking on by default, users with %permission permission can opt out', $t_permission),
+      t('Tracking off by default, users with %permission permission can opt in', $t_permission)
+    ),
     '#default_value' => variable_get('piwik_custom', 0),
   );
 
   // Render the role overview.
-  $form['role_vis_settings'] = array(
+  $form['tracking']['role_vis_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Role specific tracking settings'),
-    '#collapsible' => TRUE,
+    '#title' => t('Roles'),
   );
 
-  $roles = user_roles();
-  $role_options = array();
-  foreach ($roles as $rid => $name) {
-    $role_options[$rid] = $name;
-  }
-  $form['role_vis_settings']['piwik_roles'] = array(
+  $role_options = array_map('check_plain', user_roles());
+  $form['tracking']['role_vis_settings']['piwik_roles'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Add tracking for specific roles'),
     '#default_value' => variable_get('piwik_roles', array()),
     '#options' => $role_options,
-    '#description' => t('Add tracking only for the selected role(s). If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked.'),
+    '#description' => t('If none are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked.'),
   );
 
   // Page specific visibility configurations.
-  $form['page_vis_settings'] = array(
+  $php_access = user_access('use PHP for tracking visibility');
+  $visibility = variable_get('piwik_visibility', 0);
+  $pages = variable_get('piwik_pages', '');
+
+  $form['tracking']['page_vis_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Page specific tracking settings'),
+    '#title' => t('Pages'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
 
-  $access = user_access('use PHP for tracking visibility');
-  $visibility = variable_get('piwik_visibility', 0);
-  $pages = variable_get('piwik_pages', '');
-
-  if ($visibility == 2 && !$access) {
-    $form['page_vis_settings'] = array();
-    $form['page_vis_settings']['visibility'] = array('#type' => 'value', '#value' => 2);
-    $form['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $pages);
+  if ($visibility == 2 && !$php_access) {
+    $form['tracking']['page_vis_settings'] = array();
+    $form['tracking']['page_vis_settings']['visibility'] = array('#type' => 'value', '#value' => 2);
+    $form['tracking']['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $pages);
   }
   else {
-    $options = array(t('Add to every page except the listed pages.'), t('Add to the listed pages only.'));
-    $description = t("Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
+    $options = array(
+      t('Every page except the listed pages'),
+      t('The listed pages only')
+    );
+    $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
 
-    if ($access) {
-      $options[] = t('Add if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only).');
-      $description .= ' '. t('If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site.', array('%php' => '<?php ?>'));
+    if (module_exists('php') && $php_access) {
+      $options[] = t('Pages on which this PHP code returns <code>TRUE</code> (experts only)');
+      $title = t('Pages or PHP code');
+      $description .= ' ' . t('If the PHP option is chosen, enter PHP code between %php. Note that executing incorrect PHP code can break your Drupal site.', array('%php' => '<?php ?>'));
     }
-    $form['page_vis_settings']['piwik_visibility'] = array(
+    else {
+      $title = t('Pages');
+    }
+    $form['tracking']['page_vis_settings']['piwik_visibility'] = array(
       '#type' => 'radios',
       '#title' => t('Add tracking to specific pages'),
       '#options' => $options,
       '#default_value' => $visibility,
     );
-    $form['page_vis_settings']['piwik_pages'] = array(
+    $form['tracking']['page_vis_settings']['piwik_pages'] = array(
       '#type' => 'textarea',
-      '#title' => t('Pages'),
+      '#title' => '<span class="element-invisible">' . $title . '</span>',
       '#default_value' => $pages,
       '#description' => $description,
       '#wysiwyg' => FALSE,
@@ -122,23 +134,19 @@ function piwik_admin_settings_form(&$form_state) {
   }
 
   // Link specific configurations.
-  $form['linktracking'] = array(
+  $form['tracking']['linktracking'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Link tracking settings'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
+    '#title' => t('Links and downloads'),
   );
-  $form['linktracking']['piwik_track'] = array(
+  $form['tracking']['linktracking']['piwik_track'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Track download and outgoing links'),
+    '#title' => t('Track clicks on outgoing links and downloads (clicks on file links) for the following extensions'),
     '#default_value' => variable_get('piwik_track', 1),
-    '#description' => t('Enables tracking of clicks on download and outgoing links.')
   );
-  $form['linktracking']['piwik_trackfiles_extensions'] = array(
+  $form['tracking']['linktracking']['piwik_trackfiles_extensions'] = array(
     '#type' => 'textfield',
-    '#title' => t('File extensions to track'),
     '#default_value' => variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS),
-    '#description' => t('A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions', array('!extensions' => PK_TRACKFILES_EXTENSIONS)),
+    '#description' => t('A file extension list separated by the | character that will be tracked when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => PK_TRACKFILES_EXTENSIONS)),
     '#maxlength' => 255,
   );
 

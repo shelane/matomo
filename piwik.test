@@ -10,7 +10,7 @@ class PiwikBasicTest extends DrupalWebTestCase {
   public static function getInfo() {
     return array(
       'name' => t('Piwik basic tests'),
-      'desc' => t('Test basic Piwik module functionality.'),
+      'description' => t('Test basic Piwik module functionality.'),
       'group' => 'Piwik',
     );
   }
@@ -27,12 +27,12 @@ class PiwikBasicTest extends DrupalWebTestCase {
 
   function testPiwik() {
     // Check for setting page's presence.
-    $this->drupalGet('admin/settings/piwik');
+    $this->drupalGet('admin/config/system/piwik');
     $this->assertRaw(t('Piwik site ID'), "[testPiwik]: Settings page displayed.");
 
     // Check for account code validation.
     $edit['piwik_site_id'] = $this->randomName(2);
-    $this->drupalPost('admin/settings/piwik', $edit, 'Save configuration');
+    $this->drupalPost('admin/config/system/piwik', $edit, 'Save configuration');
     $this->assertRaw(t('A valid Piwik site ID is an integer only.'), "[testPiwik]: Account number validated.");
   }
 
@@ -70,7 +70,7 @@ class PiwikBasicTest extends DrupalWebTestCase {
     variable_set('piwik_visibility', 1);
     $this->drupalGet('admin');
     $this->assertRaw($ua_code, '[testPiwikTracking]: Tracking code is displayed on admin page.');
-    $this->drupalGet('admin/settings/piwik');
+    $this->drupalGet('admin/config/system/piwik');
     // Checking for tracking code URI here, as $ua_code is displayed in the form.
     $this->assertRaw('/piwik.php', '[testPiwikTracking]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
