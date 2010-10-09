@@ -1,6 +1,7 @@
 ; $Id$
-name = Piwik - Reports
+name = Piwik Reports
 description = Adds Piwik reports to Drupal reports section.
 core = 6.x
 package = Statistics
 dependencies[] = piwik
+dependencies[] = piwik_broken_module
