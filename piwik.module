@@ -272,7 +272,7 @@ function _piwik_cache($location, $sync_cached_file = FALSE) {
 function piwik_clear_js_cache() {
   $path = 'public://piwik';
   if (file_prepare_directory($path)) {
-    file_scan_directory($path, '/.*/', array('callback' => 'file_delete'));
+    file_scan_directory($path, '/.*/', array('callback' => 'file_unmanaged_delete'));
     rmdir($path);
 
     // Change query-strings on css/js files to enforce reload for all users.
