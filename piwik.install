@@ -45,7 +45,7 @@ function piwik_requirements($phase) {
   $t = get_t();
 
   switch ($phase) {
-    case 'install' :
+    case 'runtime' :
       // Module cannot validate piwik URL without external HTTP requests.
       if (variable_get('drupal_http_request_fails', TRUE) && !system_check_http_request()) {
         $requirements['http requests'] = array(
@@ -55,9 +55,7 @@ function piwik_requirements($phase) {
           'description' => $t('Your system or network configuration does not allow Drupal to access web pages, resulting in reduced functionality. This could be due to your webserver configuration or PHP settings, and should be resolved in order to download information about available updates, fetch aggregator feeds, sign in via OpenID, or use other network-dependent services.'),
         );
       }
-      break;
 
-    case 'runtime' :
       // Raise warning if Piwik user account has not been set yet.
       if (!preg_match('/^\d{1,}$/', variable_get('piwik_site_id', ''))) {
         $requirements['piwik'] = array(
