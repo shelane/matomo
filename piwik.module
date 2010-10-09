@@ -53,8 +53,8 @@ function piwik_init() {
 
     // Should a local cached copy of piwik.js be used?
     $script = 'var pkBaseURL = (("https:" == document.location.protocol) ? "'. check_url($url_https) .'" : "'. check_url($url_http) .'");';
-    if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $source = _piwik_cache($url_http .'/piwik.js')) {
-      drupal_add_js($source, 'module', $scope);
+    if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $url = _piwik_cache($url_http .'/piwik.js')) {
+      drupal_add_js($url, 'module', $scope);
     }
     else {
       $script .= 'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "/piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));';
@@ -114,7 +114,7 @@ function piwik_footer($main = 0) {
 
     if ((variable_get('piwik_track', 1)) && !(variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS) == PK_TRACKFILES_EXTENSIONS)) {
       $script .= 'piwikTracker.setDownloadExtensions('. drupal_to_js(variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS)) .');';
-    } 
+    }
 
     // Add custom variables.
     if (!empty($piwik_vars)) {
@@ -191,38 +191,63 @@ function piwik_user($type, $edit, &$account, $category = NULL) {
 function piwik_cron() {
   // Regenerate the piwik.js every day.
   if (time() - variable_get('piwik_last_cache', 0) >= 86400) {
-    file_delete(file_directory_path() .'/piwik/piwik.js');
-
-    // Clear aggregated JS files.
-    if (variable_get('preprocess_js', 0)) {
-      drupal_clear_js_cache();
+    // Local cache is enabled?
+    if (variable_get('piwik_cache', 0)) {
+      _piwik_cache(variable_get('piwik_url_http', '') . '/piwik.js', TRUE);
     }
-
     variable_set('piwik_last_cache', time());
   }
 }
 
 /**
- * Download and cache the piwik.js file locally.
+ * Download/Synchronize/Cache tracking code file locally.
  *
  * @param $location
  *   The full URL to the external javascript file.
+ * @param $sync_cached_file
+ *   Synchronize tracking code and update if remote file have changed.
  * @return mixed
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
-function _piwik_cache($location) {
-  $directory = file_directory_path() .'/piwik';
-  $file_destination = $directory .'/'. basename($location);
-  if (!file_exists($file_destination)) {
+function _piwik_cache($location, $sync_cached_file = FALSE) {
+  $path = file_create_path('piwik');
+  $file_destination = $path . '/' . basename($location);
+
+  if (!file_exists($file_destination) || $sync_cached_file) {
+    // Download the latest piwik.js code.
     $result = drupal_http_request($location);
+
     if ($result->code == 200) {
-      // Check that the files directory is writable
-      if (file_check_directory($directory, FILE_CREATE_DIRECTORY)) {
-        return file_save_data($result->data, $directory .'/'. basename($location), FILE_EXISTS_REPLACE);
+      if (file_exists($file_destination)) {
+        // Synchronize tracking code and and replace local file if outdated.
+        $data_hash_local = md5(file_get_contents($file_destination));
+        $data_hash_remote = md5($result->data);
+        // Check that the files directory is writable.
+        if ($data_hash_local != $data_hash_remote && file_check_directory($path, FILE_CREATE_DIRECTORY)) {
+          // Save updated piwik.js file to disk.
+          file_save_data($result->data, $file_destination, FILE_EXISTS_REPLACE);
+          watchdog('piwik', 'Locally cached tracking code file has been updated.', array(), WATCHDOG_INFO);
+
+          // Change query-strings on css/js files to enforce reload for all users.
+          _drupal_flush_css_js();
+        }
+      }
+      else {
+        // Check that the files directory is writable.
+        if (file_check_directory($directory, FILE_CREATE_DIRECTORY)) {
+          // There is no need to flush JS here as core refreshes JS caches
+          // automatically, if new files are added.
+          file_save_data($result->data, $file_destination, FILE_EXISTS_REPLACE);
+          watchdog('piwik', 'Locally cached tracking code file has been saved.', array(), WATCHDOG_INFO);
+
+          // Return the local JS file path.
+          return $file_destination;
+        }
       }
     }
   }
   else {
+    // Return the local JS file path.
     return $file_destination;
   }
 }
