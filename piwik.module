@@ -84,6 +84,12 @@ function piwik_page_alter(&$page) {
     }
 
     $piwik_vars = array();
+    $url_custom = '';
+
+    // Site search tracking support.
+    if (module_exists('search') && variable_get('piwik_site_search', FALSE) && arg(0) == 'search' && $keys = piwik_search_get_keys()) {
+      $url_custom = drupal_json_encode(rawurldecode(url('search', array('query' => array('query' => $keys)))));
+    }
 
     // If this node is a translation of another node, pass the original
     // node instead.
@@ -280,6 +286,23 @@ function piwik_clear_js_cache() {
 
     watchdog('piwik', 'Local cache has been purged.', array(), WATCHDOG_INFO);
   }
+}
+
+/**
+ * Helper function for grabbing search keys. Function is missing in D7.
+ *
+ * http://api.drupal.org/api/function/search_get_keys/6
+ */
+function piwik_search_get_keys() {
+  static $return;
+  if (!isset($return)) {
+    // Extract keys as remainder of path
+    // Note: support old GET format of searches for existing links.
+    $path = explode('/', $_GET['q'], 3);
+    $keys = empty($_REQUEST['keys']) ? '' : $_REQUEST['keys'];
+    $return = count($path) == 3 ? $path[2] : $keys;
+  }
+  return $return;
 }
 
 /**

@@ -55,6 +55,17 @@ Drupal.behaviors.trackingSettingsSummary = {
       }
       return Drupal.t('@items tracked', {'@items' : vals.join(', ')});
     });
+    
+    $('fieldset#edit-search', context).drupalSetSummary(function (context) {
+      var vals = [];
+      if ($('input#edit-piwik-site-search', context).is(':checked')) {
+        vals.push('Site search');
+      }
+      if (!vals.length) {
+        return Drupal.t('Not tracked');
+      }
+      return Drupal.t('@items tracked', {'@items' : vals.join(', ')});
+    });
   }
 };
 
