@@ -75,6 +75,12 @@ function piwik_footer($main = 0) {
   if (!empty($id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
 
     $piwik_vars = array();
+    $url_custom = '';
+
+    // Site search tracking support.
+    if (module_exists('search') && variable_get('piwik_site_search', FALSE) && arg(0) == 'search' && $keys = search_get_keys()) {
+      $url_custom = drupal_to_js(url('search', array('query' => 'query='. $keys)));
+    }
 
     // If this node is a translation of another node, pass the original
     // node instead.

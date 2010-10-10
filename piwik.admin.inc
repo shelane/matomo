@@ -171,6 +171,18 @@ function piwik_admin_settings_form(&$form_state) {
     );
   }
 
+  $site_search_dependencies = '<div class="admin-dependencies">';
+  $site_search_dependencies .= t('Depends on: !dependencies', array('!dependencies' => (module_exists('search') ? t('@module (<span class="admin-enabled">enabled</span>)', array('@module' => 'Search')) : t('@module (<span class="admin-disabled">disabled</span>)', array('@module' => 'Search')))));
+  $site_search_dependencies .= '</div>';
+
+  $form['advanced']['piwik_site_search'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track internal search') . ' (EXPERIMENTAL)',
+    '#description' => t('If checked, internal search keywords are tracked. You must manually install and configure the Site Search plugin for your sites. For the setting <em>Search URL</em> use a value of <strong>search</strong> and for <em>Search Parameter</em> use a value of <strong>query</strong>. For more information see <a href="@url">SiteSearch plugin for piwik</a>.', array('@url' => 'http://github.com/BeezyT/piwik-sitesearch/wiki')) . $site_search_dependencies,
+    '#default_value' => variable_get('piwik_site_search', FALSE),
+    '#disabled' => (module_exists('search') ? FALSE : TRUE),
+  );
+
   $form['advanced']['codesnippet'] = array(
     '#type' => 'fieldset',
     '#title' => t('Custom JavaScript code'),
