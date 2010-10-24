@@ -213,11 +213,6 @@ function piwik_cron() {
  *   The path to the local javascript file on success, boolean FALSE on failure.
  */
 function _piwik_cache($location, $sync_cached_file = FALSE) {
-  // A dummy query-string is added to filenames, to gain control over
-  // browser-caching. The string changes on every update or full cache
-  // flush, forcing browsers to load a new copy of the files, as the
-  // URL changed.
-  $query_string = '?'. substr(variable_get('css_js_query_string', '0'), 0, 1);
 
   $path = file_create_path('piwik');
   $file_destination = $path . '/' . basename($location);
@@ -250,14 +245,14 @@ function _piwik_cache($location, $sync_cached_file = FALSE) {
           watchdog('piwik', 'Locally cached tracking code file has been saved.', array(), WATCHDOG_INFO);
 
           // Return the local JS file path.
-          return base_path() . $file_destination . $query_string;
+          return $file_destination;
         }
       }
     }
   }
   else {
     // Return the local JS file path.
-    return base_path() . $file_destination . $query_string;
+    return $file_destination;
   }
 }
 
