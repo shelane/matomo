@@ -8,5 +8,3 @@ configure = admin/config/system/piwik
 files[] = piwik.module
 files[] = piwik.admin.inc
 files[] = piwik.install
-
-version = 7.x-1.x-dev
