@@ -5,6 +5,4 @@ core = 7.x
 package = Statistics
 configure = admin/config/system/piwik
 
-files[] = piwik.module
-files[] = piwik.admin.inc
-files[] = piwik.install
+files[] = piwik.test
