@@ -126,7 +126,8 @@ function piwik_admin_settings_form($form_state) {
     );
     $form['tracking']['page_vis_settings']['piwik_pages'] = array(
       '#type' => 'textarea',
-      '#title' => '<span class="element-invisible">' . $title . '</span>',
+      '#title' => $title,
+      '#title_display' => 'invisible',
       '#default_value' => $pages,
       '#description' => $description,
       '#wysiwyg' => FALSE,
@@ -144,6 +145,8 @@ function piwik_admin_settings_form($form_state) {
     '#default_value' => variable_get('piwik_track', 1),
   );
   $form['tracking']['linktracking']['piwik_trackfiles_extensions'] = array(
+    '#title' => t('List of download file extensions'),
+    '#title_display' => 'invisible',
     '#type' => 'textfield',
     '#default_value' => variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS),
     '#description' => t('A file extension list separated by the | character that will be tracked when clicked. Regular expressions are supported. For example: !extensions', array('!extensions' => PK_TRACKFILES_EXTENSIONS)),
