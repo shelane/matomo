@@ -12,6 +12,9 @@
 
 define('PK_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip');
 
+/**
+ * Implements hook_help().
+ */
 function piwik_help($path, $arg) {
   switch ($path) {
     case 'admin/config/system/piwik':
@@ -19,6 +22,9 @@ function piwik_help($path, $arg) {
   }
 }
 
+/**
+ * Implements hook_permission().
+ */
 function piwik_permission() {
   return array(
     'administer piwik' => array(
@@ -36,6 +42,9 @@ function piwik_permission() {
   );
 }
 
+/**
+ * Implements hook_menu().
+ */
 function piwik_menu() {
   $items['admin/config/system/piwik'] = array(
     'title' => 'Piwik',
@@ -374,24 +383,31 @@ function _piwik_visibility_pages() {
   if (!isset($page_match)) {
 
     $visibility = variable_get('piwik_visibility', 0);
-    $pages = variable_get('piwik_pages', '');
+    $setting_pages = variable_get('piwik_pages', '');
 
     // Match path if necessary.
-    if (!empty($pages)) {
+    if (!empty($setting_pages)) {
+      // Convert path to lowercase. This allows comparison of the same path
+      // with different case. Ex: /Page, /page, /PAGE.
+      $pages = drupal_strtolower($setting_pages);
       if ($visibility < 2) {
-        $path = drupal_get_path_alias($_GET['q']);
-        // Compare with the internal and path alias (if any).
+        // Convert the Drupal path to lowercase
+        $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+        // Compare the lowercase internal and lowercase path alias (if any).
         $page_match = drupal_match_path($path, $pages);
         if ($path != $_GET['q']) {
           $page_match = $page_match || drupal_match_path($_GET['q'], $pages);
         }
-        // When $visibility has a value of 0, the block is displayed on
+        // When $visibility has a value of 0, the tracking code is displayed on
         // all pages except those listed in $pages. When set to 1, it
         // is displayed only on those pages listed in $pages.
         $page_match = !($visibility xor $page_match);
       }
+      elseif (module_exists('php')) {
+        $page_match = php_eval($setting_pages);
+      }
       else {
-        $page_match = drupal_eval($pages);
+        $page_match = FALSE;
       }
     }
     else {
