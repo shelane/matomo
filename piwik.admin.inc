@@ -146,7 +146,7 @@ function piwik_admin_settings_form(&$form_state) {
   $form['page_title_hierarchy'] = array(
     '#type' => 'fieldset',
     '#title' => t('Page titles hierarchy'),
-    '#description' => t('This functionality enables a dynamically expandable tree view of your site page titles in your Piwik statistics. See in Piwik statistics under <em>Actions<em> > <em>Page titles</em>.'),
+    '#description' => t('This functionality enables a dynamically expandable tree view of your site page titles in your Piwik statistics. See in Piwik statistics under <em>Actions</em> > <em>Page titles</em>.'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
