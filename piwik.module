@@ -12,6 +12,9 @@
 
 define('PK_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip');
 
+/**
+ * Implementation of hook_help().
+ */
 function piwik_help($path, $arg) {
   switch ($path) {
     case 'admin/settings/piwik':
@@ -19,10 +22,16 @@ function piwik_help($path, $arg) {
   }
 }
 
+/**
+ * Implementation of hook_perm().
+ */
 function piwik_perm() {
   return array('administer piwik', 'opt-in or out of tracking', 'use PHP for tracking visibility');
 }
 
+/**
+ * Implementation of hook_menu().
+ */
 function piwik_menu() {
   $items['admin/settings/piwik'] = array(
     'title' => 'Piwik',
@@ -37,33 +46,6 @@ function piwik_menu() {
   return $items;
 }
 
-function piwik_init() {
-  global $user;
-
-  $id = variable_get('piwik_site_id', '');
-
-  // 1. Check if the piwik account number has a value.
-  // 2. Track page views based on visibility value.
-  // 3. Check if we should track the currently active user's role.
-  if (!empty($id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
-
-    $url_http = variable_get('piwik_url_http', '');
-    $url_https = variable_get('piwik_url_https', '');
-    $scope = variable_get('piwik_js_scope', 'footer');
-
-    // Should a local cached copy of piwik.js be used?
-    $script = 'var pkBaseURL = (("https:" == document.location.protocol) ? "'. check_url($url_https) .'" : "'. check_url($url_http) .'");';
-    if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $url = _piwik_cache($url_http .'/piwik.js')) {
-      drupal_add_js($url, 'module', $scope);
-    }
-    else {
-      $script .= 'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "/piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));';
-    }
-    drupal_add_js($script, 'inline', $scope);
-
-  }
-}
-
 /**
  * Implementation of hook_footer() to insert Javascript at the end of the page.
  */
@@ -73,6 +55,9 @@ function piwik_footer($main = 0) {
   $id = variable_get('piwik_site_id', '');
 
   if (!empty($id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
+
+    $url_http = variable_get('piwik_url_http', '');
+    $url_https = variable_get('piwik_url_https', '');
 
     $piwik_vars = array();
     $url_custom = '';
@@ -110,41 +95,70 @@ function piwik_footer($main = 0) {
     $codesnippet_before = variable_get('piwik_codesnippet_before', '');
     $codesnippet_after = variable_get('piwik_codesnippet_after', '');
 
-    // Build settings code. See http://piwik.org/docs/javascript-tracking/
-    $script = 'try {';
-    $script .= 'var piwikTracker = Piwik.getTracker(pkBaseURL + "/piwik.php", '. drupal_to_js(variable_get('piwik_site_id', '')) .');';
+    // Build tracker code. See http://piwik.org/docs/javascript-tracking/#toc-asynchronous-tracking
+    $script = 'var _paq = _paq || [];';
+    $script .= '(function(){';
+    $script .= 'var u=(("https:" == document.location.protocol) ? "' . check_url($url_https) . '" : "' . check_url($url_http) . '");';
+    $script .= '_paq.push(["setSiteId", ' . drupal_to_js(variable_get('piwik_site_id', '')) . ']);';
+    $script .= '_paq.push(["setTrackerUrl", u+"piwik.php"]);';
 
+    // Custom document titles.
     if (!empty($url_custom)) {
-      $script .= 'piwikTracker.setDocumentTitle('. $url_custom .');';
+      $script .= '_paq.push(["setDocumentTitle", ' . $url_custom . ']);';
     }
 
+    // Custom file download extensions.
     if ((variable_get('piwik_track', 1)) && !(variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS) == PK_TRACKFILES_EXTENSIONS)) {
-      $script .= 'piwikTracker.setDownloadExtensions('. drupal_to_js(variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS)) .');';
+      $script .= '_paq.push(["setDownloadExtensions", ' . drupal_to_js(variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS)) . ']);';
     }
 
     // Add custom variables.
     if (!empty($piwik_vars)) {
       $piwik_vars_fields = array();
       foreach ($piwik_vars as $name => $value) {
-        $piwik_vars_fields[] = drupal_to_js($name) .':'. drupal_to_js($value);
+        $piwik_vars_fields[] = drupal_to_js($name) . ':' . drupal_to_js($value);
       }
       if (count($piwik_vars_fields) > 0) {
-        $script .= 'piwikTracker.setCustomVars({ '. implode(', ', $piwik_vars_fields) .' });';
+        $script .= '_paq.push(["setCustomVars", {' . implode(', ', $piwik_vars_fields) . '}]);';
       }
     }
     if (!empty($codesnippet_before)) {
       $script .= $codesnippet_before;
     }
-    $script .= 'piwikTracker.trackPageView();';
+
+    $script .= '_paq.push(["trackPageView"]);';
 
     // Add link tracking.
     if (variable_get('piwik_track', 1)) {
-      $script .= 'piwikTracker.enableLinkTracking();';
+      $script .= '_paq.push(["enableLinkTracking"]);';
     }
     if (!empty($codesnippet_after)) {
       $script .= $codesnippet_after;
     }
-    $script .= '} catch(err) {}';
+
+    $script .= 'var d=document,';
+    $script .= 'g=d.createElement("script"),';
+    $script .= 's=d.getElementsByTagName("script")[0];';
+    $script .= 'g.type="text/javascript";';
+    $script .= 'g.defer=true;';
+    $script .= 'g.async=true;';
+
+    // Should a local cached copy of the tracking code be used?
+    if (variable_get('piwik_cache', 0) && (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC) && $url = _piwik_cache($url_http .'piwik.js')) {
+      // A dummy query-string is added to filenames, to gain control over
+      // browser-caching. The string changes on every update or full cache
+      // flush, forcing browsers to load a new copy of the files, as the
+      // URL changed.
+      $query_string = '?'. substr(variable_get('css_js_query_string', '0'), 0, 1);
+
+      $script .= 'g.src="' . $url . $query_string . '";';
+    }
+    else {
+      $script .= 'g.src=u+"piwik.js";';
+    }
+
+    $script .= 's.parentNode.insertBefore(g,s);';
+    $script .= '})();';
 
     drupal_add_js($script, 'inline', 'footer');
   }
@@ -245,14 +259,14 @@ function _piwik_cache($location, $sync_cached_file = FALSE) {
           watchdog('piwik', 'Locally cached tracking code file has been saved.', array(), WATCHDOG_INFO);
 
           // Return the local JS file path.
-          return $file_destination;
+          return base_path() . $file_destination;
         }
       }
     }
   }
   else {
     // Return the local JS file path.
-    return $file_destination;
+    return base_path() . $file_destination;
   }
 }
 
