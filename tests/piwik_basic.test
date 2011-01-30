@@ -71,7 +71,7 @@ class PiwikBasicTest extends DrupalWebTestCase {
 
     // Test whether tracking code uses latest JS.
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testPiwikTracking]: Latest tracking code used.');
+    $this->assertRaw('_paq.push(["setTrackerUrl", u+"piwik.php"]);', '[testPiwikTracking]: Latest async tracking code used.');
 
     // Test whether tracking code is not included on pages to omit.
     $this->drupalGet('admin');
