@@ -15,9 +15,10 @@ function piwik_install() {
   $pages = array(
     'admin',
     'admin/*',
-    'user/*/*',
+    'batch',
     'node/add*',
     'node/*/*',
+    'user/*/*',
   );
   variable_set('piwik_pages', implode("\n", $pages));
 }
@@ -230,6 +231,42 @@ function piwik_update_7202() {
   if (!empty($code_after)) {
     $ret[] = array('success' => TRUE, 'query' => 'Skipped custom "after" code snippet.');
     drupal_set_message(db_prefix_tables("Automatic upgrade of Google Analytics custom 'after' code snippet has been skipped. Backup of previous code snippet has been saved in database table '{variable}' as 'piwik_codesnippet_after_backup_7202'. You need to manually upgrade the custom 'after' code snippet."), 'error');
+  }
+
+  return $ret;
+}
+
+/**
+ * Path visibility filter setting should hide "batch" path.
+ */
+function piwik_update_7203() {
+  $ret = array();
+
+  // Current pages setting.
+  $pages = array(
+    'admin',
+    'admin/*',
+    'user/*/*',
+    'node/add*',
+    'node/*/*',
+  );
+
+  $diff = array_diff($pages, preg_split('/(\r\n?|\n)/', variable_get('piwik_pages', implode("\n", $pages))));
+  if (empty($diff)) {
+    // No diff to previous settings found. Update with new settings.
+    $pages = array(
+      'admin',
+      'admin/*',
+      'batch',
+      'node/add*',
+      'node/*/*',
+      'user/*/*',
+    );
+    variable_set('piwik_pages', implode("\n", $pages));
+    $ret[] = array('success' => TRUE, 'query' => 'Added "batch" to path visibility filter setting.');
+  }
+  else {
+    $ret[] = array('success' => TRUE, 'query' => 'Custom path visibility filter setting found. Update skipped!');
   }
 
   return $ret;
