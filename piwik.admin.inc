@@ -68,7 +68,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#collapsible' => TRUE,
   );
 
-  $form['tracking']['role_vis_settings']['piwik_visibility_roles'] = array(
+  $form['role_vis_settings']['piwik_visibility_roles'] = array(
     '#type' => 'radios',
     '#title' => t('Add tracking for specific roles'),
     '#options' => array(
