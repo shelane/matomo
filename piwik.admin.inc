@@ -128,6 +128,7 @@ function piwik_admin_settings_form(&$form_state) {
       '#default_value' => $pages,
       '#description' => $description,
       '#wysiwyg' => FALSE,
+      '#rows' => 10,
     );
   }
 
