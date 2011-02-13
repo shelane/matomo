@@ -100,7 +100,7 @@ function piwik_admin_settings_form(&$form_state) {
   );
 
   $access = user_access('use PHP for tracking visibility');
-  $visibility = variable_get('piwik_visibility', 0);
+  $visibility = variable_get('piwik_visibility_pages', 0);
   $pages = variable_get('piwik_pages', '');
 
   if ($visibility == 2 && !$access) {
@@ -116,7 +116,7 @@ function piwik_admin_settings_form(&$form_state) {
       $options[] = t('Add if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only).');
       $description .= ' '. t('If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site.', array('%php' => '<?php ?>'));
     }
-    $form['page_vis_settings']['piwik_visibility'] = array(
+    $form['page_vis_settings']['piwik_visibility_pages'] = array(
       '#type' => 'radios',
       '#title' => t('Add tracking to specific pages'),
       '#options' => $options,
