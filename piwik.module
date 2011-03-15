@@ -58,7 +58,6 @@ function piwik_footer($main = 0) {
     $url_http = variable_get('piwik_url_http', '');
     $url_https = variable_get('piwik_url_https', '');
 
-    $piwik_vars = array();
     $set_custom_url = '';
     $set_document_title = '';
 
@@ -141,16 +140,6 @@ function piwik_footer($main = 0) {
       $script .= '_paq.push(["setDoNotTrack", 1]);';
     }
 
-    // Add custom variables.
-    if (!empty($piwik_vars)) {
-      $piwik_vars_fields = array();
-      foreach ($piwik_vars as $name => $value) {
-        $piwik_vars_fields[] = drupal_to_js($name) . ':' . drupal_to_js($value);
-      }
-      if (count($piwik_vars_fields) > 0) {
-        $script .= '_paq.push(["setCustomVars", {' . implode(', ', $piwik_vars_fields) . '}]);';
-      }
-    }
     if (!empty($codesnippet_before)) {
       $script .= $codesnippet_before;
     }
