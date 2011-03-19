@@ -83,7 +83,7 @@ function piwik_footer($main = 0) {
 
     // Site search tracking support.
     if (module_exists('search') && variable_get('piwik_site_search', FALSE) && arg(0) == 'search' && $keys = search_get_keys()) {
-      $set_custom_url = drupal_to_js(url('search', array('query' => 'query='. $keys)));
+      $set_custom_url = drupal_to_js(url('search', array('query' => 'query='. $keys, 'absolute' => TRUE)));
     }
 
     // If this node is a translation of another node, pass the original
@@ -95,7 +95,7 @@ function piwik_footer($main = 0) {
       if ($node && translation_supported_type($node->type) && isset($node->tnid) && ($node->tnid != $node->nid)) {
         $source_node = node_load($node->tnid);
         $languages = language_list();
-        $set_custom_url = drupal_to_js(url('node/'. $source_node->nid, array('language' => $languages[$source_node->language])));
+        $set_custom_url = drupal_to_js(url('node/'. $source_node->nid, array('language' => $languages[$source_node->language], 'absolute' => TRUE)));
       }
     }
 
