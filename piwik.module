@@ -84,7 +84,7 @@ function piwik_footer($main = 0) {
 
     // Site search tracking support.
     if (module_exists('search') && variable_get('piwik_site_search', FALSE) && arg(0) == 'search' && $keys = search_get_keys()) {
-      $set_custom_url = drupal_to_js(url('search', array('query' => 'query='. $keys, 'absolute' => TRUE)));
+      $set_custom_url = drupal_to_js(url('search', array('query' => 'query='. drupal_urlencode($keys), 'absolute' => TRUE)));
 
       // hook_preprocess_search_results() is not executed if search result is
       // empty. Make sure the counter is set to 0 if there are no results.
