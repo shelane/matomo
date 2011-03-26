@@ -42,6 +42,34 @@ function piwik_admin_settings_form(&$form_state) {
     '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik/".'),
   );
 
+  $form['domain_tracking'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Domains'),
+  	'#collapsible' => TRUE,
+  );
+
+  global $cookie_domain;
+  $multiple_sub_domains = array();
+  foreach (array('www', 'app', 'shop') as $subdomain) {
+    if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
+      $multiple_sub_domains[] = $subdomain . $cookie_domain;
+    }
+    // IP addresses or localhost.
+    else {
+      $multiple_sub_domains[] = $subdomain . '.example.com';
+    }
+  }
+
+  $form['domain_tracking']['piwik_domain_mode'] = array(
+    '#type' => 'radios',
+    '#title' => t('What are you tracking?'),
+    '#options' => array(
+      0 => t('A single domain (default)') . '<div class="description">' . t('Domain: @domain', array('@domain' => $_SERVER['HTTP_HOST'])) . '</div>',
+      1 => t('One domain with multiple subdomains') . '<div class="description">' . t('Examples: @domains', array('@domains' => implode(', ', $multiple_sub_domains))) . '</div>',
+    ),
+    '#default_value' => variable_get('piwik_domain_mode', 0),
+  );
+
   // Standard tracking configurations.
   $form['user_vis_settings'] = array(
     '#type' => 'fieldset',
