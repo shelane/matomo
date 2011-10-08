@@ -168,9 +168,9 @@ function piwik_admin_settings_form(&$form_state) {
   );
   $form['linktracking']['piwik_track'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Track download and outgoing links'),
+    '#title' => t('Track download and outbound links'),
     '#default_value' => variable_get('piwik_track', 1),
-    '#description' => t('Enables tracking of clicks on download and outgoing links.')
+    '#description' => t('Enables tracking of clicks on download and outbound links.')
   );
   $form['linktracking']['piwik_trackfiles_extensions'] = array(
     '#type' => 'textfield',
