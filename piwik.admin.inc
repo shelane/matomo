@@ -328,6 +328,7 @@ function piwik_admin_settings_form_validate($form, &$form_state) {
   }
 
   // Trim some text area values.
+  $form_state['values']['piwik_site_id'] = trim($form_state['values']['piwik_site_id']);
   $form_state['values']['piwik_pages'] = trim($form_state['values']['piwik_pages']);
   $form_state['values']['piwik_codesnippet_before'] = trim($form_state['values']['piwik_codesnippet_before']);
   $form_state['values']['piwik_codesnippet_after'] = trim($form_state['values']['piwik_codesnippet_after']);
