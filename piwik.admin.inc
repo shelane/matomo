@@ -80,7 +80,7 @@ function piwik_admin_settings_form(&$form_state) {
 
   $access = user_access('use PHP for tracking visibility');
   $visibility = variable_get('piwik_visibility_pages', 0);
-  $pages = variable_get('piwik_pages', '');
+  $pages = variable_get('piwik_pages', PIWIK_PAGES);
 
   if ($visibility == 2 && !$access) {
     $form['page_vis_settings'] = array();
@@ -175,8 +175,8 @@ function piwik_admin_settings_form(&$form_state) {
   $form['linktracking']['piwik_trackfiles_extensions'] = array(
     '#type' => 'textfield',
     '#title' => t('File extensions to track'),
-    '#default_value' => variable_get('piwik_trackfiles_extensions', PK_TRACKFILES_EXTENSIONS),
-    '#description' => t('A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions', array('!extensions' => PK_TRACKFILES_EXTENSIONS)),
+    '#default_value' => variable_get('piwik_trackfiles_extensions', PIWIK_TRACKFILES_EXTENSIONS),
+    '#description' => t('A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions', array('!extensions' => PIWIK_TRACKFILES_EXTENSIONS)),
     '#maxlength' => 255,
   );
 
