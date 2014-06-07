@@ -106,6 +106,9 @@ function piwik_footer($main = 0) {
         array_shift($titles);
       }
 
+      // Remove all empty titles.
+      $titles = array_filter($titles);
+
       if (!empty($titles)) {
         // Encode title, at least to keep "/" intact.
         $titles = array_map('urlencode', $titles);
