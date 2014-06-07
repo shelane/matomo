@@ -60,7 +60,7 @@ function piwik_footer($main = 0) {
 
   $id = variable_get('piwik_site_id', '');
 
-  if (!empty($id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
+  if (preg_match('/^\d{1,}$/', $id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
 
     $url_http = variable_get('piwik_url_http', '');
     $url_https = variable_get('piwik_url_https', '');
