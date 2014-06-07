@@ -166,6 +166,11 @@ function piwik_admin_settings_form(&$form_state) {
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
+  $form['linktracking']['piwik_trackmailto'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Track clicks on mailto links'),
+    '#default_value' => variable_get('piwik_trackmailto', 1),
+  );
   $form['linktracking']['piwik_track'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track download and outbound links'),

@@ -53,6 +53,28 @@ function piwik_menu() {
 }
 
 /**
+ * Implementation of hook_init().
+ */
+function piwik_init() {
+  global $user;
+
+  $id = variable_get('piwik_site_id', '');
+
+  // 1. Check if the piwik account number has a value.
+  // 2. Track page views based on visibility value.
+  // 3. Check if we should track the currently active user's role.
+  if (preg_match('/^\d{1,}$/', $id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
+
+    // Add link tracking.
+    $link_settings = array();
+    $link_settings['trackMailto'] = variable_get('piwik_trackmailto', 1);
+
+    drupal_add_js(array('piwik' => $link_settings), 'setting', 'header');
+    drupal_add_js(drupal_get_path('module', 'piwik') .'/piwik.js', 'module', 'header');
+  }
+}
+
+/**
  * Implementation of hook_footer() to insert Javascript at the end of the page.
  */
 function piwik_footer($main = 0) {
@@ -60,6 +82,9 @@ function piwik_footer($main = 0) {
 
   $id = variable_get('piwik_site_id', '');
 
+  // 1. Check if the piwik account number has a value.
+  // 2. Track page views based on visibility value.
+  // 3. Check if we should track the currently active user's role.
   if (preg_match('/^\d{1,}$/', $id) && _piwik_visibility_pages() && _piwik_visibility_user($user)) {
 
     $url_http = variable_get('piwik_url_http', '');
@@ -183,6 +208,17 @@ function piwik_footer($main = 0) {
 
     // Add link tracking.
     if (variable_get('piwik_track', 1)) {
+      // Disable tracking of links with ".no-tracking" and ".colorbox" classes.
+      $ignore_classes = array(
+        'no-tracking',
+        'colorbox',
+      );
+      // Disable the download & outlink tracking for specific CSS classes.
+      // Custom code snippets with 'setIgnoreClasses' will override the value.
+      // http://developer.piwik.org/api-reference/tracking-javascript#disable-the-download-amp-outlink-tracking-for-specific-css-classes
+      $script .= '_paq.push(["setIgnoreClasses", ' . drupal_to_js($ignore_classes) . ']);';
+
+      // Enable download & outlink link tracking.
       $script .= '_paq.push(["enableLinkTracking"]);';
     }
     if (!empty($codesnippet_after)) {
