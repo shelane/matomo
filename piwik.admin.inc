@@ -158,7 +158,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#description' => t('Allow individual users to customize the visibility of tracking in their account settings. Only users with %permission permission are allowed to set their own preference.', array('%permission' => t('opt-in or out of tracking'))),
     '#default_value' => variable_get('piwik_custom', 0),
   );
-  $form['tracking']['user_vis_settings']['piwik_trackuserid'] = array(
+  $form['user_vis_settings']['piwik_trackuserid'] = array(
     '#type' => 'checkbox',
     '#title' => t('Track User ID'),
     '#default_value' => variable_get('piwik_trackuserid', 0),
