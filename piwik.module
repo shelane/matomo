@@ -152,6 +152,14 @@ function piwik_footer($main = 0) {
     $script .= '_paq.push(["setSiteId", ' . drupal_to_js(variable_get('piwik_site_id', '')) . ']);';
     $script .= '_paq.push(["setTrackerUrl", u+"piwik.php"]);';
 
+    // Track logged in users across all devices.
+    if (variable_get('piwik_trackuserid', 0) && user_is_logged_in()) {
+      // The USER_ID value should be a unique, persistent, and non-personally
+      // identifiable string identifier that represents a user or signed-in
+      // account across devices.
+      $script .= '_paq.push(["setUserId", ' . drupal_to_js(drupal_base64_encode(_piwik_get_hash_salt() . $user->uid)) . ']);';
+    }
+
     // Set custom data.
     if (!empty($set_custom_data)) {
       foreach ($set_custom_data as $custom_data) {
@@ -495,6 +503,18 @@ function _piwik_visibility_pages() {
 
   }
   return $page_match;
+}
+
+/**
+ * Backport of https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/drupal_get_hash_salt/7
+ *
+ * Gets a salt useful for hardening against SQL injection.
+ */
+function _piwik_get_hash_salt() {
+  global $drupal_hash_salt, $databases;
+  // If the $drupal_hash_salt variable is empty, a hash of the serialized
+  // database credentials is used as a fallback salt.
+  return empty($drupal_hash_salt) ? hash('sha256', serialize($databases)) : $drupal_hash_salt;
 }
 
 /**
