@@ -318,13 +318,13 @@ class PiwikPhpFilterTest extends DrupalWebTestCase {
 
     // Test administration form.
     variable_set('piwik_pages', '<?php return TRUE; ?>');
-    $this->drupalGet('admin/config/system/piwik');
+    $this->drupalGet('admin/settings/piwik');
     $this->assertRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testPiwikPhpFilter]: Permission to administer PHP for tracking visibility.');
     $this->assertRaw(check_plain('<?php return TRUE; ?>'), '[testPiwikPhpFilter]: PHP code snippted is displayed.');
 
     // Login the delegated user and check if fields are visible.
     $this->drupalLogin($this->delegated_admin_user);
-    $this->drupalGet('admin/config/system/piwik');
+    $this->drupalGet('admin/settings/piwik');
     $this->assertNoRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testPiwikPhpFilter]: No permission to administer PHP for tracking visibility.');
     $this->assertNoRaw(check_plain('<?php return TRUE; ?>'), '[testPiwikPhpFilter]: No permission to view PHP code snippted.');
 
