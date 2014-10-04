@@ -193,7 +193,7 @@ function piwik_admin_settings_form(&$form_state) {
     '#title' => t('File extensions to track'),
     '#default_value' => variable_get('piwik_trackfiles_extensions', PIWIK_TRACKFILES_EXTENSIONS),
     '#description' => t('A pipe separated list of file extensions that should be tracked when clicked with regular expression support. Example: !extensions', array('!extensions' => PIWIK_TRACKFILES_EXTENSIONS)),
-    '#maxlength' => 255,
+    '#maxlength' => 500,
   );
 
   // Privacy specific configurations.
