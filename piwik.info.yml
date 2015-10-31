@@ -1,7 +1,10 @@
-name = "Piwik Web Analytics"
-description = Adds Piwik javascript tracking code to all your site's pages.
-core = 7.x
-package = Statistics
-configure = admin/config/system/piwik
-files[] = piwik.test
-test_dependencies[] = token
+name: 'Piwik Web Analytics'
+type: module
+description: 'Adds Piwik javascript tracking code to all your site's pages.'
+package: Statistics
+version: VERSION
+core: 8.x
+configure: piwik.admin_settings_form
+test_dependencies:
+  - php:php
+  - token:token
