@@ -1,6 +1,6 @@
 
 Module: Piwik - Web analytics
-Author: Alexander Hass <http://www.hass.de/>
+Author: Alexander Hass <http://drupal.org/user/85918>
 
 
 Description
@@ -11,26 +11,42 @@ Requirements
 ============
 
 * Piwik installation
-* Piwik website account
+* Piwik website ID
 
 
 Installation
 ============
-* Copy the 'piwik' module directory in to your Drupal
-sites/all/modules directory as usual.
+* Copy the 'piwik' module directory in to your Drupal 'modules'
+directory as usual.
 
 
 Usage
 =====
 In the settings page enter your Piwik website ID.
 
-You will also need to define what user roles should be tracked.
-Simply tick the roles you would like to monitor.
-
 All pages will now have the required JavaScript added to the
 HTML footer can confirm this by viewing the page source from
 your browser.
 
+Page specific tracking
+====================================================
+The default is set to "Add to every page except the listed pages". By
+default the following pages are listed for exclusion:
+
+/admin
+/admin/*
+/batch
+/node/add*
+/node/*/*
+/user/*/*
+
+These defaults are changeable by the website administrator or any other
+user with 'Administer Piwik' permission.
+
+Like the blocks visibility settings in Drupal core, there is a choice for
+"Add if the following PHP code returns TRUE." Sample PHP snippets that can be
+used in this textarea can be found on the handbook page "Overview-approach to
+block visibility" at http://drupal.org/node/64135.
 
 Custom variables
 =================
@@ -54,15 +70,13 @@ http://piwik.org/docs/javascript-tracking/#toc-custom-variables.
 
 Advanced Settings
 =================
-You can include additional JavaScript snippets in the advanced
-textarea. These can be found on various blog posts, or on the
+You can include additional JavaScript snippets in the custom javascript
+code textarea. These can be found on various blog posts, or on the
 official Piwik pages. Support is not provided for any customisations
 you include.
 
-To speed up page loading you may also cache the piwik.js
-file locally. You need to make sure the site file system is in public
-download mode.
-
+To speed up page loading you may also cache the Piwik "piwik.js"
+file locally.
 
 Known issues
 ============
