@@ -54,7 +54,7 @@ function piwik_admin_settings_form($form_state) {
   $form['tracking'] = array(
     '#type' => 'vertical_tabs',
     '#attached' => array(
-      'js' => array(drupal_get_path('module', 'piwik') . '/piwik.admin.js'),
+      'js' => array(drupal_get_path('module', 'piwik') . '/js/piwik.admin.js'),
     ),
   );
 

@@ -113,7 +113,7 @@ function piwik_page_alter(&$page) {
     $link_settings['trackMailto'] = variable_get('piwik_trackmailto', 1);
 
     drupal_add_js(array('piwik' => $link_settings), 'setting');
-    drupal_add_js(drupal_get_path('module', 'piwik') . '/piwik.js');
+    drupal_add_js(drupal_get_path('module', 'piwik') . '/js/piwik.js');
 
     // Piwik can show a tree view of page titles that represents the site structure
     // if setDocumentTitle() provides the page titles as a "/" delimited list.
