@@ -569,7 +569,7 @@ function _piwik_visibility_user($account) {
 }
 
 /**
- * Based on visibility setting this function returns TRUE if GA code should
+ * Based on visibility setting this function returns TRUE if Piwik code should
  * be added for the current role and otherwise FALSE.
  */
 function _google_analytics_visibility_roles($account) {
