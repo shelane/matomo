@@ -469,7 +469,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         $form_state->setErrorByName("piwik_custom_var][slots][" . $custom_var['slot'] . "][name", t('The custom variable @slot-number requires a <em>Name</em> if a <em>Value</em> has been provided.', ['@slot-number' => $custom_var['slot']]));
       }
       elseif (!empty($custom_var['name']) && empty($custom_var['value'])) {
-        $form_state->setErrorByName("piwik_custom_var][slots][" . $custom_var['slot'] . "][name", t('The custom variable @slot-number requires a <em>Value</em> if a <em>Name</em> has been provided.', ['@slot-number' => $custom_var['slot']]));
+        $form_state->setErrorByName("piwik_custom_var][slots][" . $custom_var['slot'] . "][value", t('The custom variable @slot-number requires a <em>Value</em> if a <em>Name</em> has been provided.', ['@slot-number' => $custom_var['slot']]));
       }
     }
     $form_state->setValue('piwik_custom_var', $form_state->getValue(['piwik_custom_var', 'slots']));
