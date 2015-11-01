@@ -44,6 +44,8 @@ class PiwikUninstallTest extends WebTestBase {
     $cache_path = 'public://piwik';
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
+    $this->config('piwik.settings')->set('url_http', 'http://example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_https', 'https://example.com/piwik/')->save();
 
     // Enable local caching of piwik.js
     $this->config('piwik.settings')->set('cache', 1)->save();
