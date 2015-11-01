@@ -143,10 +143,10 @@ function piwik_page_attachments(array &$page) {
 		$piwik_custom_vars = $config->get('custom_var');
     $custom_variable = '';
     for ($i = 1; $i < 6; $i++) {
-      $custom_var_name = !empty($piwik_custom_vars['slots'][$i]['name']) ? $piwik_custom_vars['slots'][$i]['name'] : '';
+      $custom_var_name = !empty($piwik_custom_vars[$i]['name']) ? $piwik_custom_vars[$i]['name'] : '';
       if (!empty($custom_var_name)) {
-        $custom_var_value = !empty($piwik_custom_vars['slots'][$i]['value']) ? $piwik_custom_vars['slots'][$i]['value'] : '';
-        $custom_var_scope = !empty($piwik_custom_vars['slots'][$i]['scope']) ? $piwik_custom_vars['slots'][$i]['scope'] : 'visit';
+        $custom_var_value = !empty($piwik_custom_vars[$i]['value']) ? $piwik_custom_vars[$i]['value'] : '';
+        $custom_var_scope = !empty($piwik_custom_vars[$i]['scope']) ? $piwik_custom_vars[$i]['scope'] : 'visit';
 
         $types = [];
 				if ($request->attributes->has('node')) {
