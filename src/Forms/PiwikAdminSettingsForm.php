@@ -550,7 +550,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ->set('url_https', $form_state->getValue('piwik_url_https'))
       ->set('codesnippet.before', $form_state->getValue('piwik_codesnippet_before'))
       ->set('codesnippet.after', $form_state->getValue('piwik_codesnippet_after'))
-      ->set('custom.variable', $form_state->getValue('piwik_custom_variable'))
+      ->set('custom.variable', $form_state->getValue('piwik_custom_var'))
       ->set('domain_mode', $form_state->getValue('piwik_domain_mode'))
       ->set('track.files', $form_state->getValue('piwik_trackfiles'))
       ->set('track.files_extensions', $form_state->getValue('piwik_trackfiles_extensions'))
