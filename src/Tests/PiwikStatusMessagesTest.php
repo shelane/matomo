@@ -28,6 +28,8 @@ class PiwikStatusMessagesTest extends WebTestBase {
    * {@inheritdoc}
    */
   function setUp() {
+    parent::setUp();
+
     $permissions = [
       'access administration pages',
       'administer piwik',
