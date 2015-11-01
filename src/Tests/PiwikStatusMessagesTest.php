@@ -2,38 +2,49 @@
 
 /**
  * @file
- * Test file for Piwik module.
+ * Contains \Drupal\piwik\Tests\PiwikStatusMessagesTest.
  */
-class PiwikStatusMessagesTest extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Piwik status messages tests',
-      'description' => 'Test status messages functionality of Piwik module.',
-      'group' => 'Piwik',
-    );
-  }
+namespace Drupal\piwik\Tests;
 
+use Drupal\Core\Session\AccountInterface;
+use Drupal\simpletest\WebTestBase;
+
+/**
+ * Test status messages functionality of Piwik module.
+ *
+ * @group Piwik
+ */
+class PiwikStatusMessagesTest extends WebTestBase {
+
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  public static $modules = ['piwik'];
+
+  /**
+   * {@inheritdoc}
+   */
   function setUp() {
-    parent::setUp('piwik');
-
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer piwik',
-    );
+    ];
 
     // User to set up piwik.
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
   function testPiwikStatusMessages() {
-    $ua_code = '1';
-    variable_set('piwik_site_id', $ua_code);
+    $site_id = '1';
+    $this->config('piwik.settings')->set('site_id', $site_id)->save();
 
     // Enable logging of errors only.
-    variable_set('piwik_trackmessages', array('error' => 'error'));
+    $this->config('piwik.settings')->set('track.messages', ['error' => 'error'])->save();
 
-    $this->drupalPost('user/login', array(), t('Log in'));
+    $this->drupalPostForm('user/login', [], t('Log in'));
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Username field is required."]);', '[testPiwikStatusMessages]: trackEvent "Username field is required." is shown.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Password field is required."]);', '[testPiwikStatusMessages]: trackEvent "Password field is required." is shown.');
 

@@ -2,25 +2,36 @@
 
 /**
  * @file
- * Test file for Piwik module.
+ * Contains \Drupal\piwik\Tests\PiwikBasicTest.
  */
-class PiwikBasicTest extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => t('Piwik basic tests'),
-      'description' => t('Test basic functionality of Piwik module.'),
-      'group' => 'Piwik',
-    );
-  }
+namespace Drupal\piwik\Tests;
 
+use Drupal\Core\Session\AccountInterface;
+use Drupal\simpletest\WebTestBase;
+
+/**
+ * Test basic functionality of Piwik module.
+ *
+ * @group Piwik
+ */
+class PiwikBasicTest extends WebTestBase {
+
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  public static $modules = ['piwik'];
+
+  /**
+   * {@inheritdoc}
+   */
   function setUp() {
-    parent::setUp('piwik');
-
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer piwik',
-    );
+    ];
 
     // User to set up piwik.
     $this->admin_user = $this->drupalCreateUser($permissions);
@@ -39,17 +50,17 @@ class PiwikBasicTest extends DrupalWebTestCase {
   }
 
   function testPiwikPageVisibility() {
-    $ua_code = '1';
-    variable_set('piwik_site_id', $ua_code);
-    variable_get('piwik_url_http', 'http://example.com/piwik/');
-    variable_get('piwik_url_https', 'https://example.com/piwik/');
+    $site_id = '1';
+    $this->config('piwik.settings')->set('site_id', $site_id)->save();
+    $this->config('piwik.settings')->set('url_http', 'http://example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_https', 'https://example.com/piwik/')->save();
 
     // Show tracking on "every page except the listed pages".
-    variable_set('piwik_visibility_pages', 0);
+    $this->config('piwik.settings')->set('visibility.request_path_mode', 0)->save();
     // Disable tracking one "admin*" pages only.
-    variable_set('piwik_pages', "admin\nadmin/*");
+    $this->config('piwik.settings')->set('visibility.request_path_pages', "admin\nadmin/*")->save();
     // Enable tracking only for authenticated users only.
-    variable_set('piwik_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
+    $this->config('piwik.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -59,15 +70,15 @@ class PiwikBasicTest extends DrupalWebTestCase {
     $this->drupalGet('admin');
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is not displayed on admin page.');
     $this->drupalGet('admin/config/system/piwik');
-    // Checking for tracking code URI here, as $ua_code is displayed in the form.
+    // Checking for tracking code URI here, as $site_id is displayed in the form.
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is not displayed on admin subpage.');
 
     // Test whether tracking code display is properly flipped.
-    variable_set('piwik_visibility_pages', 1);
+    $this->config('piwik.settings')->set('visibility.request_path_mode', 1)->save();
     $this->drupalGet('admin');
     $this->assertRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is displayed on admin page.');
     $this->drupalGet('admin/config/system/piwik');
-    // Checking for tracking code URI here, as $ua_code is displayed in the form.
+    // Checking for tracking code URI here, as $site_id is displayed in the form.
     $this->assertRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is NOT displayed on front page.');
@@ -78,9 +89,9 @@ class PiwikBasicTest extends DrupalWebTestCase {
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is NOT displayed for anonymous.');
 
     // Switch back to every page except the listed pages.
-    variable_set('piwik_visibility_pages', 0);
+    $this->config('piwik.settings')->set('visibility.request_path_mode', 0)->save();
     // Enable tracking code for all user roles.
-    variable_set('piwik_roles', array());
+    $this->config('piwik.settings')->set('visibility.user_role_roles', [])->save();
 
     // Test whether 403 forbidden tracking code is shown if user has no access.
     $this->drupalGet('admin');
@@ -92,15 +103,15 @@ class PiwikBasicTest extends DrupalWebTestCase {
   }
 
   function testPiwikTrackingCode() {
-    $ua_code = '2';
-    variable_set('piwik_site_id', $ua_code);
-    variable_get('piwik_url_http', 'http://example.com/piwik/');
-    variable_get('piwik_url_https', 'https://example.com/piwik/');
+    $site_id = '2';
+    $this->config('piwik.settings')->set('site_id', $site_id)->save();
+    $this->config('piwik.settings')->set('url_http', 'http://example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_https', 'https://example.com/piwik/')->save();
 
     // Show tracking code on every page except the listed pages.
-    variable_set('piwik_visibility_pages', 0);
+    $this->config('piwik.settings')->set('visibility.request_path_mode', 0)->save();
     // Enable tracking code for all user roles.
-    variable_set('piwik_roles', array());
+    $this->config('piwik.settings')->set('visibility.user_role_roles', [])->save();
 
     /* Sample JS code as added to page:
     <script type="text/javascript">
@@ -123,17 +134,17 @@ class PiwikBasicTest extends DrupalWebTestCase {
     */
 
     // Test whether tracking code uses latest JS.
-    variable_set('piwik_cache', 0);
+    $this->config('piwik.settings')->set('cache', 0)->save();
     $this->drupalGet('');
     $this->assertRaw('u+"piwik.php"', '[testPiwikTrackingCode]: Latest tracking code used.');
 
     // Test if tracking of User ID is enabled.
-    variable_set('piwik_trackuserid', 1);
+    $this->config('piwik.settings')->set('track.userid', 1)->save();
     $this->drupalGet('');
     $this->assertRaw('_paq.push(["setUserId", ', '[testPiwikTrackingCode]: Tracking code for User ID is enabled.');
 
     // Test if tracking of User ID is disabled.
-    variable_set('piwik_trackuserid', 0);
+    $this->config('piwik.settings')->set('track.userid', 0)->save();
     $this->drupalGet('');
     $this->assertNoRaw('_paq.push(["setUserId", ', '[testPiwikTrackingCode]: Tracking code for User ID is disabled.');
 
@@ -142,7 +153,7 @@ class PiwikBasicTest extends DrupalWebTestCase {
     $this->assertNoRaw('_paq.push(["setCookieDomain"', '[testPiwikTrackingCode]: Single domain tracking is active.');
 
     // Enable "One domain with multiple subdomains".
-    variable_set('piwik_domain_mode', 1);
+    $this->config('piwik.settings')->set('domain_mode', 1)->save();
     $this->drupalGet('');
 
     // Test may run on localhost, an ipaddress or real domain name.
@@ -157,8 +168,8 @@ class PiwikBasicTest extends DrupalWebTestCase {
     }
 
     // Test whether the BEFORE and AFTER code is added to the tracker.
-    variable_set('piwik_codesnippet_before', '_paq.push(["setLinkTrackingTimer", 250]);');
-    variable_set('piwik_codesnippet_after', '_paq.push(["t2.setSiteId", 2]);_gaq.push(["t2.trackPageView"]);');
+    $this->config('piwik.settings')->set('codesnippet.before', '_paq.push(["setLinkTrackingTimer", 250]);')->save();
+    $this->config('piwik.settings')->set('codesnippet.after', '_paq.push(["t2.setSiteId", 2]);_gaq.push(["t2.trackPageView"]);')->save();
     $this->drupalGet('');
     $this->assertRaw('setLinkTrackingTimer', '[testPiwikTrackingCode]: Before codesnippet has been found with "setLinkTrackingTimer" set.');
     $this->assertRaw('t2.trackPageView', '[testPiwikTrackingCode]: After codesnippet with "t2" tracker has been found.');

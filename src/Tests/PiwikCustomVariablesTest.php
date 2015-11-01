@@ -2,34 +2,44 @@
 
 /**
  * @file
- * Test file for Piwik module.
+ * Contains \Drupal\piwik\Tests\PiwikCustomVariablesTest.
  */
-class PiwikCustomVariablesTest extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => t('Piwik Custom Variables tests'),
-      'description' => t('Test custom variables functionality of Piwik module.'),
-      'group' => 'Piwik',
-      'dependencies' => array('token'),
-    );
-  }
+namespace Drupal\piwik\Tests;
 
+use Drupal\Core\Session\AccountInterface;
+use Drupal\simpletest\WebTestBase;
+
+/**
+ * Test custom variables functionality of Piwik module.
+ *
+ * @group Piwik
+ */
+class PiwikCustomVariablesTest extends WebTestBase {
+
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  public static $modules = ['piwik', 'token'];
+
+  /**
+   * {@inheritdoc}
+   */
   function setUp() {
-    parent::setUp('piwik', 'token');
-
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer piwik',
-    );
+    ];
 
     // User to set up piwik.
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
   function testPiwikCustomVariables() {
-    $ua_code = '3';
-    variable_set('piwik_site_id', $ua_code);
+    $site_id = '3';
+    $this->config('piwik.settings')->set('site_id', $site_id)->save();
 
     // Basic test if the feature works.
     $custom_vars = array(
@@ -66,7 +76,7 @@ class PiwikCustomVariablesTest extends DrupalWebTestCase {
         ),
       )
     );
-    variable_set('piwik_custom_var', $custom_vars);
+    $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
     $this->drupalGet('');
 
     foreach ($custom_vars['slots'] as $slot) {
@@ -75,7 +85,7 @@ class PiwikCustomVariablesTest extends DrupalWebTestCase {
 
     // Test whether tokens are replaced in custom variable names.
     $site_slogan = $this->randomName(16);
-    variable_set('site_slogan', $site_slogan);
+    $this->config('system.site')->set('slogan', $site_slogan)->save();
 
     $custom_vars = array(
       'slots' => array(
@@ -111,7 +121,7 @@ class PiwikCustomVariablesTest extends DrupalWebTestCase {
         ),
       )
     );
-    variable_set('piwik_custom_var', $custom_vars);
+    $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
     $this->verbose('<pre>' . print_r($custom_vars, TRUE) . '</pre>');
 
     $this->drupalGet('');

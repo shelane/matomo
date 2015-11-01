@@ -2,42 +2,53 @@
 
 /**
  * @file
- * Test file for Piwik module.
+ * Contains \Drupal\piwik\Tests\PiwikRolesTest.
  */
-class PiwikRolesTest extends DrupalWebTestCase {
 
-  public static function getInfo() {
-    return array(
-      'name' => t('Piwik role tests'),
-      'description' => t('Test roles functionality of Piwik module.'),
-      'group' => 'Piwik',
-    );
-  }
+namespace Drupal\piwik\Tests;
 
+use Drupal\Core\Session\AccountInterface;
+use Drupal\simpletest\WebTestBase;
+
+/**
+ * Test roles functionality of Piwik module.
+ *
+ * @group Piwik
+ */
+class PiwikRolesTest extends WebTestBase {
+
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  public static $modules = ['piwik'];
+
+  /**
+   * {@inheritdoc}
+   */
   function setUp() {
-    parent::setUp('piwik');
-
-    $permissions = array(
+    $permissions = [
       'access administration pages',
       'administer piwik',
-    );
+    ];
 
     // User to set up piwik.
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
   function testPiwikRolesTracking() {
-    $ua_code = '1';
-    variable_set('piwik_site_id', $ua_code);
-    variable_get('piwik_url_http', 'http://example.com/piwik/');
-    variable_get('piwik_url_https', 'https://example.com/piwik/');
+    $site_id = '1';
+    $this->config('piwik.settings')->set('site_id', $site_id)->save();
+    $this->config('piwik.settings')->set('url_http', 'http://example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_https', 'https://example.com/piwik/')->save();
 
     // Test if the default settings are working as expected.
 
     // Add to the selected roles only.
-    variable_set('piwik_visibility_roles', 0);
+    $this->config('piwik.settings')->set('visibility.user_role_mode', 0)->save();
     // Enable tracking for all users.
-    variable_set('piwik_roles', array());
+    $this->config('piwik.settings')->set('visibility.user_role_roles', [])->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -55,7 +66,7 @@ class PiwikRolesTest extends DrupalWebTestCase {
     // Test if the non-default settings are working as expected.
 
     // Enable tracking only for authenticated users.
-    variable_set('piwik_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
+    $this->config('piwik.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
     $this->drupalGet('');
     $this->assertRaw('u+"piwik.php"', '[testPiwikRoleVisibility]: Tracking code is displayed for authenticated users only on frontpage.');
@@ -65,9 +76,9 @@ class PiwikRolesTest extends DrupalWebTestCase {
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikRoleVisibility]: Tracking code is NOT displayed for anonymous users on frontpage.');
 
     // Add to every role except the selected ones.
-    variable_set('piwik_visibility_roles', 1);
+    $this->config('piwik.settings')->set('visibility.user_role_mode', 1)->save();
     // Enable tracking for all users.
-    variable_set('piwik_roles', array());
+    $this->config('piwik.settings')->set('visibility.user_role_roles', [])->save();
 
     // Check tracking code visibility.
     $this->drupalGet('');
@@ -83,7 +94,7 @@ class PiwikRolesTest extends DrupalWebTestCase {
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikRoleVisibility]: Tracking code is added to every role and NOT displayed in admin section for authenticated users.');
 
     // Disable tracking for authenticated users.
-    variable_set('piwik_roles', array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID));
+    $this->config('piwik.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
     $this->drupalGet('');
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikRoleVisibility]: Tracking code is NOT displayed on frontpage for excluded authenticated users.');
