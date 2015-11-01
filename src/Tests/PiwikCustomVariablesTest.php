@@ -84,7 +84,7 @@ class PiwikCustomVariablesTest extends WebTestBase {
     }
 
     // Test whether tokens are replaced in custom variable names.
-    $site_slogan = $this->randomName(16);
+    $site_slogan = $this->randomMachineName(16);
     $this->config('system.site')->set('slogan', $site_slogan)->save();
 
     $custom_vars = [
@@ -97,12 +97,12 @@ class PiwikCustomVariablesTest extends WebTestBase {
       2 => [
         'slot' => 2,
         'name' => '',
-        'value' => $this->randomName(16),
+        'value' => $this->randomMachineName(16),
         'scope' => 1,
       ],
       3 => [
         'slot' => 3,
-        'name' => $this->randomName(16),
+        'name' => $this->randomMachineName(16),
         'value' => '',
         'scope' => 2,
       ],

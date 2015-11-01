@@ -46,7 +46,7 @@ class PiwikBasicTest extends WebTestBase {
     $this->assertRaw(t('Piwik site ID'), '[testPiwikConfiguration]: Settings page displayed.');
 
     // Check for account code validation.
-    $edit['piwik_site_id'] = $this->randomName(2);
+    $edit['piwik_site_id'] = $this->randomMachineName(2);
     $this->drupalPostForm('admin/config/system/piwik', $edit, 'Save configuration');
     $this->assertRaw(t('A valid Piwik site ID is an integer only.'), '[testPiwikConfiguration]: Invalid Piwik site ID number validated.');
   }
@@ -100,7 +100,7 @@ class PiwikBasicTest extends WebTestBase {
     $this->assertRaw('"403/URL = "', '[testPiwikPageVisibility]: 403 Forbidden tracking code shown if user has no access.');
 
     // Test whether 404 not found tracking code is shown on non-existent pages.
-    $this->drupalGet($this->randomName(64));
+    $this->drupalGet($this->randomMachineName(64));
     $this->assertRaw('"404/URL = "', '[testPiwikPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
   }
 
