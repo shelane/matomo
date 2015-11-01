@@ -228,7 +228,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#title' => t('Links and downloads'),
       '#group' => 'tracking_scope',
     ];
-    $form['tracking']['linktracking']['google_analytics_trackmailto'] = [
+    $form['tracking']['linktracking']['piwik_trackmailto'] = [
       '#type' => 'checkbox',
       '#title' => t('Track clicks on mailto links'),
       '#default_value' => $config->get('track.mailto'),
