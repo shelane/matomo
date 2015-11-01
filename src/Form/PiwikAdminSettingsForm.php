@@ -484,12 +484,12 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 			$form_state->setErrorByName('piwik_site_id', t('A valid Piwik site ID is an integer only.'));
     }
 
-    $url = $form_state->getValue('url_http') . 'piwik.php';
+    $url = $form_state->getValue('piwik_url_http') . 'piwik.php';
     $http_client = \Drupal::httpClient();
     try {
       $result = $http_client->get($url);
       if ($result->getStatusCode() != 200 && $form_state->getValue('piwik_url_skiperror') == FALSE) {
-        $form_state->setErrorByName('url_http', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
+        $form_state->setErrorByName('piwik_url_http', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
           '@url' => UrlHelper::filterBadProtocol($url),
           '@error' => $result->getReasonPhrase(),
           '@code' => $result->getStatusCode()
@@ -497,19 +497,19 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       }
     }
     catch (RequestException $exception) {
-      $form_state->setErrorByName('url_http', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
+      $form_state->setErrorByName('piwik_url_http', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
         '@url' => UrlHelper::filterBadProtocol($url),
         '@error' => $exception->getMessage(),
         '@code' => $exception->getCode()
       ]));
     }
 
-    if (!empty($form_state->getValue('url_https'))) {
-      $url = $form_state->getValue('url_https') . 'piwik.php';
+    if (!empty($form_state->getValue('piwik_url_https'))) {
+      $url = $form_state->getValue('piwik_url_https') . 'piwik.php';
       try {
         $result = $http_client->get($url);
         if ($result->getStatusCode() != 200 && $form_state->getValue('piwik_url_skiperror') == FALSE) {
-          $form_state->setErrorByName('url_https', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
+          $form_state->setErrorByName('piwik_url_https', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
             '@url' => UrlHelper::filterBadProtocol($url),
             '@error' => $result->getReasonPhrase(),
             '@code' => $result->getStatusCode()
@@ -517,7 +517,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         }
       }
       catch (RequestException $exception) {
-        $form_state->setErrorByName('url_https', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
+        $form_state->setErrorByName('piwik_url_https', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
           '@url' => UrlHelper::filterBadProtocol($url),
           '@error' => $exception->getMessage(),
           '@code' => $exception->getCode()
