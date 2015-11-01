@@ -53,7 +53,7 @@ class PiwikSearchTest extends WebTestBase {
     $this->assertRaw($site_id, '[testPiwikSearch]: Tracking code is displayed for authenticated users.');
 
     $this->drupalGet('search/node');
-    $this->assertNoRaw('_paq.push(["trackPageView"]);', '[testPiwikSearch]: Custom url not set.');
+    $this->assertNoRaw('_paq.push(["trackSiteSearch", ', '[testPiwikSearch]: Search tracker not added to page.');
 
     // Enable site search support.
     $this->config('piwik.settings')->set('track.site_search', 1)->save();

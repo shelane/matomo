@@ -45,38 +45,36 @@ class PiwikCustomVariablesTest extends WebTestBase {
 
     // Basic test if the feature works.
     $custom_vars = [
-      'slots' => [
-        1 => [
-          'slot' => 1,
-          'name' => 'Foo 1',
-          'value' => 'Bar 1',
-          'scope' => 3,
-        ],
-        2 => [
-          'slot' => 2,
-          'name' => 'Foo 2',
-          'value' => 'Bar 2',
-          'scope' => 2,
-        ],
-        3 => [
-          'slot' => 3,
-          'name' => 'Foo 3',
-          'value' => 'Bar 3',
-          'scope' => 3,
-        ],
-        4 => [
-          'slot' => 4,
-          'name' => 'Foo 4',
-          'value' => 'Bar 4',
-          'scope' => 2,
-        ],
-        5 => [
-          'slot' => 5,
-          'name' => 'Foo 5',
-          'value' => 'Bar 5',
-          'scope' => 1,
-        ],
-      ]
+      1 => [
+        'slot' => 1,
+        'name' => 'Foo 1',
+        'value' => 'Bar 1',
+        'scope' => 3,
+      ],
+      2 => [
+        'slot' => 2,
+        'name' => 'Foo 2',
+        'value' => 'Bar 2',
+        'scope' => 2,
+      ],
+      3 => [
+        'slot' => 3,
+        'name' => 'Foo 3',
+        'value' => 'Bar 3',
+        'scope' => 3,
+      ],
+      4 => [
+        'slot' => 4,
+        'name' => 'Foo 4',
+        'value' => 'Bar 4',
+        'scope' => 2,
+      ],
+      5 => [
+        'slot' => 5,
+        'name' => 'Foo 5',
+        'value' => 'Bar 5',
+        'scope' => 1,
+      ],
     ];
     $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
     $this->drupalGet('');
@@ -89,40 +87,38 @@ class PiwikCustomVariablesTest extends WebTestBase {
     $site_slogan = $this->randomName(16);
     $this->config('system.site')->set('slogan', $site_slogan)->save();
 
-    $custom_vars = array(
-      'slots' => array(
-        1 => array(
-          'slot' => 1,
-          'name' => 'Name: [site:slogan]',
-          'value' => 'Value: [site:slogan]',
-          'scope' => 3,
-        ),
-        2 => array(
-          'slot' => 2,
-          'name' => '',
-          'value' => $this->randomName(16),
-          'scope' => 1,
-        ),
-        3 => array(
-          'slot' => 3,
-          'name' => $this->randomName(16),
-          'value' => '',
-          'scope' => 2,
-        ),
-        4 => array(
-          'slot' => 4,
-          'name' => '',
-          'value' => '',
-          'scope' => 3,
-        ),
-        5 => array(
-          'slot' => 5,
-          'name' => '',
-          'value' => '',
-          'scope' => 3,
-        ),
-      )
-    );
+    $custom_vars = [
+      1 => [
+        'slot' => 1,
+        'name' => 'Name: [site:slogan]',
+        'value' => 'Value: [site:slogan]',
+        'scope' => 3,
+      ],
+      2 => [
+        'slot' => 2,
+        'name' => '',
+        'value' => $this->randomName(16),
+        'scope' => 1,
+      ],
+      3 => [
+        'slot' => 3,
+        'name' => $this->randomName(16),
+        'value' => '',
+        'scope' => 2,
+      ],
+      4 => [
+        'slot' => 4,
+        'name' => '',
+        'value' => '',
+        'scope' => 3,
+      ],
+      5 => [
+        'slot' => 5,
+        'name' => '',
+        'value' => '',
+        'scope' => 3,
+      ],
+    ];
     $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
     $this->verbose('<pre>' . print_r($custom_vars, TRUE) . '</pre>');
 
