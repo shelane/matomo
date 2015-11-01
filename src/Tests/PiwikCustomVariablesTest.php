@@ -79,7 +79,7 @@ class PiwikCustomVariablesTest extends WebTestBase {
     $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
     $this->drupalGet('');
 
-    foreach ($custom_vars['slots'] as $slot) {
+    foreach ($custom_vars as $slot) {
       $this->assertRaw("_paq.push(['setCustomVariable', " . $slot['slot'] . ", \"" . $slot['name'] . "\", \"" . $slot['value'] . "\", " . $slot['scope'] . "]);", '[testPiwikCustomVariables]: setCustomVariable ' . $slot['slot'] . ' is shown.');
     }
 
