@@ -124,18 +124,19 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     // Page specific visibility configurations.
     $account = \Drupal::currentUser();
     $php_access = $account->hasPermission('use PHP for tracking visibility');
-    $visibility_pages = $config->get('visibility.pages');
+    $visibility_request_path_pages = $config->get('visibility.request_path_pages');
 
-    $form['tracking']['page_vis_settings'] = [
+    $form['tracking']['page_visibility_settings'] = [
       '#type' => 'details',
       '#title' => t('Pages'),
       '#group' => 'tracking_scope',
     ];
 
-    if ($config->get('visibility.pages_enabled') == 2 && !$php_access) {
-      $form['tracking']['page_vis_settings'] = [];
-      $form['tracking']['page_vis_settings']['piwik_visibility_pages'] = ['#type' => 'value', '#value' => 2];
-      $form['tracking']['page_vis_settings']['piwik_pages'] = ['#type' => 'value', '#value' => $visibility_pages];
+    if ($config->get('visibility.request_path_mode') == 2 && !$php_access) {
+      // No permission to change PHP snippets, but keep existing settings.
+      $form['tracking']['page_visibility_settings'] = [];
+      $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_mode'] = ['#type' => 'value', '#value' => 2];
+      $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_pages'] = ['#type' => 'value', '#value' => $visibility_request_path_pages];
     }
     else {
       // @TODO: see BlockBase.php for upgrade
@@ -153,58 +154,58 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       else {
         $title = t('Pages');
       }
-      $form['tracking']['page_vis_settings']['piwik_visibility_pages'] = [
+      $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_mode'] = [
         '#type' => 'radios',
         '#title' => t('Add tracking to specific pages'),
         '#options' => $options,
-        '#default_value' => $config->get('visibility.pages_enabled'),
+        '#default_value' => $config->get('visibility.request_path_mode'),
       ];
-      $form['tracking']['page_vis_settings']['piwik_pages'] = [
+      $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_pages'] = [
         '#type' => 'textarea',
         '#title' => $title,
         '#title_display' => 'invisible',
-        '#default_value' => !empty($visibility_pages) ? $visibility_pages : '',
+        '#default_value' => !empty($visibility_request_path_pages) ? $visibility_request_path_pages : '',
         '#description' => $description,
         '#rows' => 10,
       ];
     }
 
     // Render the role overview.
-    $visibility_roles = $config->get('visibility.roles');
+    $visibility_user_role_roles = $config->get('visibility.user_role_roles');
 
-    $form['tracking']['role_vis_settings'] = [
+    $form['tracking']['role_visibility_settings'] = [
       '#type' => 'details',
       '#title' => t('Roles'),
       '#group' => 'tracking_scope',
     ];
 
-    $form['tracking']['role_vis_settings']['piwik_visibility_roles'] = [
+    $form['tracking']['role_visibility_settings']['piwik_visibility_user_role_mode'] = [
       '#type' => 'radios',
       '#title' => t('Add tracking for specific roles'),
       '#options' => [
         t('Add to the selected roles only'),
         t('Add to every role except the selected ones'),
       ],
-      '#default_value' => $config->get('visibility.roles_enabled'), // @FIXME rename variable
+      '#default_value' => $config->get('visibility.user_role_mode'),
     ];
-    $form['tracking']['role_vis_settings']['piwik_roles'] = [
+    $form['tracking']['role_visibility_settings']['piwik_visibility_user_role_roles'] = [
       '#type' => 'checkboxes',
       '#title' => t('Roles'),
-      '#default_value' => !empty($visibility_roles) ? $visibility_roles : [],
+      '#default_value' => !empty($visibility_user_role_roles) ? $visibility_user_role_roles : [],
       '#options' => array_map('\Drupal\Component\Utility\Html::escape', user_role_names()),
       '#description' => t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
     ];
 
     // Standard tracking configurations.
-    $visibility_users = $config->get('visibility.users');
+    $visibility_user_account_mode = $config->get('visibility.user_account_mode');
 
-    $form['tracking']['user_vis_settings'] = [
+    $form['tracking']['user_visibility_settings'] = [
       '#type' => 'details',
       '#title' => t('Users'),
       '#group' => 'tracking_scope',
     ];
     $t_permission = ['%permission' => t('opt-in or out of tracking')];
-    $form['tracking']['user_vis_settings']['piwik_users'] = [
+    $form['tracking']['user_visibility_settings']['piwik_visibility_user_account_mode'] = [
       '#type' => 'radios',
       '#title' => t('Allow users to customize tracking on their account page'),
       '#options' => [
@@ -212,9 +213,9 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         t('Tracking on by default, users with %permission permission can opt out', $t_permission),
         t('Tracking off by default, users with %permission permission can opt in', $t_permission),
       ],
-      '#default_value' => !empty($visibility_users) ? $visibility_users : 0,
+      '#default_value' => !empty($visibility_user_account_mode) ? $visibility_user_account_mode : 0,
     ];
-    $form['tracking']['user_vis_settings']['piwik_trackuserid'] = [
+    $form['tracking']['user_visibility_settings']['piwik_trackuserid'] = [
       '#type' => 'checkbox',
       '#title' => t('Track User ID'),
       '#default_value' => $config->get('track.userid'),
@@ -475,7 +476,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     // Trim some text area values.
     $form_state->setValue('piwik_site_id', trim($form_state->getValue('piwik_site_id')));
-    $form_state->setValue('piwik_pages', trim($form_state->getValue('piwik_pages')));
+    $form_state->setValue('piwik_visibility_request_path_pages', trim($form_state->getValue('piwik_visibility_request_path_pages')));
     $form_state->setValue('piwik_codesnippet_before', trim($form_state->getValue('piwik_codesnippet_before')));
     $form_state->setValue('piwik_codesnippet_after', trim($form_state->getValue('piwik_codesnippet_after')));
 
@@ -489,7 +490,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       $result = $http_client->get($url);
       if ($result->getStatusCode() != 200 && $form_state->getValue('piwik_url_skiperror') == FALSE) {
         $form_state->setErrorByName('url_http', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
-          '@url' => check_url($url),
+          '@url' => UrlHelper::filterBadProtocol($url),
           '@error' => $result->getReasonPhrase(),
           '@code' => $result->getStatusCode()
         ]));
@@ -547,7 +548,6 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ->set('site_id', $form_state->getValue('piwik_site_id'))
       ->set('url_http', $form_state->getValue('piwik_url_http'))
       ->set('url_https', $form_state->getValue('piwik_url_https'))
-      ->set('cross_domains', $form_state->getValue('piwik_cross_domains'))
       ->set('codesnippet.before', $form_state->getValue('piwik_codesnippet_before'))
       ->set('codesnippet.after', $form_state->getValue('piwik_codesnippet_after'))
       ->set('custom.variable', $form_state->getValue('piwik_custom_variable'))
@@ -560,11 +560,11 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ->set('track.site_search', $form_state->getValue('piwik_site_search'))
       ->set('privacy.donottrack', $form_state->getValue('piwik_privacy_donottrack'))
       ->set('cache', $form_state->getValue('piwik_cache'))
-      ->set('visibility.pages_enabled', $form_state->getValue('piwik_visibility_pages'))
-      ->set('visibility.pages', $form_state->getValue('piwik_pages'))
-      ->set('visibility.roles_enabled', $form_state->getValue('piwik_visibility_roles'))
-      ->set('visibility.roles', $form_state->getValue('piwik_roles'))
-      ->set('visibility.users', $form_state->getValue('piwik_users'))
+      ->set('visibility.request_path_mode', $form_state->getValue('piwik_visibility_request_path_mode'))
+      ->set('visibility.request_path_pages', $form_state->getValue('piwik_visibility_request_path_pages'))
+      ->set('visibility.user_account_mode', $form_state->getValue('piwik_visibility_user_account_mode'))
+      ->set('visibility.user_role_mode', $form_state->getValue('piwik_visibility_user_role_mode'))
+      ->set('visibility.user_role_roles', $form_state->getValue('piwik_visibility_user_role_roles'))
       ->save();
 
     if ($form_state->hasValue('piwik_translation_set')) {
