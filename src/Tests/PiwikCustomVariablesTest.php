@@ -44,40 +44,40 @@ class PiwikCustomVariablesTest extends WebTestBase {
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
 
     // Basic test if the feature works.
-    $custom_vars = array(
-      'slots' => array(
-        1 => array(
+    $custom_vars = [
+      'slots' => [
+        1 => [
           'slot' => 1,
           'name' => 'Foo 1',
           'value' => 'Bar 1',
           'scope' => 3,
-        ),
-        2 => array(
+        ],
+        2 => [
           'slot' => 2,
           'name' => 'Foo 2',
           'value' => 'Bar 2',
           'scope' => 2,
-        ),
-        3 => array(
+        ],
+        3 => [
           'slot' => 3,
           'name' => 'Foo 3',
           'value' => 'Bar 3',
           'scope' => 3,
-        ),
-        4 => array(
+        ],
+        4 => [
           'slot' => 4,
           'name' => 'Foo 4',
           'value' => 'Bar 4',
           'scope' => 2,
-        ),
-        5 => array(
+        ],
+        5 => [
           'slot' => 5,
           'name' => 'Foo 5',
           'value' => 'Bar 5',
           'scope' => 1,
-        ),
-      )
-    );
+        ],
+      ]
+    ];
     $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
     $this->drupalGet('');
 

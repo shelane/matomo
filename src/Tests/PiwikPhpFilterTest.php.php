@@ -50,7 +50,7 @@ class PiwikPhpFilterTest extends WebTestBase {
     $site_id = '1';
     $this->drupalLogin($this->admin_user);
 
-    $edit = array();
+    $edit = [];
     $edit['piwik_site_id'] = $site_id;
     $edit['piwik_url_http'] = 'http://example.com/piwik/';
     $edit['piwik_url_https'] = 'https://example.com/piwik/';
@@ -89,7 +89,7 @@ class PiwikPhpFilterTest extends WebTestBase {
     // Set a different value and verify that this is still the same after the post.
     $this->config('piwik.settings')->set('visibility.request_path_pages', '<?php return 0; ?>')->save();
 
-    $edit = array();
+    $edit = [];
     $edit['piwik_site_id'] = $site_id;
     $edit['piwik_url_http'] = 'http://example.com/piwik/';
     $edit['piwik_url_https'] = 'https://example.com/piwik/';

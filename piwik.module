@@ -266,10 +266,10 @@ function piwik_page_attachments(array &$page) {
     // Add link tracking.
     if ($config->get('track.files')) {
       // Disable tracking of links with ".no-tracking" and ".colorbox" classes.
-      $ignore_classes = array(
+      $ignore_classes = [
         'no-tracking',
         'colorbox',
-      );
+      ];
       // Disable the download & outlink tracking for specific CSS classes.
       // Custom code snippets with 'setIgnoreClasses' will override the value.
       // @see http://developer.piwik.org/api-reference/tracking-javascript#disable-the-download-amp-outlink-tracking-for-specific-css-classes
@@ -325,11 +325,11 @@ function piwik_page_attachments(array &$page) {
  * Implements hook_field_extra_fields().
  */
 function piwik_field_extra_fields() {
-  $extra['user']['user']['form']['piwik'] = array(
+  $extra['user']['user']['form']['piwik'] = [
     'label' => t('Piwik configuration'),
     'description' => t('Piwik module form element.'),
     'weight' => 3,
-  );
+  ];
 
   return $extra;
 }
