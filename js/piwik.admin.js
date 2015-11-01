@@ -82,7 +82,7 @@
         return Drupal.t('@items enabled', {'@items': vals.join(', ')});
       });
 
-      $('#edit-search-and-advertising').drupalSetSummary(function (context) {
+      $('#edit-search').drupalSetSummary(function (context) {
         var vals = [];
         if ($('input#edit-piwik-site-search', context).is(':checked')) {
           vals.push(Drupal.t('Site search'));
