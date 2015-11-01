@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\piwik\Tests\GoogleAnalyticsBasicTest.
+ * Contains \Drupal\piwik\Tests\PiwikSearchTest.
  */
 
 namespace Drupal\piwik\Tests;
