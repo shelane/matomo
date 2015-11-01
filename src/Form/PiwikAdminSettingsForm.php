@@ -358,7 +358,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         '#type' => 'textfield',
       ];
       $form['piwik_custom_var']['slots'][$i]['name'] = [
-        '#default_value' => !empty($piwik_custom_vars['slots'][$i]['name']) ? $piwik_custom_vars['slots'][$i]['name'] : '',
+        '#default_value' => isset($piwik_custom_vars[$i]['name']) ? $piwik_custom_vars[$i]['name'] : '',
         '#description' => t('The custom variable name.'),
         '#maxlength' => 100,
       	'#size' => 20,
@@ -367,7 +367,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         '#type' => 'textfield',
       ];
       $form['piwik_custom_var']['slots'][$i]['value'] = [
-        '#default_value' => !empty($piwik_custom_vars['slots'][$i]['value']) ? $piwik_custom_vars['slots'][$i]['value'] : '',
+        '#default_value' => isset($piwik_custom_vars[$i]['value']) ? $piwik_custom_vars[$i]['value'] : '',
         '#description' => t('The custom variable value.'),
         '#maxlength' => 255,
         '#title' => t('Custom variable value #@slot', ['@slot' => $i]),
@@ -381,7 +381,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         $form['piwik_custom_var']['slots'][$i]['value']['#element_validate'][] = 'token_element_validate';
       }
       $form['piwik_custom_var']['slots'][$i]['scope'] = [
-        '#default_value' => !empty($piwik_custom_vars['slots'][$i]['scope']) ? $piwik_custom_vars['slots'][$i]['scope'] : 'visit',
+        '#default_value' => isset($piwik_custom_vars[$i]['scope']) ? $piwik_custom_vars[$i]['scope'] : '',
         '#description' => t('The scope for the custom variable.'),
         '#title' => t('Custom variable slot #@slot', ['@slot' => $i]),
         '#title_display' => 'invisible',
