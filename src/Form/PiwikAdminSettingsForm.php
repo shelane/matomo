@@ -525,6 +525,18 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       }
     }
 
+    // Verify that every path is prefixed with a slash, but don't check PHP code snippets.
+    if ($form_state->getValue('piwik_visibility_request_path_mode') != 2) {
+      $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('piwik_visibility_request_path_pages'));
+      foreach ($pages as $page) {
+        if (strpos($page, '/') !== 0 && $page !== '<front>') {
+          $form_state->setErrorByName('piwik_visibility_request_path_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
+          // Drupal forms show one error only.
+          break;
+        }
+      }
+    }
+
     // Clear obsolete local cache if cache has been disabled.
     if ($form_state->isValueEmpty('piwik_cache') && $form['advanced']['piwik_cache']['#default_value']) {
       piwik_clear_js_cache();
