@@ -479,6 +479,8 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     $form_state->setValue('piwik_visibility_request_path_pages', trim($form_state->getValue('piwik_visibility_request_path_pages')));
     $form_state->setValue('piwik_codesnippet_before', trim($form_state->getValue('piwik_codesnippet_before')));
     $form_state->setValue('piwik_codesnippet_after', trim($form_state->getValue('piwik_codesnippet_after')));
+    $form_state->setValue('piwik_visibility_user_role_roles', array_filter($form_state->getValue('piwik_visibility_user_role_roles')));
+    $form_state->setValue('piwik_trackmessages', array_filter($form_state->getValue('piwik_trackmessages')));
 
     if (!preg_match('/^\d{1,}$/', $form_state->getValue('piwik_site_id'))) {
 			$form_state->setErrorByName('piwik_site_id', t('A valid Piwik site ID is an integer only.'));
