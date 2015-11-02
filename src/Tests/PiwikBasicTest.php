@@ -47,6 +47,7 @@ class PiwikBasicTest extends WebTestBase {
 
     // Check for account code validation.
     $edit['piwik_site_id'] = $this->randomMachineName(2);
+    $edit['piwik_url_http'] = 'http://example.com/piwik/';
     $this->drupalPostForm('admin/config/system/piwik', $edit, 'Save configuration');
     $this->assertRaw(t('A valid Piwik site ID is an integer only.'), '[testPiwikConfiguration]: Invalid Piwik site ID number validated.');
   }
