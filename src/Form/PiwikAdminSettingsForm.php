@@ -486,6 +486,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 			$form_state->setErrorByName('piwik_site_id', t('A valid Piwik site ID is an integer only.'));
     }
 
+    /* FIXME: https://www.drupal.org/node/2608666
     $url = $form_state->getValue('piwik_url_http') . 'piwik.php';
     try {
       $result = \Drupal::httpClient()->get($url);
@@ -524,7 +525,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
           '@code' => $exception->getCode()
         ]));
       }
-    }
+    } */
 
     // Verify that every path is prefixed with a slash, but don't check PHP code snippets.
     if ($form_state->getValue('piwik_visibility_request_path_mode') != 2) {
