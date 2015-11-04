@@ -140,7 +140,7 @@ function piwik_page_attachments(array &$page) {
     }
 
     // Add custom variables.
-		$piwik_custom_vars = $config->get('custom_var');
+		$piwik_custom_vars = $config->get('custom.variable');
     $custom_variable = '';
     for ($i = 1; $i < 6; $i++) {
       $custom_var_name = !empty($piwik_custom_vars[$i]['name']) ? $piwik_custom_vars[$i]['name'] : '';
