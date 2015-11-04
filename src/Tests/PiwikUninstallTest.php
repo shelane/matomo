@@ -50,8 +50,12 @@ class PiwikUninstallTest extends WebTestBase {
     // Enable local caching of piwik.js
     $this->config('piwik.settings')->set('cache', 1)->save();
 
-    // Load page to get the piwik.js downloaded into local cache.
-    $this->drupalGet('');
+    // Load front page to get the piwik.js downloaded into local cache. But
+    // loading the piwik.js is not possible as "url_http" is a test dummy only.
+    // Create a dummy file to complete the rest of the tests.
+    //$this->drupalGet('');
+    file_save_data($this->randomMachineName(16), $cache_path);
+
 
     // Test if the directory and piwik.js exists.
     $this->assertTrue(file_prepare_directory($cache_path), 'Cache directory "public://piwik" has been found.');
