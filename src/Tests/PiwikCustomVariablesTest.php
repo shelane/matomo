@@ -80,7 +80,7 @@ class PiwikCustomVariablesTest extends WebTestBase {
     $this->drupalGet('');
 
     foreach ($custom_vars as $slot) {
-      $this->assertRaw("_paq.push(['setCustomVariable', " . Json::encode($slot['slot']) . ', ' . Json::encode($slot['name']) . ', ' . Json::encode($slot['value']) . ', ' . Json::encode($slot['scope']) . "]);", '[testPiwikCustomVariables]: setCustomVariable ' . $slot['slot'] . ' is shown.');
+      $this->assertRaw('_paq.push(["setCustomVariable", ' . Json::encode($slot['slot']) . ', ' . Json::encode($slot['name']) . ', ' . Json::encode($slot['value']) . ', ' . Json::encode($slot['scope']) . ']);', '[testPiwikCustomVariables]: setCustomVariable ' . $slot['slot'] . ' is shown.');
     }
 
     // Test whether tokens are replaced in custom variable names.

@@ -170,10 +170,8 @@ function piwik_page_attachments(array &$page) {
         $custom_var_name = rtrim(substr($custom_var_name, 0, 200));
         $custom_var_value = rtrim(substr($custom_var_value, 0, 200));
 
-        $custom_var_name = Json::encode($custom_var_name);
-        $custom_var_value = Json::encode($custom_var_value);
-        $custom_var_scope = Json::encode($custom_var_scope);
-        $custom_variable .= "_paq.push(['setCustomVariable', $i, $custom_var_name, $custom_var_value, $custom_var_scope]);";
+        // Add variables to tracker.
+        $custom_variable .= '_paq.push(["setCustomVariable", ' . Json::encode($i) . ', ' . Json::encode($custom_var_name) . ', ' . Json::encode($custom_var_value) . ', ' . Json::encode($custom_var_scope) . ']);';
       }
     }
 
