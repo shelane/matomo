@@ -61,7 +61,7 @@ class PiwikBasicTest extends WebTestBase {
     // Show tracking on "every page except the listed pages".
     $this->config('piwik.settings')->set('visibility.request_path_mode', 0)->save();
     // Disable tracking one "admin*" pages only.
-    $this->config('piwik.settings')->set('visibility.request_path_pages', "admin\nadmin/*")->save();
+    $this->config('piwik.settings')->set('visibility.request_path_pages', "/admin\n/admin/*")->save();
     // Enable tracking only for authenticated users only.
     $this->config('piwik.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
