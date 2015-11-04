@@ -42,6 +42,8 @@ class PiwikCustomVariablesTest extends WebTestBase {
   function testPiwikCustomVariables() {
     $site_id = '3';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
+    $this->config('piwik.settings')->set('url_http', 'http://example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_https', 'https://example.com/piwik/')->save();
 
     // Basic test if the feature works.
     $custom_vars = [
