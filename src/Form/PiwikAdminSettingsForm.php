@@ -487,9 +487,8 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     }
 
     $url = $form_state->getValue('piwik_url_http') . 'piwik.php';
-    $http_client = \Drupal::httpClient();
     try {
-      $result = $http_client->get($url);
+      $result = \Drupal::httpClient()->get($url);
       if ($result->getStatusCode() != 200 && $form_state->getValue('piwik_url_skiperror') == FALSE) {
         $form_state->setErrorByName('piwik_url_http', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
           '@url' => UrlHelper::filterBadProtocol($url),
@@ -509,7 +508,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     if (!empty($form_state->getValue('piwik_url_https'))) {
       $url = $form_state->getValue('piwik_url_https') . 'piwik.php';
       try {
-        $result = $http_client->get($url);
+        $result = \Drupal::httpClient()->get($url);
         if ($result->getStatusCode() != 200 && $form_state->getValue('piwik_url_skiperror') == FALSE) {
           $form_state->setErrorByName('piwik_url_https', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
             '@url' => UrlHelper::filterBadProtocol($url),
