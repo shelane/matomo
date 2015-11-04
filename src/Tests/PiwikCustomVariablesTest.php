@@ -125,10 +125,10 @@ class PiwikCustomVariablesTest extends WebTestBase {
     $this->verbose('<pre>' . print_r($custom_vars, TRUE) . '</pre>');
 
     $this->drupalGet('');
-    $this->assertRaw("_paq.push(['setCustomVariable', 1, " . Json::encode("Name: $site_slogan") . ', ' . Json::encode("Value: $site_slogan") . ', 3]', '[testPiwikCustomVariables]: Tokens have been replaced in custom variable.');
-    $this->assertNoRaw("_paq.push(['setCustomVariable', 2,", '[testPiwikCustomVariables]: Value with empty name is not shown.');
-    $this->assertNoRaw("_paq.push(['setCustomVariable', 3,", '[testPiwikCustomVariables]: Name with empty value is not shown.');
-    $this->assertNoRaw("_paq.push(['setCustomVariable', 4,", '[testPiwikCustomVariables]: Empty name and value is not shown.');
-    $this->assertNoRaw("_paq.push(['setCustomVariable', 5,", '[testPiwikCustomVariables]: Empty name and value is not shown.');
+    $this->assertRaw('_paq.push(["setCustomVariable", 1, ' . Json::encode("Name: $site_slogan") . ', ' . Json::encode("Value: $site_slogan") . ', 3]', '[testPiwikCustomVariables]: Tokens have been replaced in custom variable.');
+    $this->assertNoRaw('_paq.push(["setCustomVariable", 2,', '[testPiwikCustomVariables]: Value with empty name is not shown.');
+    $this->assertNoRaw('_paq.push(["setCustomVariable", 3,', '[testPiwikCustomVariables]: Name with empty value is not shown.');
+    $this->assertNoRaw('_paq.push(["setCustomVariable", 4,', '[testPiwikCustomVariables]: Empty name and value is not shown.');
+    $this->assertNoRaw('_paq.push(["setCustomVariable", 5,', '[testPiwikCustomVariables]: Empty name and value is not shown.');
   }
 }
