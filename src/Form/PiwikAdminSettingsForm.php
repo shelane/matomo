@@ -73,7 +73,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     // Required for automated form save testing only.
     $form['general']['piwik_url_skiperror'] = [
       '#type' => 'hidden',
-      '#default_value' => FALSE,
+      '#value' => FALSE,
     ];
 
     // Visibility settings.
