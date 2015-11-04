@@ -75,7 +75,7 @@ function piwik_page_attachments(array &$page) {
 
     // Add link tracking.
     $link_settings = [];
-		$link_settings['trackMailto'] = $config->get('track.mailto');
+    $link_settings['trackMailto'] = $config->get('track.mailto');
 
     $page['#attached']['drupalSettings']['piwik'] = $link_settings;
     $page['#attached']['library'][] = 'piwik/piwik';
