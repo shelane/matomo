@@ -51,31 +51,31 @@ class PiwikCustomVariablesTest extends WebTestBase {
         'slot' => 1,
         'name' => 'Foo 1',
         'value' => 'Bar 1',
-        'scope' => 3,
+        'scope' => 'visit',
       ],
       2 => [
         'slot' => 2,
         'name' => 'Foo 2',
         'value' => 'Bar 2',
-        'scope' => 2,
+        'scope' => 'page',
       ],
       3 => [
         'slot' => 3,
         'name' => 'Foo 3',
         'value' => 'Bar 3',
-        'scope' => 3,
+        'scope' => 'page',
       ],
       4 => [
         'slot' => 4,
         'name' => 'Foo 4',
         'value' => 'Bar 4',
-        'scope' => 2,
+        'scope' => 'visit',
       ],
       5 => [
         'slot' => 5,
         'name' => 'Foo 5',
         'value' => 'Bar 5',
-        'scope' => 1,
+        'scope' => 'visit',
       ],
     ];
     $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
@@ -94,31 +94,31 @@ class PiwikCustomVariablesTest extends WebTestBase {
         'slot' => 1,
         'name' => 'Name: [site:slogan]',
         'value' => 'Value: [site:slogan]',
-        'scope' => 3,
+        'scope' => 'visit',
       ],
       2 => [
         'slot' => 2,
         'name' => '',
         'value' => $this->randomMachineName(16),
-        'scope' => 1,
+        'scope' => 'page',
       ],
       3 => [
         'slot' => 3,
         'name' => $this->randomMachineName(16),
         'value' => '',
-        'scope' => 2,
+        'scope' => 'visit',
       ],
       4 => [
         'slot' => 4,
         'name' => '',
         'value' => '',
-        'scope' => 3,
+        'scope' => 'page',
       ],
       5 => [
         'slot' => 5,
         'name' => '',
         'value' => '',
-        'scope' => 3,
+        'scope' => 'visit',
       ],
     ];
     $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
