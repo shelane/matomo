@@ -47,7 +47,7 @@ class PiwikBasicTest extends WebTestBase {
 
     // Check for account code validation.
     $edit['piwik_site_id'] = $this->randomMachineName(2);
-    $edit['piwik_url_http'] = 'http://example.com/piwik/';
+    $edit['piwik_url_http'] = 'http://www.example.com/piwik/';
     $this->drupalPostForm('admin/config/system/piwik', $edit, 'Save configuration');
     $this->assertRaw(t('A valid Piwik site ID is an integer only.'), '[testPiwikConfiguration]: Invalid Piwik site ID number validated.');
 
@@ -64,8 +64,8 @@ class PiwikBasicTest extends WebTestBase {
   function testPiwikPageVisibility() {
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
-    $this->config('piwik.settings')->set('url_http', 'http://example.com/piwik/')->save();
-    $this->config('piwik.settings')->set('url_https', 'https://example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
 
     // Show tracking on "every page except the listed pages".
     $this->config('piwik.settings')->set('visibility.request_path_mode', 0)->save();
@@ -117,8 +117,8 @@ class PiwikBasicTest extends WebTestBase {
   function testPiwikTrackingCode() {
     $site_id = '2';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
-    $this->config('piwik.settings')->set('url_http', 'http://example.com/piwik/')->save();
-    $this->config('piwik.settings')->set('url_https', 'https://example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
 
     // Show tracking code on every page except the listed pages.
     $this->config('piwik.settings')->set('visibility.request_path_mode', 0)->save();

@@ -42,8 +42,8 @@ class PiwikRolesTest extends WebTestBase {
   function testPiwikRolesTracking() {
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
-    $this->config('piwik.settings')->set('url_http', 'http://example.com/piwik/')->save();
-    $this->config('piwik.settings')->set('url_https', 'https://example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
+    $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
 
     // Test if the default settings are working as expected.
 
