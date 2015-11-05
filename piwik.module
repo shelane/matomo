@@ -34,7 +34,7 @@ define('PIWIK_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|
 function piwik_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'piwik.admin_settings_form':
-			return t('<a href=":pk_url">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to Google Analytics.', [':pk_url' => 'http://www.piwik.org/']);
+      return t('<a href=":pk_url">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to Google Analytics.', [':pk_url' => 'http://www.piwik.org/']);
       break;
   }
 }
@@ -140,7 +140,7 @@ function piwik_page_attachments(array &$page) {
     }
 
     // Add custom variables.
-		$piwik_custom_vars = $config->get('custom.variable');
+    $piwik_custom_vars = $config->get('custom.variable');
     $custom_variable = '';
     for ($i = 1; $i < 6; $i++) {
       $custom_var_name = !empty($piwik_custom_vars[$i]['name']) ? $piwik_custom_vars[$i]['name'] : '';
@@ -149,7 +149,7 @@ function piwik_page_attachments(array &$page) {
         $custom_var_scope = !empty($piwik_custom_vars[$i]['scope']) ? $piwik_custom_vars[$i]['scope'] : 'visit';
 
         $types = [];
-				if ($request->attributes->has('node')) {
+        if ($request->attributes->has('node')) {
           $node = $request->attributes->get('node');
           if ($node instanceof NodeInterface) {
             $types += ['node' => $node];

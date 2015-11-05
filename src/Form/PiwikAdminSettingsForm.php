@@ -331,11 +331,11 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     $form['piwik_custom_var'] = [
       '#description' => t('You can add Piwiks <a href=":custom_var_documentation">Custom Variables</a> here. These will be added to every page that Piwik tracking code appears on. Custom variable names and values are limited to 200 characters in length. Keep the names and values as short as possible and expect long values to get trimmed. You may use tokens in custom variable names and values. Global and user tokens are always available; on node pages, node tokens are also available.', [':custom_var_documentation' => 'http://piwik.org/docs/custom-variables/']),
       '#title' => t('Custom variables'),
-			'#tree' => TRUE,
+      '#tree' => TRUE,
       '#type' => 'details',
     ];
 
-		$form['piwik_custom_var']['slots'] = [
+    $form['piwik_custom_var']['slots'] = [
       '#type' => 'table',
       '#header' => [
         ['data' => t('Slot')],
@@ -345,7 +345,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-		$piwik_custom_vars = $config->get('custom.variable');
+    $piwik_custom_vars = $config->get('custom.variable');
 
     // Piwik supports up to 5 custom variables.
     for ($i = 1; $i < 6; $i++) {
@@ -362,7 +362,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         '#default_value' => isset($piwik_custom_vars[$i]['name']) ? $piwik_custom_vars[$i]['name'] : '',
         '#description' => t('The custom variable name.'),
         '#maxlength' => 100,
-      	'#size' => 20,
+        '#size' => 20,
         '#title' => t('Custom variable name #@slot', ['@slot' => $i]),
         '#title_display' => 'invisible',
         '#type' => 'textfield',
@@ -484,7 +484,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     $form_state->setValue('piwik_trackmessages', array_filter($form_state->getValue('piwik_trackmessages')));
 
     if (!preg_match('/^\d{1,}$/', $form_state->getValue('piwik_site_id'))) {
-			$form_state->setErrorByName('piwik_site_id', t('A valid Piwik site ID is an integer only.'));
+      $form_state->setErrorByName('piwik_site_id', t('A valid Piwik site ID is an integer only.'));
     }
 
     $url = $form_state->getValue('piwik_url_http') . 'piwik.php';
@@ -546,10 +546,10 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     // This is for the Newbie's who cannot read a text area description.
     if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state->getValue('piwik_codesnippet_before'))) {
-			$form_state->setErrorByName('piwik_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+      $form_state->setErrorByName('piwik_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
     if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state->getValue('piwik_codesnippet_after'))) {
-			$form_state->setErrorByName('piwik_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+      $form_state->setErrorByName('piwik_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
   }
 
