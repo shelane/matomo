@@ -53,7 +53,7 @@ class PiwikBasicTest extends WebTestBase {
 
     // Verify that invalid URLs throw a form error.
     $edit = [];
-    $edit['piwik_site_id'] = $site_id;
+    $edit['piwik_site_id'] = 1;
     $edit['piwik_url_http'] = 'http://example.com/piwik/';
     $edit['piwik_url_https'] = 'https://example.com/piwik/';
     $this->drupalPostForm('admin/config/system/piwik', $edit, t('Save configuration'));
