@@ -50,6 +50,15 @@ class PiwikBasicTest extends WebTestBase {
     $edit['piwik_url_http'] = 'http://example.com/piwik/';
     $this->drupalPostForm('admin/config/system/piwik', $edit, 'Save configuration');
     $this->assertRaw(t('A valid Piwik site ID is an integer only.'), '[testPiwikConfiguration]: Invalid Piwik site ID number validated.');
+
+    // Verify that invalid URLs throw a form error.
+    $edit = [];
+    $edit['piwik_site_id'] = $site_id;
+    $edit['piwik_url_http'] = 'http://example.com/piwik/';
+    $edit['piwik_url_https'] = 'https://example.com/piwik/';
+    $this->drupalPostForm('admin/config/system/piwik', $edit, t('Save configuration'));
+    $this->assertRaw('The validation of "http://www.example.com/piwik/piwik.php" failed with an exception', '[testPiwikConfiguration]: HTTP URL exception shown.');
+    $this->assertRaw('The validation of "https://www.example.com/piwik/piwik.php" failed with an exception', '[testPiwikConfiguration]: HTTPS URL exception shown.');
   }
 
   function testPiwikPageVisibility() {
