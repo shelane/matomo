@@ -551,8 +551,8 @@ function _piwik_visibility_user($account) {
     // Use the user's block visibility setting, if necessary.
     if (($visibility_user_account_mode = $config->get('visibility.user_account_mode')) != 0) {
       $user_data_piwik = \Drupal::service('user.data')->get('piwik', $account->id());
-      if ($account->id() && isset($user_data_piwik['users'])) {
-        $enabled = $user_data_piwik['users'];
+      if ($account->id() && isset($user_data_piwik['user_account_users'])) {
+        $enabled = $user_data_piwik['user_account_users'];
       }
       else {
         $enabled = ($visibility_user_account_mode == 1);
