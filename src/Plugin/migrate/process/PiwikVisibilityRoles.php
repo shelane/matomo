@@ -71,7 +71,10 @@ class PiwikVisibilityRoles extends ProcessPluginBase implements ContainerFactory
    * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-    $roles = $value;
+    list($roles) = $value;
+
+    // Remove role IDs disabled in D6/D7.
+    $roles = array_filter($roles);
 
     $user_role_roles = array();
 
