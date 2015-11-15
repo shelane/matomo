@@ -376,11 +376,11 @@ function piwik_form_user_form_alter(&$form, FormStateInterface $form_state) {
       $description .= '</span>';
     }
 
-    $form['piwik']['users'] = [
+    $form['piwik']['user_account_users'] = [
       '#type' => 'checkbox',
       '#title' => t('Enable user tracking'),
       '#description' => $description,
-      '#default_value' => isset($account_data_piwik['users']) ? $account_data_piwik['users'] : ($visibility_users == 1),
+      '#default_value' => isset($account_data_piwik['user_account_users']) ? $account_data_piwik['user_account_users'] : ($visibility_users == 1),
       '#disabled' => $disabled,
     ];
   }
@@ -390,8 +390,8 @@ function piwik_form_user_form_alter(&$form, FormStateInterface $form_state) {
  * Implements hook_user_update().
  */
 function piwik_user_update($account) {
-  if (isset($account->piwik['users'])) {
-    \Drupal::service('user.data')->set('piwik', $account->id(), 'users', (int) $account->piwik['users']);
+  if (isset($account->piwik['user_account_users'])) {
+    \Drupal::service('user.data')->set('piwik', $account->id(), 'user_account_users', (int) $account->piwik['user_account_users']);
   }
 }
 
