@@ -537,8 +537,9 @@ function piwik_clear_js_cache() {
  *
  * @param $account
  *   A user object containing an array of roles to check.
- * @return boolean
- *   A decision on if the current user is being tracked by Piwik.
+ *
+ * @return bool
+ *   TRUE if the current user is being tracked by Piwik, otherwise FALSE.
  */
 function _piwik_visibility_user($account) {
   $config = \Drupal::config('piwik.settings');
@@ -569,6 +570,12 @@ function _piwik_visibility_user($account) {
 /**
  * Based on visibility setting this function returns TRUE if Piwik code should
  * be added for the current role and otherwise FALSE.
+ *
+ * @param $account
+ *   A user object containing an array of roles to check.
+ *
+ * @return bool
+ *   TRUE if JS code should be added for the current role and otherwise FALSE.
  */
 function _piwik_visibility_roles($account) {
   $config = \Drupal::config('piwik.settings');

@@ -638,7 +638,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
    *
    * @param $token_string
    *   A string with one or more tokens to be validated.
-   * @return boolean
+   * @return bool
    *   TRUE if blacklisted token has been found, otherwise FALSE.
    */
   protected static function containsForbiddenToken($token_string) {
