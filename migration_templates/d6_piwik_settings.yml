@@ -46,9 +46,19 @@ process:
   url_http: piwik_url_http
   url_https: piwik_url_https
   'visibility/user_account_mode': piwik_custom
-  'visibility/request_path_pages': piwik_pages
-  'visibility/request_path_mode': piwik_visibility
-  'visibility/user_role_roles': piwik_roles
+  'visibility/request_path_pages':
+    plugin: piwik_visibility_pages
+    source:
+      - piwik_visibility_pages
+      - piwik_pages
+    # If Google Analytics uses PHP visibility, don't migrate it unless the PHP
+    # module is enabled.
+    skip_php: true
+  'visibility/request_path_mode': piwik_visibility_pages
+  'visibility/user_role_roles':
+    plugin: piwik_visibility_roles
+    source:
+      - piwik_roles
   'visibility/user_role_mode': piwik_visibility_roles
   page_title_hierarchy: piwik_page_title_hierarchy
   page_title_hierarchy_exclude_home: piwik_page_title_hierarchy_exclude_home
