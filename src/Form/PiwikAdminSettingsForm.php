@@ -619,6 +619,13 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     return $element;
   }
 
+  /**
+   * @param array $value
+   *   An array of token values.
+   *
+   * @return array
+   *   A unique array of invalid tokens.
+   */
   protected static function getForbiddenTokens($value) {
     $invalid_tokens = [];
     $value_tokens = is_string($value) ? \Drupal::token()->scan($value) : $value;
@@ -636,8 +643,9 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
   /**
    * Validate if a string contains forbidden tokens not allowed by privacy rules.
    *
-   * @param $token_string
+   * @param string $token_string
    *   A string with one or more tokens to be validated.
+   *
    * @return bool
    *   TRUE if blacklisted token has been found, otherwise FALSE.
    */
