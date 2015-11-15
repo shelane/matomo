@@ -65,7 +65,6 @@ process:
 destination:
   plugin: config
   config_name: piwik.settings
-dependencies:
-  module:
-    - piwik
-    - migrate_drupal
+migration_dependencies:
+  optional:
+    - d7_user_role
