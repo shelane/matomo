@@ -24,7 +24,7 @@ source:
     - piwik_translation_set
     - piwik_url_http
     - piwik_url_https
-    - piwik_visibility
+    - piwik_visibility_pages
     - piwik_visibility_roles
     - piwik_page_title_hierarchy
     - piwik_page_title_hierarchy_exclude_home
