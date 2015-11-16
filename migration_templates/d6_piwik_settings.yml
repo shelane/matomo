@@ -9,7 +9,6 @@ source:
     - piwik_codesnippet_after
     - piwik_codesnippet_before
     - piwik_custom
-    - piwik_custom_var
     - piwik_domain_mode
     - piwik_pages
     - piwik_privacy_donottrack
@@ -32,10 +31,6 @@ process:
   cache: piwik_cache
   'codesnippet/after': piwik_codesnippet_after
   'codesnippet/before': piwik_codesnippet_before
-  'custom/variable':
-    plugin: piwik_custom_vars
-    source:
-      - piwik_custom_var
   domain_mode: piwik_domain_mode
   'privacy/donottrack': piwik_privacy_donottrack
   site_id: piwik_site_id
