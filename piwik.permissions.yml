@@ -1,7 +1,7 @@
 administer piwik:
   title: 'Administer Piwik'
   description: 'Perform maintenance tasks for Piwik.'
-opt-in or out of tracking':
+opt-in or out of tracking:
   title: 'Opt-in or out of tracking'
   description: 'Allow users to decide if tracking code will be added to pages or not.'
 use PHP for tracking visibility:
