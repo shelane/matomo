@@ -40,8 +40,8 @@ class PiwikVisibilityPages extends ProcessPluginBase implements ContainerFactory
   protected $migrationPlugin;
 
   /**
-   * Whether or not to skip Google Analytivs that use PHP for visibility. Only
-   * applies if the PHP module is not enabled.
+   * Whether or not to skip Piwik that use PHP for visibility. Only applies if
+   * the PHP module is not enabled.
    *
    * @var bool
    */

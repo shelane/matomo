@@ -50,8 +50,8 @@ process:
     source:
       - piwik_visibility_pages
       - piwik_pages
-    # If Google Analytics uses PHP visibility, don't migrate it unless the PHP
-    # module is enabled.
+    # If Piwik uses PHP visibility, don't migrate it unless the PHP module is
+    # enabled.
     skip_php: true
   'visibility/user_role_mode': piwik_visibility_roles
   'visibility/user_role_roles':
