@@ -378,7 +378,6 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         '#token_types' => ['node'],
       ];
       if (\Drupal::moduleHandler()->moduleExists('token')) {
-        // @ FIXME: token module is not available, cannot implement/test validation.
         $form['piwik_custom_var']['slots'][$i]['value']['#element_validate'][] = 'token_element_validate';
       }
       $form['piwik_custom_var']['slots'][$i]['scope'] = [
