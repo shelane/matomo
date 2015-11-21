@@ -6,10 +6,10 @@
 
     // Attach mousedown, keyup, touchstart events to document only and catch
     // clicks on all elements.
-    $(document.body).bind("mousedown keyup touchstart", function(event) {
+    $(document.body).bind("mousedown keyup touchstart", function (event) {
 
       // Catch the closest surrounding link of a clicked element.
-      $(event.target).closest("a,area").each(function() {
+      $(event.target).closest("a,area").each(function () {
 
         if (drupalSettings.piwik.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
           // Mailto link clicked.
