@@ -35,7 +35,6 @@ function piwik_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'piwik.admin_settings_form':
       return t('<a href=":pk_url">Piwik - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Piwik aims to be an open source alternative to Google Analytics.', [':pk_url' => 'http://www.piwik.org/']);
-      break;
   }
 }
 
