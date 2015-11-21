@@ -38,7 +38,7 @@ class PiwikStatusMessagesTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
-  function testPiwikStatusMessages() {
+  public function testPiwikStatusMessages() {
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
     $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();

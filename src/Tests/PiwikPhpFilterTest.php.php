@@ -46,7 +46,7 @@ class PiwikPhpFilterTest extends WebTestBase {
     $this->delegated_admin_user = $this->drupalCreateUser($permissions_delegated_admin_user);
   }
 
-  function testPiwikPhpFilter() {
+  public function testPiwikPhpFilter() {
     $site_id = '1';
     $this->drupalLogin($this->admin_user);
 

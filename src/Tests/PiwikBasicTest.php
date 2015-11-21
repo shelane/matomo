@@ -40,7 +40,7 @@ class PiwikBasicTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
-  function testPiwikConfiguration() {
+  public function testPiwikConfiguration() {
     // Check for setting page's presence.
     $this->drupalGet('admin/config/system/piwik');
     $this->assertRaw(t('Piwik site ID'), '[testPiwikConfiguration]: Settings page displayed.');
@@ -61,7 +61,7 @@ class PiwikBasicTest extends WebTestBase {
     $this->assertRaw('The validation of "https://www.example.com/piwik/piwik.php" failed with an exception', '[testPiwikConfiguration]: HTTPS URL exception shown.');
   }
 
-  function testPiwikPageVisibility() {
+  public function testPiwikPageVisibility() {
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
     $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
@@ -114,7 +114,7 @@ class PiwikBasicTest extends WebTestBase {
     $this->assertRaw('"404/URL = "', '[testPiwikPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
   }
 
-  function testPiwikTrackingCode() {
+  public function testPiwikTrackingCode() {
     $site_id = '2';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
     $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();

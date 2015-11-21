@@ -40,7 +40,7 @@ class PiwikUninstallTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
-  function testPiwikUninstall() {
+  public function testPiwikUninstall() {
     $cache_path = 'public://piwik';
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();

@@ -39,7 +39,7 @@ class PiwikCustomVariablesTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
-  function testPiwikCustomVariables() {
+  public function testPiwikCustomVariables() {
     $site_id = '3';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
     $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
