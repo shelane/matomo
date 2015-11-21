@@ -27,7 +27,7 @@ class PiwikPhpFilterTest extends WebTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Administrator with all permissions.

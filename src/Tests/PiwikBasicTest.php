@@ -27,7 +27,7 @@ class PiwikBasicTest extends WebTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     $permissions = [
