@@ -504,8 +504,9 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ]));
     }
 
-    if (!empty($form_state->getValue('piwik_url_https'))) {
-      $url = $form_state->getValue('piwik_url_https') . 'piwik.php';
+    $piwik_url_https = $form_state->getValue('piwik_url_https');
+    if (!empty($piwik_url_https)) {
+      $url = $piwik_url_https . 'piwik.php';
       try {
         $result = \Drupal::httpClient()->get($url);
         if ($result->getStatusCode() != 200 && $form_state->getValue('piwik_url_skiperror') == FALSE) {
