@@ -2,7 +2,7 @@
 
   "use strict";
 
-  $(document).ready(function() {
+  $(document).ready(function () {
 
     // Attach mousedown, keyup, touchstart events to document only and catch
     // clicks on all elements.
