@@ -665,12 +665,14 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     //
     // TODO: If someone have better ideas, share them, please!
     $token_blacklist = [
+      ':account-name]',
       ':author]',
       ':author:edit-url]',
       ':author:url]',
       ':author:path]',
       ':current-user]',
       ':current-user:original]',
+      ':display-name]',
       ':fid]',
       ':mail]',
       ':name]',
