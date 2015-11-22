@@ -39,6 +39,9 @@ class PiwikRolesTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
+  /**
+   * Tests if roles based tracking works.
+   */
   public function testPiwikRolesTracking() {
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
@@ -46,7 +49,6 @@ class PiwikRolesTest extends WebTestBase {
     $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
 
     // Test if the default settings are working as expected.
-
     // Add to the selected roles only.
     $this->config('piwik.settings')->set('visibility.user_role_mode', 0)->save();
     // Enable tracking for all users.
@@ -66,7 +68,6 @@ class PiwikRolesTest extends WebTestBase {
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikRoleVisibility]: Tracking code is NOT displayed for authenticated users in admin section with default settings.');
 
     // Test if the non-default settings are working as expected.
-
     // Enable tracking only for authenticated users.
     $this->config('piwik.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 

@@ -39,6 +39,9 @@ class PiwikCustomVariablesTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
+  /**
+   * Tests if custom variables are properly added to the page.
+   */
   public function testPiwikCustomVariables() {
     $site_id = '3';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
@@ -131,4 +134,5 @@ class PiwikCustomVariablesTest extends WebTestBase {
     $this->assertNoRaw('_paq.push(["setCustomVariable", 4,', '[testPiwikCustomVariables]: Empty name and value is not shown.');
     $this->assertNoRaw('_paq.push(["setCustomVariable", 5,', '[testPiwikCustomVariables]: Empty name and value is not shown.');
   }
+
 }

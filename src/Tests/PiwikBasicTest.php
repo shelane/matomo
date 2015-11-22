@@ -40,6 +40,9 @@ class PiwikBasicTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
+  /**
+   * Tests if configuration is possible.
+   */
   public function testPiwikConfiguration() {
     // Check for setting page's presence.
     $this->drupalGet('admin/config/system/piwik');
@@ -61,6 +64,9 @@ class PiwikBasicTest extends WebTestBase {
     $this->assertRaw('The validation of "https://www.example.com/piwik/piwik.php" failed with an exception', '[testPiwikConfiguration]: HTTPS URL exception shown.');
   }
 
+  /**
+   * Tests if page visibility works.
+   */
   public function testPiwikPageVisibility() {
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
@@ -82,7 +88,7 @@ class PiwikBasicTest extends WebTestBase {
     $this->drupalGet('admin');
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is not displayed on admin page.');
     $this->drupalGet('admin/config/system/piwik');
-    // Checking for tracking code URI here, as $site_id is displayed in the form.
+    // Checking for tracking URI here, as $site_id is displayed in the form.
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is not displayed on admin subpage.');
 
     // Test whether tracking code display is properly flipped.
@@ -90,7 +96,7 @@ class PiwikBasicTest extends WebTestBase {
     $this->drupalGet('admin');
     $this->assertRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is displayed on admin page.');
     $this->drupalGet('admin/config/system/piwik');
-    // Checking for tracking code URI here, as $site_id is displayed in the form.
+    // Checking for tracking URI here, as $site_id is displayed in the form.
     $this->assertRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
     $this->assertNoRaw('u+"piwik.php"', '[testPiwikPageVisibility]: Tracking code is NOT displayed on front page.');
@@ -114,6 +120,9 @@ class PiwikBasicTest extends WebTestBase {
     $this->assertRaw('"404/URL = "', '[testPiwikPageVisibility]: 404 Not Found tracking code shown on non-existent page.');
   }
 
+  /**
+   * Tests if tracking code is properly added to the page.
+   */
   public function testPiwikTrackingCode() {
     $site_id = '2';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
@@ -169,7 +178,8 @@ class PiwikBasicTest extends WebTestBase {
     $this->drupalGet('');
 
     // Test may run on localhost, an ipaddress or real domain name.
-    // TODO: Workaround to run tests successfully. This feature cannot tested reliable.
+    // TODO: Workaround to run tests successfully. This feature cannot tested
+    // reliable.
     global $cookie_domain;
     if (count(explode('.', $cookie_domain)) > 2 && !is_numeric(str_replace('.', '', $cookie_domain))) {
       $this->assertRaw('_paq.push(["setCookieDomain"', '[testPiwikTrackingCode]: One domain with multiple subdomains is active on real host.');

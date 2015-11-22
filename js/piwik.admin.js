@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Piwik admin behaviors.
+ */
+
 (function ($, window) {
 
   "use strict";

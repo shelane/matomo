@@ -394,7 +394,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     $form['piwik_custom_var']['piwik_custom_var_description'] = [
       '#type' => 'item',
-      '#description' => t('You can supplement Piwiks\' basic IP address tracking of visitors by segmenting users based on custom variables. Make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties\' websites) with any personally identifying information from any source as part of your use (or such third parties\' use) of the Piwik\' service.'),
+      '#description' => t("You can supplement Piwiks' basic IP address tracking of visitors by segmenting users based on custom variables. Make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties' websites) with any personally identifying information from any source as part of your use (or such third parties' use) of the Piwik' service."),
     ];
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['piwik_custom_var']['piwik_custom_var_token_tree'] = [
@@ -526,7 +526,8 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       }
     }
 
-    // Verify that every path is prefixed with a slash, but don't check PHP code snippets.
+    // Verify that every path is prefixed with a slash, but don't check PHP
+    // code snippets.
     if ($form_state->getValue('piwik_visibility_request_path_mode') != 2) {
       $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('piwik_visibility_request_path_pages'));
       foreach ($pages as $page) {
@@ -619,13 +620,15 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
   }
 
   /**
+   * Get an array of all forbidden tokens.
+   *
    * @param array $value
    *   An array of token values.
    *
    * @return array
    *   A unique array of invalid tokens.
    */
-  protected static function getForbiddenTokens($value) {
+  protected static function getForbiddenTokens(array $value) {
     $invalid_tokens = [];
     $value_tokens = is_string($value) ? \Drupal::token()->scan($value) : $value;
 
@@ -649,15 +652,16 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
    *   TRUE if blacklisted token has been found, otherwise FALSE.
    */
   protected static function containsForbiddenToken($token_string) {
-    // List of strings in tokens with personal identifying information not allowed
-    // for privacy reasons. See section 8.1 of the Google Analytics terms of use
-    // for more detailed information.
+    // List of strings in tokens with personal identifying information not
+    // allowed for privacy reasons. See section 8.1 of the Google Analytics
+    // terms of use for more detailed information.
     //
     // This list can never ever be complete. For this reason it tries to use a
     // regex and may kill a few other valid tokens, but it's the only way to
     // protect users as much as possible from admins with illegal ideas.
     //
-    // User tokens are not prefixed with colon to catch 'current-user' and 'user'.
+    // User tokens are not prefixed with colon to catch 'current-user' and
+    // 'user'.
     //
     // TODO: If someone have better ideas, share them, please!
     $token_blacklist = [

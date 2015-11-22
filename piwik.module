@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Drupal Module: Piwik
+ * Drupal Module: Piwik.
  *
  * Adds the required Javascript to all your Drupal pages to allow tracking by
  * the Piwik statistics package.
@@ -39,7 +39,9 @@ function piwik_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_page_attachments() to insert JavaScript to the appropriate scope/region of the page.
+ * Implements hook_page_attachments().
+ *
+ * Insert JavaScript to the appropriate scope/region of the page.
  */
 function piwik_page_attachments(array &$page) {
   $account = \Drupal::currentUser();
@@ -429,7 +431,7 @@ function piwik_preprocess_item_list__search_results(&$variables) {
       [
         '#tag' => 'script',
         '#value' => 'window.piwik_search_results = ' . intval($pager_total_items[0]) . ';',
-        '#weight' => JS_LIBRARY-1,
+        '#weight' => JS_LIBRARY - 1,
       ],
       'piwik_search_script'
     ];
@@ -537,7 +539,7 @@ function piwik_clear_js_cache() {
 /**
  * Tracking visibility check for an user object.
  *
- * @param $account
+ * @param object $account
  *   A user object containing an array of roles to check.
  *
  * @return bool
@@ -570,10 +572,12 @@ function _piwik_visibility_user($account) {
 }
 
 /**
+ * Tracking visibility check for user roles.
+ *
  * Based on visibility setting this function returns TRUE if Piwik code should
  * be added for the current role and otherwise FALSE.
  *
- * @param $account
+ * @param object $account
  *   A user object containing an array of roles to check.
  *
  * @return bool
@@ -605,6 +609,8 @@ function _piwik_visibility_roles($account) {
 }
 
 /**
+ * Tracking visibility check for pages.
+ *
  * Based on visibility setting this function returns TRUE if JS code should
  * be added to the current page and otherwise FALSE.
  */

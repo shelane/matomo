@@ -38,6 +38,9 @@ class PiwikStatusMessagesTest extends WebTestBase {
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
+  /**
+   * Tests if status messages tracking is properly added to the page.
+   */
   public function testPiwikStatusMessages() {
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
@@ -62,4 +65,5 @@ class PiwikStatusMessagesTest extends WebTestBase {
     //$this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Example error message."]);', '[testPiwikStatusMessages]: Example error message is shown.');
     //$this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Example error message with html tags and link."]);', '[testPiwikStatusMessages]: HTML has been stripped successful from Example error message with html tags and link.');
   }
+
 }

@@ -46,6 +46,9 @@ class PiwikPhpFilterTest extends WebTestBase {
     $this->delegated_admin_user = $this->drupalCreateUser($permissions_delegated_admin_user);
   }
 
+  /**
+   * Tests if PHP module integration works.
+   */
   public function testPiwikPhpFilter() {
     $site_id = '1';
     $this->drupalLogin($this->admin_user);
@@ -86,7 +89,8 @@ class PiwikPhpFilterTest extends WebTestBase {
     $this->assertNoRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testPiwikPhpFilter]: No permission to administer PHP for tracking visibility.');
     $this->assertRaw(Html::escape('<?php return TRUE; ?>'), '[testPiwikPhpFilter]: No permission to view PHP code snippted.');
 
-    // Set a different value and verify that this is still the same after the post.
+    // Set a different value and verify that this is still the same after the
+    // post.
     $this->config('piwik.settings')->set('visibility.request_path_pages', '<?php return 0; ?>')->save();
 
     $edit = [];

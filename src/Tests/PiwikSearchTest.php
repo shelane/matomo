@@ -44,6 +44,9 @@ class PiwikSearchTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
+  /**
+   * Tests if search tracking is properly added to the page.
+   */
   public function testPiwikSearchTracking() {
     $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
@@ -96,4 +99,5 @@ class PiwikSearchTest extends WebTestBase {
     $this->assertRaw('_paq.push(["trackSiteSearch", ', '[testPiwikSearch]: Search results tracker is displayed.');
     $this->assertRaw('window.piwik_search_results = 2;', '[testPiwikSearch]: Two search results found.');
   }
+
 }

@@ -40,6 +40,9 @@ class PiwikUninstallTest extends WebTestBase {
     $this->drupalLogin($this->admin_user);
   }
 
+  /**
+   * Tests if the module cleans up the disk on uninstall.
+   */
   public function testPiwikUninstall() {
     $cache_path = 'public://piwik';
     $site_id = '1';
