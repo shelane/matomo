@@ -28,4 +28,5 @@ class PiwikCustomVars extends ProcessPluginBase {
 
     return isset($piwik_custom_vars['slots']) ? $piwik_custom_vars['slots'] : [];
   }
+
 }

@@ -56,7 +56,6 @@ class PiwikUninstallTest extends WebTestBase {
     // Load front page to get the piwik.js downloaded into local cache. But
     // loading the piwik.js is not possible as "url_http" is a test dummy only.
     // Create a dummy file to complete the rest of the tests.
-    //$this->drupalGet('');
     file_prepare_directory($cache_path, FILE_CREATE_DIRECTORY);
     file_unmanaged_save_data($this->randomMachineName(16), $cache_path . '/piwik.js');
 

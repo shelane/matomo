@@ -57,7 +57,8 @@ class PiwikPhpFilterTest extends WebTestBase {
     $edit['piwik_site_id'] = $site_id;
     $edit['piwik_url_http'] = 'http://www.example.com/piwik/';
     $edit['piwik_url_https'] = 'https://www.example.com/piwik/';
-    $edit['piwik_url_skiperror'] = TRUE; // Required for testing only.
+    // Skip url check errors in automated tests.
+    $edit['piwik_url_skiperror'] = TRUE;
     $edit['piwik_visibility_request_path_mode'] = 2;
     $edit['piwik_visibility_request_path_pages'] = '<?php return 0; ?>';
     $this->drupalPostForm('admin/config/system/piwik', $edit, t('Save configuration'));
