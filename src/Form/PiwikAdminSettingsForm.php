@@ -398,9 +398,8 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     ];
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['piwik_custom_var']['piwik_custom_var_token_tree'] = [
-        '#theme' => 'token_tree',
+        '#theme' => 'token_tree_link',
         '#token_types' => ['node'],
-        '#dialog' => TRUE,
       ];
     }
 
