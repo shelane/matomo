@@ -41,34 +41,34 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     $form['general'] = [
       '#type' => 'details',
-      '#title' => t('General settings'),
+      '#title' => $this->t('General settings'),
       '#open' => TRUE,
     ];
 
     $form['general']['piwik_site_id'] = [
       '#default_value' => $config->get('site_id'),
-      '#description' => t('The user account number is unique to the websites domain. Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Websites</strong> tab and enter the appropriate site <strong>ID</strong> into this field.'),
+      '#description' => $this->t('The user account number is unique to the websites domain. Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Websites</strong> tab and enter the appropriate site <strong>ID</strong> into this field.'),
       '#maxlength' => 20,
       '#required' => TRUE,
       '#size' => 15,
-      '#title' => t('Piwik site ID'),
+      '#title' => $this->t('Piwik site ID'),
       '#type' => 'textfield',
     ];
     $form['general']['piwik_url_http'] = [
       '#default_value' => $config->get('url_http'),
-      '#description' => t('The URL to your Piwik base directory. Example: "http://www.example.com/piwik/".'),
+      '#description' => $this->t('The URL to your Piwik base directory. Example: "http://www.example.com/piwik/".'),
       '#maxlength' => 255,
       '#required' => TRUE,
       '#size' => 80,
-      '#title' => t('Piwik HTTP URL'),
+      '#title' => $this->t('Piwik HTTP URL'),
       '#type' => 'textfield',
     ];
     $form['general']['piwik_url_https'] = [
       '#default_value' => $config->get('url_https'),
-      '#description' => t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik/".'),
+      '#description' => $this->t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik/".'),
       '#maxlength' => 255,
       '#size' => 80,
-      '#title' => t('Piwik HTTPS URL'),
+      '#title' => $this->t('Piwik HTTPS URL'),
       '#type' => 'textfield',
     ];
     // Required for automated form save testing only.
@@ -80,7 +80,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     // Visibility settings.
     $form['tracking_scope'] = [
       '#type' => 'vertical_tabs',
-      '#title' => t('Tracking scope'),
+      '#title' => $this->t('Tracking scope'),
       '#attached' => [
         'library' => [
           'piwik/piwik.admin',
@@ -90,7 +90,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     $form['tracking']['domain_tracking'] = [
       '#type' => 'details',
-      '#title' => t('Domains'),
+      '#title' => $this->t('Domains'),
       '#group' => 'tracking_scope',
     ];
 
@@ -108,16 +108,16 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     $form['tracking']['domain_tracking']['piwik_domain_mode'] = [
       '#type' => 'radios',
-      '#title' => t('What are you tracking?'),
+      '#title' => $this->t('What are you tracking?'),
       '#options' => [
-        0 => t('A single domain (default)'),
-        1 => t('One domain with multiple subdomains'),
+        0 => $this->t('A single domain (default)'),
+        1 => $this->t('One domain with multiple subdomains'),
       ],
       0 => [
-        '#description' => t('Domain: @domain', ['@domain' => $_SERVER['HTTP_HOST']]),
+        '#description' => $this->t('Domain: @domain', ['@domain' => $_SERVER['HTTP_HOST']]),
       ],
       1 => [
-        '#description' => t('Examples: @domains', ['@domains' => implode(', ', $multiple_sub_domains)]),
+        '#description' => $this->t('Examples: @domains', ['@domains' => implode(', ', $multiple_sub_domains)]),
       ],
       '#default_value' => $config->get('domain_mode'),
     ];
@@ -129,7 +129,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     $form['tracking']['page_visibility_settings'] = [
       '#type' => 'details',
-      '#title' => t('Pages'),
+      '#title' => $this->t('Pages'),
       '#group' => 'tracking_scope',
     ];
 
@@ -156,7 +156,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       }
       $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_mode'] = [
         '#type' => 'radios',
-        '#title' => t('Add tracking to specific pages'),
+        '#title' => $this->t('Add tracking to specific pages'),
         '#options' => $options,
         '#default_value' => $config->get('visibility.request_path_mode'),
       ];
@@ -175,13 +175,13 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     $form['tracking']['role_visibility_settings'] = [
       '#type' => 'details',
-      '#title' => t('Roles'),
+      '#title' => $this->t('Roles'),
       '#group' => 'tracking_scope',
     ];
 
     $form['tracking']['role_visibility_settings']['piwik_visibility_user_role_mode'] = [
       '#type' => 'radios',
-      '#title' => t('Add tracking for specific roles'),
+      '#title' => $this->t('Add tracking for specific roles'),
       '#options' => [
         t('Add to the selected roles only'),
         t('Add to every role except the selected ones'),
@@ -190,10 +190,10 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     ];
     $form['tracking']['role_visibility_settings']['piwik_visibility_user_role_roles'] = [
       '#type' => 'checkboxes',
-      '#title' => t('Roles'),
+      '#title' => $this->t('Roles'),
       '#default_value' => !empty($visibility_user_role_roles) ? $visibility_user_role_roles : [],
       '#options' => array_map('\Drupal\Component\Utility\Html::escape', user_role_names()),
-      '#description' => t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
+      '#description' => $this->t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
     ];
 
     // Standard tracking configurations.
@@ -201,13 +201,13 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     $form['tracking']['user_visibility_settings'] = [
       '#type' => 'details',
-      '#title' => t('Users'),
+      '#title' => $this->t('Users'),
       '#group' => 'tracking_scope',
     ];
-    $t_permission = ['%permission' => t('opt-in or out of tracking')];
+    $t_permission = ['%permission' => $this->t('opt-in or out of tracking')];
     $form['tracking']['user_visibility_settings']['piwik_visibility_user_account_mode'] = [
       '#type' => 'radios',
-      '#title' => t('Allow users to customize tracking on their account page'),
+      '#title' => $this->t('Allow users to customize tracking on their account page'),
       '#options' => [
         t('No customization allowed'),
         t('Tracking on by default, users with %permission permission can opt out', $t_permission),
@@ -217,33 +217,33 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     ];
     $form['tracking']['user_visibility_settings']['piwik_trackuserid'] = [
       '#type' => 'checkbox',
-      '#title' => t('Track User ID'),
+      '#title' => $this->t('Track User ID'),
       '#default_value' => $config->get('track.userid'),
-      '#description' => t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href=":url">Learn more about the benefits of using User ID</a>.', [':url' => 'http://piwik.org/docs/user-id/']),
+      '#description' => $this->t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href=":url">Learn more about the benefits of using User ID</a>.', [':url' => 'http://piwik.org/docs/user-id/']),
     ];
 
     // Link specific configurations.
     $form['tracking']['linktracking'] = [
       '#type' => 'details',
-      '#title' => t('Links and downloads'),
+      '#title' => $this->t('Links and downloads'),
       '#group' => 'tracking_scope',
     ];
     $form['tracking']['linktracking']['piwik_trackmailto'] = [
       '#type' => 'checkbox',
-      '#title' => t('Track clicks on mailto links'),
+      '#title' => $this->t('Track clicks on mailto links'),
       '#default_value' => $config->get('track.mailto'),
     ];
     $form['tracking']['linktracking']['piwik_trackfiles'] = [
       '#type' => 'checkbox',
-      '#title' => t('Track clicks on outbound links and downloads (clicks on file links) for the following extensions'),
+      '#title' => $this->t('Track clicks on outbound links and downloads (clicks on file links) for the following extensions'),
       '#default_value' => $config->get('track.files'),
     ];
     $form['tracking']['linktracking']['piwik_trackfiles_extensions'] = [
-      '#title' => t('List of download file extensions'),
+      '#title' => $this->t('List of download file extensions'),
       '#title_display' => 'invisible',
       '#type' => 'textfield',
       '#default_value' => $config->get('track.files_extensions'),
-      '#description' => t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: @extensions', ['@extensions' => PIWIK_TRACKFILES_EXTENSIONS]),
+      '#description' => $this->t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: @extensions', ['@extensions' => PIWIK_TRACKFILES_EXTENSIONS]),
       '#maxlength' => 500,
       '#states' => [
         'enabled' => [
@@ -259,25 +259,25 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     // Message specific configurations.
     $form['tracking']['messagetracking'] = [
       '#type' => 'details',
-      '#title' => t('Messages'),
+      '#title' => $this->t('Messages'),
       '#group' => 'tracking_scope',
     ];
     $track_messages = $config->get('track.messages');
     $form['tracking']['messagetracking']['piwik_trackmessages'] = [
       '#type' => 'checkboxes',
-      '#title' => t('Track messages of type'),
+      '#title' => $this->t('Track messages of type'),
       '#default_value' => !empty($track_messages) ? $track_messages : [],
-      '#description' => t('This will track the selected message types shown to users. Tracking of form validation errors may help you identifying usability issues in your site. Every message is tracked as one individual event. Messages from excluded pages cannot tracked.'),
+      '#description' => $this->t('This will track the selected message types shown to users. Tracking of form validation errors may help you identifying usability issues in your site. Every message is tracked as one individual event. Messages from excluded pages cannot tracked.'),
       '#options' => [
-        'status' => t('Status message'),
-        'warning' => t('Warning message'),
-        'error' => t('Error message'),
+        'status' => $this->t('Status message'),
+        'warning' => $this->t('Warning message'),
+        'error' => $this->t('Error message'),
       ],
     ];
 
     $form['tracking']['search'] = [
       '#type' => 'details',
-      '#title' => t('Search'),
+      '#title' => $this->t('Search'),
       '#group' => 'tracking_scope',
     ];
 
@@ -287,8 +287,8 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     $form['tracking']['search']['piwik_site_search'] = [
       '#type' => 'checkbox',
-      '#title' => t('Track internal search'),
-      '#description' => t('If checked, internal search keywords are tracked.') . $site_search_dependencies,
+      '#title' => $this->t('Track internal search'),
+      '#description' => $this->t('If checked, internal search keywords are tracked.') . $site_search_dependencies,
       '#default_value' => $config->get('track.site_search'),
       '#disabled' => (\Drupal::moduleHandler()->moduleExists('search') ? FALSE : TRUE),
     ];
@@ -296,40 +296,40 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     // Privacy specific configurations.
     $form['tracking']['privacy'] = [
       '#type' => 'details',
-      '#title' => t('Privacy'),
+      '#title' => $this->t('Privacy'),
       '#group' => 'tracking_scope',
     ];
     $form['tracking']['privacy']['piwik_privacy_donottrack'] = [
       '#type' => 'checkbox',
-      '#title' => t('Universal web tracking opt-out'),
-      '#description' => t('If enabled and your Piwik server receives the <a href="http://donottrack.us/">Do-Not-Track</a> header from the client browser, the Piwik server will not track the user. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision.'),
+      '#title' => $this->t('Universal web tracking opt-out'),
+      '#description' => $this->t('If enabled and your Piwik server receives the <a href="http://donottrack.us/">Do-Not-Track</a> header from the client browser, the Piwik server will not track the user. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision.'),
       '#default_value' => $config->get('privacy.donottrack'),
     ];
 
     // Piwik page title tree view settings.
     $form['page_title_hierarchy'] = [
       '#type' => 'details',
-      '#title' => t('Page titles hierarchy'),
-      '#description' => t('This functionality enables a dynamically expandable tree view of your site page titles in your Piwik statistics. See in Piwik statistics under <em>Actions</em> > <em>Page titles</em>.'),
+      '#title' => $this->t('Page titles hierarchy'),
+      '#description' => $this->t('This functionality enables a dynamically expandable tree view of your site page titles in your Piwik statistics. See in Piwik statistics under <em>Actions</em> > <em>Page titles</em>.'),
       '#group' => 'page_title_hierarchy',
     ];
     $form['page_title_hierarchy']['piwik_page_title_hierarchy'] = [
       '#type' => 'checkbox',
-      '#title' => t("Show page titles as hierarchy like breadcrumbs"),
-      '#description' => t('By default Piwik tracks the current page title and shows you a flat list of the most popular titles. This enables a breadcrumbs like tree view.'),
+      '#title' => $this->t("Show page titles as hierarchy like breadcrumbs"),
+      '#description' => $this->t('By default Piwik tracks the current page title and shows you a flat list of the most popular titles. This enables a breadcrumbs like tree view.'),
       '#default_value' => $config->get('page_title_hierarchy'),
     ];
     $form['page_title_hierarchy']['piwik_page_title_hierarchy_exclude_home'] = [
       '#type' => 'checkbox',
-      '#title' => t('Hide home page from hierarchy'),
-      '#description' => t('If enabled, the "Home" item will be removed from the hierarchy to flatten the structure in the Piwik statistics. Hits to the home page will still be counted, but for other pages the hierarchy will start at level Home+1.'),
+      '#title' => $this->t('Hide home page from hierarchy'),
+      '#description' => $this->t('If enabled, the "Home" item will be removed from the hierarchy to flatten the structure in the Piwik statistics. Hits to the home page will still be counted, but for other pages the hierarchy will start at level Home+1.'),
       '#default_value' => $config->get('page_title_hierarchy_exclude_home'),
     ];
 
     // Custom variables.
     $form['piwik_custom_var'] = [
-      '#description' => t('You can add Piwiks <a href=":custom_var_documentation">Custom Variables</a> here. These will be added to every page that Piwik tracking code appears on. Custom variable names and values are limited to 200 characters in length. Keep the names and values as short as possible and expect long values to get trimmed. You may use tokens in custom variable names and values. Global and user tokens are always available; on node pages, node tokens are also available.', [':custom_var_documentation' => 'http://piwik.org/docs/custom-variables/']),
-      '#title' => t('Custom variables'),
+      '#description' => $this->t('You can add Piwiks <a href=":custom_var_documentation">Custom Variables</a> here. These will be added to every page that Piwik tracking code appears on. Custom variable names and values are limited to 200 characters in length. Keep the names and values as short as possible and expect long values to get trimmed. You may use tokens in custom variable names and values. Global and user tokens are always available; on node pages, node tokens are also available.', [':custom_var_documentation' => 'http://piwik.org/docs/custom-variables/']),
+      '#title' => $this->t('Custom variables'),
       '#tree' => TRUE,
       '#type' => 'details',
     ];
@@ -337,10 +337,10 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     $form['piwik_custom_var']['slots'] = [
       '#type' => 'table',
       '#header' => [
-        ['data' => t('Slot')],
-        ['data' => t('Name')],
-        ['data' => t('Value')],
-        ['data' => t('Scope')],
+        ['data' => $this->t('Slot')],
+        ['data' => $this->t('Name')],
+        ['data' => $this->t('Value')],
+        ['data' => $this->t('Scope')],
       ],
     ];
 
@@ -350,27 +350,27 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     for ($i = 1; $i < 6; $i++) {
       $form['piwik_custom_var']['slots'][$i]['slot'] = [
         '#default_value' => $i,
-        '#description' => t('Slot number'),
+        '#description' => $this->t('Slot number'),
         '#disabled' => TRUE,
         '#size' => 1,
-        '#title' => t('Custom variable slot #@slot', ['@slot' => $i]),
+        '#title' => $this->t('Custom variable slot #@slot', ['@slot' => $i]),
         '#title_display' => 'invisible',
         '#type' => 'textfield',
       ];
       $form['piwik_custom_var']['slots'][$i]['name'] = [
         '#default_value' => isset($piwik_custom_vars[$i]['name']) ? $piwik_custom_vars[$i]['name'] : '',
-        '#description' => t('The custom variable name.'),
+        '#description' => $this->t('The custom variable name.'),
         '#maxlength' => 100,
         '#size' => 20,
-        '#title' => t('Custom variable name #@slot', ['@slot' => $i]),
+        '#title' => $this->t('Custom variable name #@slot', ['@slot' => $i]),
         '#title_display' => 'invisible',
         '#type' => 'textfield',
       ];
       $form['piwik_custom_var']['slots'][$i]['value'] = [
         '#default_value' => isset($piwik_custom_vars[$i]['value']) ? $piwik_custom_vars[$i]['value'] : '',
-        '#description' => t('The custom variable value.'),
+        '#description' => $this->t('The custom variable value.'),
         '#maxlength' => 255,
-        '#title' => t('Custom variable value #@slot', ['@slot' => $i]),
+        '#title' => $this->t('Custom variable value #@slot', ['@slot' => $i]),
         '#title_display' => 'invisible',
         '#type' => 'textfield',
         '#element_validate' => [[get_class($this), 'tokenElementValidate']],
@@ -381,20 +381,20 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       }
       $form['piwik_custom_var']['slots'][$i]['scope'] = [
         '#default_value' => isset($piwik_custom_vars[$i]['scope']) ? $piwik_custom_vars[$i]['scope'] : '',
-        '#description' => t('The scope for the custom variable.'),
-        '#title' => t('Custom variable slot #@slot', ['@slot' => $i]),
+        '#description' => $this->t('The scope for the custom variable.'),
+        '#title' => $this->t('Custom variable slot #@slot', ['@slot' => $i]),
         '#title_display' => 'invisible',
         '#type' => 'select',
         '#options' => [
-          'visit' => t('Visit'),
-          'page' => t('Page'),
+          'visit' => $this->t('Visit'),
+          'page' => $this->t('Page'),
         ],
       ];
     }
 
     $form['piwik_custom_var']['piwik_custom_var_description'] = [
       '#type' => 'item',
-      '#description' => t("You can supplement Piwiks' basic IP address tracking of visitors by segmenting users based on custom variables. Make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties' websites) with any personally identifying information from any source as part of your use (or such third parties' use) of the Piwik' service."),
+      '#description' => $this->t("You can supplement Piwiks' basic IP address tracking of visitors by segmenting users based on custom variables. Make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties' websites) with any personally identifying information from any source as part of your use (or such third parties' use) of the Piwik' service."),
     ];
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['piwik_custom_var']['piwik_custom_var_token_tree'] = [
@@ -406,14 +406,14 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     // Advanced feature configurations.
     $form['advanced'] = [
       '#type' => 'details',
-      '#title' => t('Advanced settings'),
+      '#title' => $this->t('Advanced settings'),
       '#open' => FALSE,
     ];
 
     $form['advanced']['piwik_cache'] = [
       '#type' => 'checkbox',
-      '#title' => t('Locally cache tracking code file'),
-      '#description' => t('If checked, the tracking code file is retrieved from your Piwik site and cached locally. It is updated daily to ensure updates to tracking code are reflected in the local copy.'),
+      '#title' => $this->t('Locally cache tracking code file'),
+      '#description' => $this->t('If checked, the tracking code file is retrieved from your Piwik site and cached locally. It is updated daily to ensure updates to tracking code are reflected in the local copy.'),
       '#default_value' => $config->get('cache'),
     ];
 
@@ -421,31 +421,31 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     if (\Drupal::moduleHandler()->moduleExists('content_translation')) {
       $form['advanced']['piwik_translation_set'] = [
         '#type' => 'checkbox',
-        '#title' => t('Track translation sets as one unit'),
-        '#description' => t('When a node is part of a translation set, record statistics for the originating node instead. This allows for a translation set to be treated as a single unit.'),
+        '#title' => $this->t('Track translation sets as one unit'),
+        '#description' => $this->t('When a node is part of a translation set, record statistics for the originating node instead. This allows for a translation set to be treated as a single unit.'),
         '#default_value' => $config->get('translation_set'),
       ];
     }
 
     $form['advanced']['codesnippet'] = [
       '#type' => 'details',
-      '#title' => t('Custom JavaScript code'),
+      '#title' => $this->t('Custom JavaScript code'),
       '#open' => TRUE,
-      '#description' => t('You can add custom Piwik <a href=":snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'http://piwik.org/docs/javascript-tracking/'])
+      '#description' => $this->t('You can add custom Piwik <a href=":snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'http://piwik.org/docs/javascript-tracking/'])
     ];
     $form['advanced']['codesnippet']['piwik_codesnippet_before'] = [
       '#type' => 'textarea',
-      '#title' => t('Code snippet (before)'),
+      '#title' => $this->t('Code snippet (before)'),
       '#default_value' => $config->get('codesnippet.before'),
       '#rows' => 5,
-      '#description' => t('Code in this textarea will be added <strong>before</strong> _paq.push(["trackPageView"]).'),
+      '#description' => $this->t('Code in this textarea will be added <strong>before</strong> _paq.push(["trackPageView"]).'),
     ];
     $form['advanced']['codesnippet']['piwik_codesnippet_after'] = [
       '#type' => 'textarea',
-      '#title' => t('Code snippet (after)'),
+      '#title' => $this->t('Code snippet (after)'),
       '#default_value' => $config->get('codesnippet.after'),
       '#rows' => 5,
-      '#description' => t('Code in this textarea will be added <strong>after</strong> _paq.push(["trackPageView"]). This is useful if you\'d like to track a site in two accounts.'),
+      '#description' => $this->t('Code in this textarea will be added <strong>after</strong> _paq.push(["trackPageView"]). This is useful if you\'d like to track a site in two accounts.'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -594,7 +594,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
    * @code
    * $form['my_node_text_element'] = [
    *   '#type' => 'textfield',
-   *   '#title' => t('Some text to token-ize that has a node context.'),
+   *   '#title' => $this->t('Some text to token-ize that has a node context.'),
    *   '#default_value' => 'The title of this node is [node:title].',
    *   '#element_validate' => [[get_class($this), 'tokenElementValidate']],
    * ];
