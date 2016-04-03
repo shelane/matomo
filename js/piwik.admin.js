@@ -70,6 +70,9 @@
           vals.push(Drupal.t('Outbound links'));
           vals.push(Drupal.t('Downloads'));
         }
+        if ($('input#edit-piwik-trackcolorbox', context).is(':checked')) {
+          vals.push(Drupal.t('Colorbox'));
+        }        
         if (!vals.length) {
           return Drupal.t('Not tracked');
         }

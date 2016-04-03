@@ -51,6 +51,9 @@ piwik.settings:
         files_extensions:
           type: string
           label: 'File extension list'
+        colorbox:
+          type: boolean
+          label: 'Track content in colorbox modal dialogs'
         userid:
           type: boolean
           label: 'Track User ID'

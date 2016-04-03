@@ -78,6 +78,10 @@ function piwik_page_attachments(array &$page) {
     $link_settings = [];
     $link_settings['trackMailto'] = $config->get('track.mailto');
 
+    if ((\Drupal::moduleHandler()->moduleExists('colorbox')) && $track_colorbox = $config->get('track.colorbox')) {
+      $link_settings['trackColorbox'] = $track_colorbox;
+    }
+
     $page['#attached']['drupalSettings']['piwik'] = $link_settings;
     $page['#attached']['library'][] = 'piwik/piwik';
 

@@ -256,6 +256,18 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
+    $colorbox_dependencies = '<div class="admin-requirements">';
+    $colorbox_dependencies .= t('Requires: !module-list', ['!module-list' => (\Drupal::moduleHandler()->moduleExists('colorbox') ? t('@module (<span class="admin-enabled">enabled</span>)', ['@module' => 'Colorbox']) : t('@module (<span class="admin-missing">disabled</span>)', ['@module' => 'Colorbox']))]);
+    $colorbox_dependencies .= '</div>';
+
+    $form['tracking']['linktracking']['piwik_trackcolorbox'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Track content in colorbox modal dialogs'),
+      '#description' => t('Enable to track the content shown in colorbox modal windows.') . $colorbox_dependencies,
+      '#default_value' => $config->get('track.colorbox'),
+      '#disabled' => (\Drupal::moduleHandler()->moduleExists('colorbox') ? FALSE : TRUE),
+    );
+
     // Message specific configurations.
     $form['tracking']['messagetracking'] = [
       '#type' => 'details',
@@ -567,6 +579,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ->set('domain_mode', $form_state->getValue('piwik_domain_mode'))
       ->set('track.files', $form_state->getValue('piwik_trackfiles'))
       ->set('track.files_extensions', $form_state->getValue('piwik_trackfiles_extensions'))
+      ->set('track.colorbox', $form_state->getValue('piwik_trackcolorbox'))
       ->set('track.userid', $form_state->getValue('piwik_trackuserid'))
       ->set('track.mailto', $form_state->getValue('piwik_trackmailto'))
       ->set('track.messages', $form_state->getValue('piwik_trackmessages'))
