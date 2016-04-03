@@ -16,10 +16,11 @@ source:
     - piwik_roles
     - piwik_site_id
     - piwik_site_search
-    - piwik_trackmessages
     - piwik_track
+    - piwik_trackcolorbox
     - piwik_trackfiles_extensions
     - piwik_trackmailto
+    - piwik_trackmessages
     - piwik_trackuserid
     - piwik_translation_set
     - piwik_url_http
@@ -39,6 +40,7 @@ process:
   domain_mode: piwik_domain_mode
   'privacy/donottrack': piwik_privacy_donottrack
   site_id: piwik_site_id
+  'track/colorbox': piwik_trackcolorbox
   'track/files': piwik_track
   'track/files_extensions': piwik_trackfiles_extensions
   'track/mailto': piwik_trackmailto
