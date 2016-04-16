@@ -194,10 +194,7 @@ function piwik_page_attachments(array &$page) {
 
     // Track logged in users across all devices.
     if ($config->get('track.userid') && $account->isAuthenticated()) {
-      // The USER_ID value should be a unique, persistent, and non-personally
-      // identifiable string identifier that represents a user or signed-in
-      // account across devices.
-      $script .= '_paq.push(["setUserId", ' . Json::encode(Crypt::hmacBase64($account->id(), \Drupal::service('private_key')->get() . Settings::getHashSalt())) . ']);';
+      $script .= '_paq.push(["setUserId", ' . Json::encode(piwik_user_id_hash($account->id())) . ']);';
     }
 
     // Set custom data.
@@ -322,6 +319,23 @@ function piwik_page_attachments(array &$page) {
       'piwik_tracking_script'
     ];
   }
+}
+
+/**
+ * Generate user id hash to implement USER_ID.
+ *
+ * The USER_ID value should be a unique, persistent, and non-personally
+ * identifiable string identifier that represents a user or signed-in
+ * account across devices.
+ *
+ * @param int $uid
+ *   User id.
+ *
+ * @return string
+ *   User id hash.
+ */
+function piwik_user_id_hash($uid) {
+  return Crypt::hmacBase64($uid, \Drupal::service('private_key')->get() . Settings::getHashSalt());
 }
 
 /**
