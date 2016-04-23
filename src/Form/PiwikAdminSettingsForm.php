@@ -257,7 +257,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     ];
 
     $colorbox_dependencies = '<div class="admin-requirements">';
-    $colorbox_dependencies .= t('Requires: !module-list', ['!module-list' => (\Drupal::moduleHandler()->moduleExists('colorbox') ? t('@module (<span class="admin-enabled">enabled</span>)', ['@module' => 'Colorbox']) : t('@module (<span class="admin-missing">disabled</span>)', ['@module' => 'Colorbox']))]);
+    $colorbox_dependencies .= t('Requires: @module-list', ['@module-list' => (\Drupal::moduleHandler()->moduleExists('colorbox') ? t('@module (<span class="admin-enabled">enabled</span>)', ['@module' => 'Colorbox']) : t('@module (<span class="admin-missing">disabled</span>)', ['@module' => 'Colorbox']))]);
     $colorbox_dependencies .= '</div>';
 
     $form['tracking']['linktracking']['piwik_trackcolorbox'] = array(
