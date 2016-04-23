@@ -247,7 +247,8 @@ function piwik_page_attachments(array &$page) {
     // Site search tracking support.
     // NOTE: It's recommended not to call trackPageView() on the Site Search
     // Result page.
-    if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && (strpos(\Drupal::routeMatch()->getRouteName(), 'search.view') === 0) && $keys = piwik_search_get_keys()) {
+    $keys = ($request->query->has('keys') ? trim($request->get('keys')) : '');
+    if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && (strpos(\Drupal::routeMatch()->getRouteName(), 'search.view') === 0) && !empty($keys)) {
       // Parameters:
       // 1. Search keyword searched for. Example: "Banana"
       // 2. Search category selected in your search engine. If you do not need
@@ -454,28 +455,6 @@ function piwik_preprocess_item_list__search_results(&$variables) {
       'piwik_search_script'
     ];
   }
-}
-
-/**
- * Helper function for grabbing search keys. Function is missing in D8.
- *
- * http://api.drupal.org/api/function/search_get_keys/6
- */
-function piwik_search_get_keys() {
-  static $return;
-  if (!isset($return)) {
-    // Extract keys as remainder of path.
-    $path = explode('/', Url::fromRoute('<current>')->toString(), 3);
-
-    // Based on Drupal\search\Controller\SearchController::view
-    // Build the form first, because it may redirect during the submit,
-    // and we don't want to build the results based on last time's request.
-    $request = \Drupal::request();
-    $keys = ($request->query->has('keys') ? trim($request->get('keys')) : '');
-
-    $return = count($path) == 3 ? $path[2] : $keys;
-  }
-  return $return;
 }
 
 /**
