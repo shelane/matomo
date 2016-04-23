@@ -247,8 +247,7 @@ function piwik_page_attachments(array &$page) {
     // Site search tracking support.
     // NOTE: It's recommended not to call trackPageView() on the Site Search
     // Result page.
-    $keys = ($request->query->has('keys') ? trim($request->get('keys')) : '');
-    if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && (strpos(\Drupal::routeMatch()->getRouteName(), 'search.view') === 0) && !empty($keys)) {
+    if (\Drupal::moduleHandler()->moduleExists('search') && $config->get('track.site_search') && (strpos(\Drupal::routeMatch()->getRouteName(), 'search.view') === 0) && $keys = ($request->query->has('keys') ? trim($request->get('keys')) : '')) {
       // Parameters:
       // 1. Search keyword searched for. Example: "Banana"
       // 2. Search category selected in your search engine. If you do not need
