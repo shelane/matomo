@@ -502,7 +502,7 @@ function _piwik_cache($location, $synchronize = FALSE) {
           \Drupal::logger('piwik')->info('Locally cached tracking code file has been saved.');
 
           // Return the local JS file path.
-          return file_create_url($file_destination);
+          return file_url_transform_relative(file_create_url($file_destination));
         }
       }
     }
@@ -512,7 +512,7 @@ function _piwik_cache($location, $synchronize = FALSE) {
   }
   else {
     // Return the local JS file path.
-    return file_create_url($file_destination);
+    return file_url_transform_relative(file_create_url($file_destination));
   }
 }
 
