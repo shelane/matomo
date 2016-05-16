@@ -338,11 +338,11 @@ function piwik_user_id_hash($uid) {
 }
 
 /**
- * Implements hook_field_extra_fields().
+ * Implements hook_entity_extra_field_info().
  */
-function piwik_field_extra_fields() {
+function piwik_entity_extra_field_info() {
   $extra['user']['user']['form']['piwik'] = [
-    'label' => t('Piwik configuration'),
+    'label' => t('Piwik settings'),
     'description' => t('Piwik module form element.'),
     'weight' => 3,
   ];
