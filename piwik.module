@@ -359,7 +359,7 @@ function piwik_form_user_form_alter(&$form, FormStateInterface $form_state) {
   $config = \Drupal::config('piwik.settings');
   $account = $form_state->getFormObject()->getEntity();
 
-  if ($account->hasPermission('opt-in or out of tracking') && ($visibility_users = $config->get('visibility.user_account_mode')) != 0 && _piwik_visibility_roles($account)) {
+  if ($account->hasPermission('opt-in or out of piwik tracking') && ($visibility_users = $config->get('visibility.user_account_mode')) != 0 && _piwik_visibility_roles($account)) {
     $account_data_piwik = \Drupal::service('user.data')->get('piwik', $account->id());
 
     $form['piwik'] = [

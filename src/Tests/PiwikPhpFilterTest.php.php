@@ -34,7 +34,7 @@ class PiwikPhpFilterTest extends WebTestBase {
     $permissions_admin_user = [
       'access administration pages',
       'administer piwik',
-      'use PHP for tracking visibility',
+      'use PHP for piwik tracking visibility',
     ];
     $this->admin_user = $this->drupalCreateUser($permissions_admin_user);
 

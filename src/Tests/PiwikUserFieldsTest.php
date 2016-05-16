@@ -33,7 +33,7 @@ class PiwikUserFieldsTestTest extends WebTestBase {
     $permissions = [
       'access administration pages',
       'administer user form display',
-      'opt-in or out of tracking',
+      'opt-in or out of piwik tracking',
     ];
 
     // User to set up piwik.
