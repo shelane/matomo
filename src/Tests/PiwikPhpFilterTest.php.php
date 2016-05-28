@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\piwik\Tests\PiwikPhpFilterTest.
- */
-
 namespace Drupal\piwik\Tests;
 
 use Drupal\Component\Utility\Html;

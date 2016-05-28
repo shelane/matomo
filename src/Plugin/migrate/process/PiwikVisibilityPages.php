@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\piwik\Plugin\migrate\process\PiwikVisibilityPages.
- */
-
 namespace Drupal\piwik\Plugin\migrate\process;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;

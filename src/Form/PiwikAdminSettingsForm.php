@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\piwik\Form\PiwikAdminSettingsForm.
- */
-
 namespace Drupal\piwik\Form;
 
 use Drupal\Component\Utility\Unicode;

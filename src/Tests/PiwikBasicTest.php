@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\piwik\Tests\PiwikBasicTest.
- */
-
 namespace Drupal\piwik\Tests;
 
 use Drupal\Core\Session\AccountInterface;

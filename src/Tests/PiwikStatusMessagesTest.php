@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\piwik\Tests\PiwikStatusMessagesTest.
- */
-
 namespace Drupal\piwik\Tests;
 
 use Drupal\simpletest\WebTestBase;
