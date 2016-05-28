@@ -315,7 +315,7 @@ function piwik_page_attachments(array &$page) {
         '#tag' => 'script',
         '#value' => $script,
       ],
-      'piwik_tracking_script'
+      'piwik_tracking_script',
     ];
   }
 }
@@ -450,7 +450,7 @@ function piwik_preprocess_item_list__search_results(&$variables) {
         '#value' => 'window.piwik_search_results = ' . intval($pager_total_items[0]) . ';',
         '#weight' => JS_LIBRARY - 1,
       ],
-      'piwik_search_script'
+      'piwik_search_script',
     ];
   }
 }

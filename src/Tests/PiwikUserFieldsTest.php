@@ -54,13 +54,15 @@ class PiwikUserFieldsTestTest extends WebTestBase {
     $this->assertResponse(200);
     $this->assertNoRaw(t('Piwik settings'), '[testPiwikUserFields]: Piwik settings field does not exist on user edit page.');
 
-    // Tracking on by default, users with opt-in or out of tracking permission can opt out.
+    // Tracking on by default, users with opt-in or out of tracking permission
+    // can opt out.
     $this->config('piwik.settings')->set('visibility.user_account_mode', 1)->save();
     $this->drupalGet('user/' . $this->admin_user->id() . '/edit');
     $this->assertResponse(200);
     $this->assertRaw(t('Users are tracked by default, but you are able to opt out.'), '[testPiwikUserFields]: Piwik settings field exists on on user edit page');
 
-    // Tracking off by default, users with opt-in or out of tracking permission can opt in.
+    // Tracking off by default, users with opt-in or out of tracking permission
+    // can opt in.
     $this->config('piwik.settings')->set('visibility.user_account_mode', 2)->save();
     $this->drupalGet('user/' . $this->admin_user->id() . '/edit');
     $this->assertResponse(200);

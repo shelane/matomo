@@ -49,7 +49,7 @@ class PiwikStatusMessagesTest extends WebTestBase {
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Username field is required."]);', '[testPiwikStatusMessages]: trackEvent "Username field is required." is shown.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Password field is required."]);', '[testPiwikStatusMessages]: trackEvent "Password field is required." is shown.');
 
-    // @todo: investigate why drupal_set_message() fails.
+    // @todo: Testing this drupal_set_message() requires an extra test module.
     //drupal_set_message('Example status message.', 'status');
     //drupal_set_message('Example warning message.', 'warning');
     //drupal_set_message('Example error message.', 'error');

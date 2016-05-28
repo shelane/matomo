@@ -437,7 +437,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#type' => 'details',
       '#title' => $this->t('Custom JavaScript code'),
       '#open' => TRUE,
-      '#description' => $this->t('You can add custom Piwik <a href=":snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'http://piwik.org/docs/javascript-tracking/'])
+      '#description' => $this->t('You can add custom Piwik <a href=":snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'http://piwik.org/docs/javascript-tracking/']),
     ];
     $form['advanced']['codesnippet']['piwik_codesnippet_before'] = [
       '#type' => 'textarea',
@@ -497,7 +497,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         $form_state->setErrorByName('piwik_url_http', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
           '@url' => UrlHelper::filterBadProtocol($url),
           '@error' => $result->getReasonPhrase(),
-          '@code' => $result->getStatusCode()
+          '@code' => $result->getStatusCode(),
         ]));
       }
     }
@@ -505,7 +505,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       $form_state->setErrorByName('piwik_url_http', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
         '@url' => UrlHelper::filterBadProtocol($url),
         '@error' => $exception->getMessage(),
-        '@code' => $exception->getCode()
+        '@code' => $exception->getCode(),
       ]));
     }
 
@@ -518,7 +518,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
           $form_state->setErrorByName('piwik_url_https', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
             '@url' => UrlHelper::filterBadProtocol($url),
             '@error' => $result->getReasonPhrase(),
-            '@code' => $result->getStatusCode()
+            '@code' => $result->getStatusCode(),
           ]));
         }
       }
@@ -526,7 +526,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         $form_state->setErrorByName('piwik_url_https', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
           '@url' => UrlHelper::filterBadProtocol($url),
           '@error' => $exception->getMessage(),
-          '@code' => $exception->getCode()
+          '@code' => $exception->getCode(),
         ]));
       }
     }

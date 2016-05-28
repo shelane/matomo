@@ -45,7 +45,7 @@ class PiwikUninstallTest extends WebTestBase {
     $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
     $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
 
-    // Enable local caching of piwik.js
+    // Enable local caching of piwik.js.
     $this->config('piwik.settings')->set('cache', 1)->save();
 
     // Load front page to get the piwik.js downloaded into local cache. But
