@@ -13,6 +13,13 @@ use Drupal\simpletest\WebTestBase;
 class PiwikBasicTest extends WebTestBase {
 
   /**
+   * User without permissions to use snippets.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $noSnippetUser;
+
+  /**
    * Modules to enable.
    *
    * @var array
@@ -31,6 +38,8 @@ class PiwikBasicTest extends WebTestBase {
     ];
 
     // User to set up piwik.
+    $this->noSnippetUser = $this->drupalCreateUser($permissions);
+    $permissions[] = 'add JS snippets for piwik';
     $this->admin_user = $this->drupalCreateUser($permissions);
     $this->drupalLogin($this->admin_user);
   }
@@ -57,6 +66,22 @@ class PiwikBasicTest extends WebTestBase {
     $this->drupalPostForm('admin/config/system/piwik', $edit, t('Save configuration'));
     $this->assertRaw('The validation of "http://www.example.com/piwik/piwik.php" failed with an exception', '[testPiwikConfiguration]: HTTP URL exception shown.');
     $this->assertRaw('The validation of "https://www.example.com/piwik/piwik.php" failed with an exception', '[testPiwikConfiguration]: HTTPS URL exception shown.');
+
+    // User should have access to code snippets.
+    $this->assertFieldByName('piwik_codesnippet_before');
+    $this->assertFieldByName('piwik_codesnippet_after');
+    $this->assertNoFieldByXPath("//textarea[@name='piwik_codesnippet_before' and @disabled='disabled']", NULL, '"Code snippet (before)" is enabled.');
+    $this->assertNoFieldByXPath("//textarea[@name='piwik_codesnippet_after' and @disabled='disabled']", NULL, '"Code snippet (after)" is enabled.');
+
+    // Login as user without JS permissions.
+    $this->drupalLogin($this->noSnippetUser);
+    $this->drupalGet('admin/config/system/piwik');
+
+    // User should *not* have access to snippets, but create fields.
+    $this->assertFieldByName('piwik_codesnippet_before');
+    $this->assertFieldByName('piwik_codesnippet_after');
+    $this->assertFieldByXPath("//textarea[@name='piwik_codesnippet_before' and @disabled='disabled']", NULL, '"Code snippet (before)" is disabled.');
+    $this->assertFieldByXPath("//textarea[@name='piwik_codesnippet_after' and @disabled='disabled']", NULL, '"Code snippet (after)" is disabled.');
   }
 
   /**
