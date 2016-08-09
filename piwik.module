@@ -32,7 +32,7 @@ function piwik_help($path, $arg) {
  * Implementation of hook_perm().
  */
 function piwik_perm() {
-  return array('administer piwik', 'opt-in or out of tracking', 'use PHP for tracking visibility');
+  return array('administer piwik', 'opt-in or out of tracking', 'use PHP for tracking visibility', 'add JS snippets for piwik');
 }
 
 /**
