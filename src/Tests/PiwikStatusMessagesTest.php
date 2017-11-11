@@ -53,7 +53,7 @@ class PiwikStatusMessagesTest extends WebTestBase {
     $this->drupalGet('piwik-test/drupal-set-message');
     $this->assertNoRaw('_paq.push(["trackEvent", "Messages", "Status message", "Example status message."]);', '[testPiwikStatusMessages]: Example status message is not enabled for tracking.');
     $this->assertNoRaw('_paq.push(["trackEvent", "Messages", "Warning message", "Example warning message."]);', '[testPiwikStatusMessages]: Example warning message is not enabled for tracking.');
-    $this->assertRaw('_paq.push(["trackEvent"", "Messages", "Error message", "Example error message."]);', '[testPiwikStatusMessages]: Example error message is shown.');
+    $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Example error message."]);', '[testPiwikStatusMessages]: Example error message is shown.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Example error message with html tags and link."]);', '[testPiwikStatusMessages]: HTML has been stripped successful from Example error message with html tags and link.');
 
     // Enable logging of status, warnings and errors.
@@ -61,7 +61,7 @@ class PiwikStatusMessagesTest extends WebTestBase {
 
     $this->drupalGet('piwik-test/drupal-set-message');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Status message", "Example status message."]);', '[testPiwikStatusMessages]: Example status message is enabled for tracking.');
-    $this->assertRaw('_paq.push(["trackEvent"", "Messages", "Warning message", "Example warning message."]);', '[testPiwikStatusMessages]: Example warning message is enabled for tracking.');
+    $this->assertRaw('_paq.push(["trackEvent", "Messages", "Warning message", "Example warning message."]);', '[testPiwikStatusMessages]: Example warning message is enabled for tracking.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Example error message."]);', '[testPiwikStatusMessages]: Example error message is shown.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Example error message with html tags and link."]);', '[testPiwikStatusMessages]: HTML has been stripped successful from Example error message with html tags and link.');
   }
