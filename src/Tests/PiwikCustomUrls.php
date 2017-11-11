@@ -4,6 +4,7 @@ namespace Drupal\piwik\Tests;
 
 use Drupal\Core\Session\AccountInterface;
 use Drupal\simpletest\WebTestBase;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Test custom url functionality of Piwik module.
@@ -47,10 +48,10 @@ class PiwikCustomUrls extends WebTestBase {
     $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
 
     $this->drupalGet('user/password', ['query' => ['name' => 'foo']]);
-    $this->assertRaw('_paq.push(["setCustomUrl", "' . $base_path . 'user/password"]);');    
+    $this->assertRaw('_paq.push(["setCustomUrl", ' . Json::encode($base_path . 'user/password') . ']);');    
 
     $this->drupalGet('user/password', ['query' => ['name' => 'foo@example.com']]);
-    $this->assertRaw('_paq.push(["setCustomUrl", "' . $base_path . 'user/password"]);');
+    $this->assertRaw('_paq.push(["setCustomUrl", ' . Json::encode($base_path . 'user/password') . ']);');
 
     $this->drupalGet('user/password');
     $this->assertNoRaw('_paq.push(["setCustomUrl", "', '[testPiwikCustomUrls]: Custom url not set.');
