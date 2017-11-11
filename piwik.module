@@ -48,7 +48,6 @@ function piwik_page_attachments(array &$page) {
   $config = \Drupal::config('piwik.settings');
   $id = $config->get('site_id');
   $request = \Drupal::request();
-  $base_path = base_path();
 
   // Add module cache tags.
   $page['#cache']['tags'] = Cache::mergeTags(isset($page['#cache']['tags']) ? $page['#cache']['tags'] : [], $config->getCacheTags());
