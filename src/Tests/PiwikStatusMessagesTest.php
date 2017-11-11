@@ -16,7 +16,7 @@ class PiwikStatusMessagesTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = ['piwik'];
+  public static $modules = ['piwik', 'piwik_test'];
 
   /**
    * {@inheritdoc}
