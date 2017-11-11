@@ -57,6 +57,7 @@ class PiwikUninstallTest extends WebTestBase {
     // Test if the directory and piwik.js exists.
     $this->assertTrue(file_prepare_directory($cache_path), 'Cache directory "public://piwik" has been found.');
     $this->assertTrue(file_exists($cache_path . '/piwik.js'), 'Cached piwik.js tracking file has been found.');
+    $this->assertTrue(file_exists($cache_path . '/piwik.js.gz'), 'Cached piwik.js.gz tracking file has been found.');
 
     // Uninstall the module.
     $edit = [];
