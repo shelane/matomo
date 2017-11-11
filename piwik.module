@@ -515,7 +515,7 @@ function _piwik_cache($location, $synchronize = FALSE) {
           // There is no need to flush JS here as core refreshes JS caches
           // automatically, if new files are added.
           file_unmanaged_save_data($data, $file_destination, FILE_EXISTS_REPLACE);
-                  // Based on Drupal Core class AssetDumper.
+          // Based on Drupal Core class AssetDumper.
           if (extension_loaded('zlib') && \Drupal::config('system.performance')->get('js.gzip')) {
             file_unmanaged_save_data(gzencode($data, 9, FORCE_GZIP), $file_destination . '.gz', FILE_EXISTS_REPLACE);
           }
