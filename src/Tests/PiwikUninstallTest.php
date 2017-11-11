@@ -52,7 +52,12 @@ class PiwikUninstallTest extends WebTestBase {
     // loading the piwik.js is not possible as "url_http" is a test dummy only.
     // Create a dummy file to complete the rest of the tests.
     file_prepare_directory($cache_path, FILE_CREATE_DIRECTORY);
-    file_unmanaged_save_data($this->randomMachineName(16), $cache_path . '/piwik.js');
+    $data = $this->randomMachineName(128);
+    $file_destination = $cache_path . '/piwik.js';
+    foreach (array_values($account->getRoles()) as $user_role) {
+      file_unmanaged_save_data($data, $cache_path . '/piwik.js');
+      file_unmanaged_save_data(gzencode($data, 9, FORCE_GZIP), $file_destination . '.gz', FILE_EXISTS_REPLACE);
+    }
 
     // Test if the directory and piwik.js exists.
     $this->assertTrue(file_prepare_directory($cache_path), 'Cache directory "public://piwik" has been found.');
