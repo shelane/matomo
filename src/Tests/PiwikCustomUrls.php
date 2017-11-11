@@ -47,7 +47,7 @@ class PiwikCustomUrls extends WebTestBase {
     $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
 
     $this->drupalGet('user/password', ['query' => ['name' => 'foo']]);
-    $this->assertRaw('_paq.push(["setCustomUrl", ' . Json::encode($base_path . 'user/password') . ']);');    
+    $this->assertRaw('_paq.push(["setCustomUrl", ' . Json::encode($base_path . 'user/password') . ']);');
 
     $this->drupalGet('user/password', ['query' => ['name' => 'foo@example.com']]);
     $this->assertRaw('_paq.push(["setCustomUrl", ' . Json::encode($base_path . 'user/password') . ']);');
