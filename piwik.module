@@ -48,6 +48,7 @@ function piwik_page_attachments(array &$page) {
   $config = \Drupal::config('piwik.settings');
   $id = $config->get('site_id');
   $request = \Drupal::request();
+  $base_path = base_path();
 
   // Add module cache tags.
   $page['#cache']['tags'] = Cache::mergeTags(isset($page['#cache']['tags']) ? $page['#cache']['tags'] : [], $config->getCacheTags());
@@ -142,6 +143,18 @@ function piwik_page_attachments(array &$page) {
     }
     elseif ($status == '404') {
       $set_document_title = '"404/URL = " + encodeURIComponent(document.location.pathname+document.location.search) + "/From = " + encodeURIComponent(document.referrer)';
+    }
+
+    // #2693595: User has entered an invalid login and clicked on forgot
+    // password link. This link contains the username or email address and may
+    // get send to Google if we do not override it. Override only if 'name'
+    // query param exists. Last custom url condition, this need to win.
+    //
+    // URLs to protect are:
+    // - user/password?name=username
+    // - user/password?name=foo@example.com
+    if (\Drupal::routeMatch()->getRouteName() == 'user.pass' && $request->query->has('name')) {
+      $set_custom_url = Json::encode(Url::fromRoute('user.pass'));
     }
 
     // Add custom variables.
