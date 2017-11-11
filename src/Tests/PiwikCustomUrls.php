@@ -27,7 +27,7 @@ class PiwikCustomUrls extends WebTestBase {
 
     $permissions = [
       'access administration pages',
-      'administer google analytics',
+      'administer piwik',
       'administer modules',
       'administer site configuration',
     ];
