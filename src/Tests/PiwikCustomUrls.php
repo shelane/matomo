@@ -41,7 +41,7 @@ class PiwikCustomUrls extends WebTestBase {
    */
   public function testPiwikUserPasswordPage() {
     $base_path = base_path();
-    $site_id = '2';
+    $site_id = '1';
     $this->config('piwik.settings')->set('site_id', $site_id)->save();
     $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
     $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
