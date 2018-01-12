@@ -1,18 +1,18 @@
-# Schema for the configuration files of the piwik module.
+# Schema for the configuration files of the matomo module.
 
-piwik.settings:
+matomo.settings:
   type: config_object
-  label: 'Piwik settings'
+  label: 'Matomo settings'
   mapping:
     site_id:
       type: string
-      label: 'Piwik site ID'
+      label: 'Matomo site ID'
     url_http:
       type: string
-      label: 'Piwik HTTP URL'
+      label: 'Matomo HTTP URL'
     url_https:
       type: string
-      label: 'Piwik HTTPS URL'
+      label: 'Matomo HTTPS URL'
     domain_mode:
       type: integer
       label: 'What are you tracking?'

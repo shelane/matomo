@@ -1,22 +1,22 @@
 <?php
 
-namespace Drupal\piwik\Tests;
+namespace Drupal\matomo\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
 /**
- * Test uninstall functionality of Piwik module.
+ * Test uninstall functionality of Matomo module.
  *
- * @group Piwik
+ * @group Matomo
  */
-class PiwikUninstallTest extends WebTestBase {
+class MatomoUninstallTest extends WebTestBase {
 
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = ['piwik'];
+  public static $modules = ['matomo'];
 
   /**
    * {@inheritdoc}
@@ -26,11 +26,11 @@ class PiwikUninstallTest extends WebTestBase {
 
     $permissions = [
       'access administration pages',
-      'administer piwik',
+      'administer matomo',
       'administer modules',
     ];
 
-    // User to set up piwik.
+    // User to set up matomo.
     $this->admin_user = $this->drupalCreateUser($permissions);
     $this->drupalLogin($this->admin_user);
   }
@@ -38,15 +38,15 @@ class PiwikUninstallTest extends WebTestBase {
   /**
    * Tests if the module cleans up the disk on uninstall.
    */
-  public function testPiwikUninstall() {
-    $cache_path = 'public://piwik';
+  public function testMatomoUninstall() {
+    $cache_path = 'public://matomo';
     $site_id = '1';
-    $this->config('piwik.settings')->set('site_id', $site_id)->save();
-    $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
-    $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
+    $this->config('matomo.settings')->set('site_id', $site_id)->save();
+    $this->config('matomo.settings')->set('url_http', 'http://www.example.com/matomo/')->save();
+    $this->config('matomo.settings')->set('url_https', 'https://www.example.com/matomo/')->save();
 
     // Enable local caching of piwik.js.
-    $this->config('piwik.settings')->set('cache', 1)->save();
+    $this->config('matomo.settings')->set('cache', 1)->save();
 
     // Load front page to get the piwik.js downloaded into local cache. But
     // loading the piwik.js is not possible as "url_http" is a test dummy only.
@@ -58,13 +58,13 @@ class PiwikUninstallTest extends WebTestBase {
     file_unmanaged_save_data(gzencode($data, 9, FORCE_GZIP), $file_destination . '.gz', FILE_EXISTS_REPLACE);
 
     // Test if the directory and piwik.js exists.
-    $this->assertTrue(file_prepare_directory($cache_path), 'Cache directory "public://piwik" has been found.');
+    $this->assertTrue(file_prepare_directory($cache_path), 'Cache directory "public://matomo" has been found.');
     $this->assertTrue(file_exists($cache_path . '/piwik.js'), 'Cached piwik.js tracking file has been found.');
     $this->assertTrue(file_exists($cache_path . '/piwik.js.gz'), 'Cached piwik.js.gz tracking file has been found.');
 
     // Uninstall the module.
     $edit = [];
-    $edit['uninstall[piwik]'] = TRUE;
+    $edit['uninstall[matomo]'] = TRUE;
     $this->drupalPostForm('admin/modules/uninstall', $edit, t('Uninstall'));
     $this->assertNoText(\Drupal::translation()->translate('Configuration deletions'), 'No configuration deletions listed on the module install confirmation page.');
     $this->drupalPostForm(NULL, NULL, t('Uninstall'));
@@ -72,7 +72,7 @@ class PiwikUninstallTest extends WebTestBase {
 
     // Test if the directory and all files have been removed.
     $this->assertFalse(file_scan_directory($cache_path, '/.*/'), 'Cached JavaScript files have been removed.');
-    $this->assertFalse(file_prepare_directory($cache_path), 'Cache directory "public://piwik" has been removed.');
+    $this->assertFalse(file_prepare_directory($cache_path), 'Cache directory "public://matomo" has been removed.');
   }
 
 }

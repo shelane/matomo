@@ -1,9 +1,9 @@
-name: 'Piwik Web Analytics'
+name: 'Matomo Web Analytics'
 type: module
-description: "Adds Piwik javascript tracking code to all your site's pages."
+description: "Adds Matomo javascript tracking code to all your site's pages."
 package: Statistics
 core: 8.x
-configure: piwik.admin_settings_form
+configure: matomo.admin_settings_form
 test_dependencies:
   - php:php
   - token:token

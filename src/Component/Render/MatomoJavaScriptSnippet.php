@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\piwik\Component\Render;
+namespace Drupal\matomo\Component\Render;
 
 use Drupal\Component\Render\MarkupInterface;
 
 /**
  * Formats a string for JavaScript display.
  */
-class PiwikJavaScriptSnippet implements MarkupInterface {
+class MatomoJavaScriptSnippet implements MarkupInterface {
 
   /**
    * The string to escape.

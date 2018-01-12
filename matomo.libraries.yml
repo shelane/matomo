@@ -1,15 +1,15 @@
-piwik:
+matomo:
   version: VERSION
   js:
-    js/piwik.js: {}
+    js/matomo.js: {}
   dependencies:
     - core/jquery
     - core/drupalSettings
 
-piwik.admin:
+matomo.admin:
   version: VERSION
   js:
-    js/piwik.admin.js: {}
+    js/matomo.admin.js: {}
   dependencies:
     - core/jquery
     - core/drupal

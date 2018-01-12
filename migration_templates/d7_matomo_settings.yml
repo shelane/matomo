@@ -34,7 +34,7 @@ process:
   'codesnippet/after': piwik_codesnippet_after
   'codesnippet/before': piwik_codesnippet_before
   'custom/variable':
-    plugin: piwik_custom_vars
+    plugin: matomo_custom_vars
     source:
       - piwik_custom_var
   domain_mode: piwik_domain_mode
@@ -53,7 +53,7 @@ process:
   'visibility/user_account_mode': piwik_custom
   'visibility/request_path_mode': piwik_visibility_pages
   'visibility/request_path_pages':
-    plugin: piwik_visibility_pages
+    plugin: matomo_visibility_pages
     source:
       - piwik_visibility_pages
       - piwik_pages
@@ -62,14 +62,14 @@ process:
     skip_php: true
   'visibility/user_role_mode': piwik_visibility_roles
   'visibility/user_role_roles':
-    plugin: piwik_visibility_roles
+    plugin: matomo_visibility_roles
     source:
       - piwik_roles
   page_title_hierarchy: piwik_page_title_hierarchy
   page_title_hierarchy_exclude_home: piwik_page_title_hierarchy_exclude_home
 destination:
   plugin: config
-  config_name: piwik.settings
+  config_name: matomo.settings
 migration_dependencies:
   optional:
     - d7_user_role

@@ -11,13 +11,13 @@ use Drupal\Core\Render\BubbleableMetadata;
 /**
  * Implements hook_token_info().
  */
-function piwik_token_info() {
-  $user['piwik-role-names'] = [
+function matomo_token_info() {
+  $user['matomo-role-names'] = [
     'name' => t('User role names'),
     'description' => t('The role names the user account is a member of as comma separated list.'),
     'needs-data' => 'user',
   ];
-  $user['piwik-role-ids'] = [
+  $user['matomo-role-ids'] = [
     'name' => t('User role ids'),
     'description' => t('The role ids the user account is a member of as comma separated list.'),
     'needs-data' => 'user',
@@ -31,7 +31,7 @@ function piwik_token_info() {
 /**
  * Implements hook_tokens().
  */
-function piwik_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+function matomo_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $sanitize = !empty($options['sanitize']);
   $replacements = [];
 
@@ -41,13 +41,13 @@ function piwik_tokens($type, $tokens, array $data, array $options, BubbleableMet
     foreach ($tokens as $name => $original) {
       switch ($name) {
         // Basic user account information.
-        case 'piwik-role-names':
+        case 'matomo-role-names':
           $names = implode(',', $account->getRoles());
           $replacements[$original] = $sanitize ? Html::escape($names) : $names;
           $bubbleable_metadata->addCacheableDependency($account);
           break;
 
-        case 'piwik-role-ids':
+        case 'matomo-role-ids':
           $ids = implode(',', array_keys($account->getRoles()));
           $replacements[$original] = $sanitize ? Html::escape($ids) : $ids;
           $bubbleable_metadata->addCacheableDependency($account);

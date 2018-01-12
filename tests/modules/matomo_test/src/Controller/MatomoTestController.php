@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\piwik_test\Controller;
+namespace Drupal\matomo_test\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 
 /**
  * Controller routines for system_test routes.
  */
-class PiwikTestController extends ControllerBase {
+class MatomoTestController extends ControllerBase {
 
   /**
    * Tests setting messages and removing one before it is displayed.

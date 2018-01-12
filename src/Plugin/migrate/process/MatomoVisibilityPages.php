@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\piwik\Plugin\migrate\process;
+namespace Drupal\matomo\Plugin\migrate\process;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -16,10 +16,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Prefixes paths with a slash.
  *
  * @MigrateProcessPlugin(
- *   id = "piwik_visibility_pages"
+ *   id = "matomo_visibility_pages"
  * )
  */
-class PiwikVisibilityPages extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+class MatomoVisibilityPages extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * The module handler.
@@ -37,7 +37,7 @@ class PiwikVisibilityPages extends ProcessPluginBase implements ContainerFactory
   protected $migrationPlugin;
 
   /**
-   * Whether or not to skip Piwik that use PHP for visibility. Only applies if
+   * Whether or not to skip Matomo that use PHP for visibility. Only applies if
    * the PHP module is not enabled.
    *
    * @var bool

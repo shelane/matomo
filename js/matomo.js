@@ -16,7 +16,7 @@
       // Catch the closest surrounding link of a clicked element.
       $(event.target).closest("a,area").each(function () {
 
-        if (drupalSettings.piwik.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
+        if (drupalSettings.matomo.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
           // Mailto link clicked.
           _paq.push(["trackEvent", "Mails", "Click", this.href.substring(7)]);
         }
@@ -26,7 +26,7 @@
 
     // Colorbox: This event triggers when the transition has completed and the
     // newly loaded content has been revealed.
-    if (drupalSettings.piwik.trackColorbox) {
+    if (drupalSettings.matomo.trackColorbox) {
       $(document).bind("cbox_complete", function () {
         var href = $.colorbox.element().attr("href");
         if (href) {

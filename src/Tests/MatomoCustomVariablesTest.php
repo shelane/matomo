@@ -1,23 +1,23 @@
 <?php
 
-namespace Drupal\piwik\Tests;
+namespace Drupal\matomo\Tests;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\simpletest\WebTestBase;
 
 /**
- * Test custom variables functionality of Piwik module.
+ * Test custom variables functionality of Matomo module.
  *
- * @group Piwik
+ * @group Matomo
  */
-class PiwikCustomVariablesTest extends WebTestBase {
+class MatomoCustomVariablesTest extends WebTestBase {
 
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = ['piwik', 'token'];
+  public static $modules = ['matomo', 'token'];
 
   /**
    * {@inheritdoc}
@@ -27,21 +27,21 @@ class PiwikCustomVariablesTest extends WebTestBase {
 
     $permissions = [
       'access administration pages',
-      'administer piwik',
+      'administer matomo',
     ];
 
-    // User to set up piwik.
+    // User to set up matomo.
     $this->admin_user = $this->drupalCreateUser($permissions);
   }
 
   /**
    * Tests if custom variables are properly added to the page.
    */
-  public function testPiwikCustomVariables() {
+  public function testMatomoCustomVariables() {
     $site_id = '3';
-    $this->config('piwik.settings')->set('site_id', $site_id)->save();
-    $this->config('piwik.settings')->set('url_http', 'http://www.example.com/piwik/')->save();
-    $this->config('piwik.settings')->set('url_https', 'https://www.example.com/piwik/')->save();
+    $this->config('matomo.settings')->set('site_id', $site_id)->save();
+    $this->config('matomo.settings')->set('url_http', 'http://www.example.com/matomo/')->save();
+    $this->config('matomo.settings')->set('url_https', 'https://www.example.com/matomo/')->save();
 
     // Basic test if the feature works.
     $custom_vars = [
@@ -76,11 +76,11 @@ class PiwikCustomVariablesTest extends WebTestBase {
         'scope' => 'visit',
       ],
     ];
-    $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
+    $this->config('matomo.settings')->set('custom.variable', $custom_vars)->save();
     $this->drupalGet('');
 
     foreach ($custom_vars as $slot) {
-      $this->assertRaw('_paq.push(["setCustomVariable", ' . Json::encode($slot['slot']) . ', ' . Json::encode($slot['name']) . ', ' . Json::encode($slot['value']) . ', ' . Json::encode($slot['scope']) . ']);', '[testPiwikCustomVariables]: setCustomVariable ' . $slot['slot'] . ' is shown.');
+      $this->assertRaw('_paq.push(["setCustomVariable", ' . Json::encode($slot['slot']) . ', ' . Json::encode($slot['name']) . ', ' . Json::encode($slot['value']) . ', ' . Json::encode($slot['scope']) . ']);', '[testMatomoCustomVariables]: setCustomVariable ' . $slot['slot'] . ' is shown.');
     }
 
     // Test whether tokens are replaced in custom variable names.
@@ -119,15 +119,15 @@ class PiwikCustomVariablesTest extends WebTestBase {
         'scope' => 'visit',
       ],
     ];
-    $this->config('piwik.settings')->set('custom.variable', $custom_vars)->save();
+    $this->config('matomo.settings')->set('custom.variable', $custom_vars)->save();
     $this->verbose('<pre>' . print_r($custom_vars, TRUE) . '</pre>');
 
     $this->drupalGet('');
-    $this->assertRaw('_paq.push(["setCustomVariable", 1, ' . Json::encode("Name: $site_slogan") . ', ' . Json::encode("Value: $site_slogan") . ', "visit"]', '[testPiwikCustomVariables]: Tokens have been replaced in custom variable.');
-    $this->assertNoRaw('_paq.push(["setCustomVariable", 2,', '[testPiwikCustomVariables]: Value with empty name is not shown.');
-    $this->assertNoRaw('_paq.push(["setCustomVariable", 3,', '[testPiwikCustomVariables]: Name with empty value is not shown.');
-    $this->assertNoRaw('_paq.push(["setCustomVariable", 4,', '[testPiwikCustomVariables]: Empty name and value is not shown.');
-    $this->assertNoRaw('_paq.push(["setCustomVariable", 5,', '[testPiwikCustomVariables]: Empty name and value is not shown.');
+    $this->assertRaw('_paq.push(["setCustomVariable", 1, ' . Json::encode("Name: $site_slogan") . ', ' . Json::encode("Value: $site_slogan") . ', "visit"]', '[testMatomoCustomVariables]: Tokens have been replaced in custom variable.');
+    $this->assertNoRaw('_paq.push(["setCustomVariable", 2,', '[testMatomoCustomVariables]: Value with empty name is not shown.');
+    $this->assertNoRaw('_paq.push(["setCustomVariable", 3,', '[testMatomoCustomVariables]: Name with empty value is not shown.');
+    $this->assertNoRaw('_paq.push(["setCustomVariable", 4,', '[testMatomoCustomVariables]: Empty name and value is not shown.');
+    $this->assertNoRaw('_paq.push(["setCustomVariable", 5,', '[testMatomoCustomVariables]: Empty name and value is not shown.');
   }
 
 }

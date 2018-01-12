@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\piwik\Plugin\migrate\process;
+namespace Drupal\matomo\Plugin\migrate\process;
 
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
@@ -10,18 +10,18 @@ use Drupal\migrate\Row;
  * This plugin flattens the custom variables array.
  *
  * @MigrateProcessPlugin(
- *   id = "piwik_custom_vars"
+ *   id = "matomo_custom_vars"
  * )
  */
-class PiwikCustomVars extends ProcessPluginBase {
+class MatomoCustomVars extends ProcessPluginBase {
 
   /**
    * Flatten custom vars array.
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-    list($piwik_custom_vars) = $value;
+    list($matomo_custom_vars) = $value;
 
-    return isset($piwik_custom_vars['slots']) ? $piwik_custom_vars['slots'] : [];
+    return isset($matomo_custom_vars['slots']) ? $matomo_custom_vars['slots'] : [];
   }
 
 }

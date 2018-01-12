@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\piwik\Form;
+namespace Drupal\matomo\Form;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\Component\Utility\UrlHelper;
@@ -9,29 +9,29 @@ use Drupal\Core\Form\FormStateInterface;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Configure Piwik settings for this site.
+ * Configure Matomo settings for this site.
  */
-class PiwikAdminSettingsForm extends ConfigFormBase {
+class MatomoAdminSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'piwik_admin_settings';
+    return 'matomo_admin_settings';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['piwik.settings'];
+    return ['matomo.settings'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('piwik.settings');
+    $config = $this->config('matomo.settings');
 
     $form['general'] = [
       '#type' => 'details',
@@ -39,34 +39,34 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#open' => TRUE,
     ];
 
-    $form['general']['piwik_site_id'] = [
+    $form['general']['matomo_site_id'] = [
       '#default_value' => $config->get('site_id'),
-      '#description' => $this->t('The user account number is unique to the websites domain. Click the <strong>Settings</strong> link in your Piwik account, then the <strong>Websites</strong> tab and enter the appropriate site <strong>ID</strong> into this field.'),
+      '#description' => $this->t('The user account number is unique to the websites domain. Click the <strong>Settings</strong> link in your Matomo account, then the <strong>Websites</strong> tab and enter the appropriate site <strong>ID</strong> into this field.'),
       '#maxlength' => 20,
       '#required' => TRUE,
       '#size' => 15,
-      '#title' => $this->t('Piwik site ID'),
+      '#title' => $this->t('Matomo site ID'),
       '#type' => 'textfield',
     ];
-    $form['general']['piwik_url_http'] = [
+    $form['general']['matomo_url_http'] = [
       '#default_value' => $config->get('url_http'),
-      '#description' => $this->t('The URL to your Piwik base directory. Example: "http://www.example.com/piwik/".'),
+      '#description' => $this->t('The URL to your Matomo base directory. Example: "http://www.example.com/matomo/".'),
       '#maxlength' => 255,
       '#required' => TRUE,
       '#size' => 80,
-      '#title' => $this->t('Piwik HTTP URL'),
+      '#title' => $this->t('Matomo HTTP URL'),
       '#type' => 'textfield',
     ];
-    $form['general']['piwik_url_https'] = [
+    $form['general']['matomo_url_https'] = [
       '#default_value' => $config->get('url_https'),
-      '#description' => $this->t('The URL to your Piwik base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/piwik/".'),
+      '#description' => $this->t('The URL to your Matomo base directory with SSL certificate installed. Required if you track a SSL enabled website. Example: "https://www.example.com/matomo/".'),
       '#maxlength' => 255,
       '#size' => 80,
-      '#title' => $this->t('Piwik HTTPS URL'),
+      '#title' => $this->t('Matomo HTTPS URL'),
       '#type' => 'textfield',
     ];
     // Required for automated form save testing only.
-    $form['general']['piwik_url_skiperror'] = [
+    $form['general']['matomo_url_skiperror'] = [
       '#type' => 'hidden',
       '#default_value' => FALSE,
     ];
@@ -77,7 +77,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Tracking scope'),
       '#attached' => [
         'library' => [
-          'piwik/piwik.admin',
+          'matomo/matomo.admin',
         ],
       ],
     ];
@@ -100,7 +100,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       }
     }
 
-    $form['tracking']['domain_tracking']['piwik_domain_mode'] = [
+    $form['tracking']['domain_tracking']['matomo_domain_mode'] = [
       '#type' => 'radios',
       '#title' => $this->t('What are you tracking?'),
       '#options' => [
@@ -118,7 +118,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     // Page specific visibility configurations.
     $account = \Drupal::currentUser();
-    $php_access = $account->hasPermission('use PHP for piwik tracking visibility');
+    $php_access = $account->hasPermission('use PHP for matomo tracking visibility');
     $visibility_request_path_pages = $config->get('visibility.request_path_pages');
 
     $form['tracking']['page_visibility_settings'] = [
@@ -130,8 +130,8 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     if ($config->get('visibility.request_path_mode') == 2 && !$php_access) {
       // No permission to change PHP snippets, but keep existing settings.
       $form['tracking']['page_visibility_settings'] = [];
-      $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_mode'] = ['#type' => 'value', '#value' => 2];
-      $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_pages'] = ['#type' => 'value', '#value' => $visibility_request_path_pages];
+      $form['tracking']['page_visibility_settings']['matomo_visibility_request_path_mode'] = ['#type' => 'value', '#value' => 2];
+      $form['tracking']['page_visibility_settings']['matomo_visibility_request_path_pages'] = ['#type' => 'value', '#value' => $visibility_request_path_pages];
     }
     else {
       $options = [
@@ -148,13 +148,13 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       else {
         $title = t('Pages');
       }
-      $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_mode'] = [
+      $form['tracking']['page_visibility_settings']['matomo_visibility_request_path_mode'] = [
         '#type' => 'radios',
         '#title' => $this->t('Add tracking to specific pages'),
         '#options' => $options,
         '#default_value' => $config->get('visibility.request_path_mode'),
       ];
-      $form['tracking']['page_visibility_settings']['piwik_visibility_request_path_pages'] = [
+      $form['tracking']['page_visibility_settings']['matomo_visibility_request_path_pages'] = [
         '#type' => 'textarea',
         '#title' => $title,
         '#title_display' => 'invisible',
@@ -173,7 +173,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#group' => 'tracking_scope',
     ];
 
-    $form['tracking']['role_visibility_settings']['piwik_visibility_user_role_mode'] = [
+    $form['tracking']['role_visibility_settings']['matomo_visibility_user_role_mode'] = [
       '#type' => 'radios',
       '#title' => $this->t('Add tracking for specific roles'),
       '#options' => [
@@ -182,7 +182,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ],
       '#default_value' => $config->get('visibility.user_role_mode'),
     ];
-    $form['tracking']['role_visibility_settings']['piwik_visibility_user_role_roles'] = [
+    $form['tracking']['role_visibility_settings']['matomo_visibility_user_role_roles'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Roles'),
       '#default_value' => !empty($visibility_user_role_roles) ? $visibility_user_role_roles : [],
@@ -199,7 +199,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#group' => 'tracking_scope',
     ];
     $t_permission = ['%permission' => $this->t('opt-in or out of tracking')];
-    $form['tracking']['user_visibility_settings']['piwik_visibility_user_account_mode'] = [
+    $form['tracking']['user_visibility_settings']['matomo_visibility_user_account_mode'] = [
       '#type' => 'radios',
       '#title' => $this->t('Allow users to customize tracking on their account page'),
       '#options' => [
@@ -209,11 +209,11 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ],
       '#default_value' => !empty($visibility_user_account_mode) ? $visibility_user_account_mode : 0,
     ];
-    $form['tracking']['user_visibility_settings']['piwik_trackuserid'] = [
+    $form['tracking']['user_visibility_settings']['matomo_trackuserid'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Track User ID'),
       '#default_value' => $config->get('track.userid'),
-      '#description' => $this->t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href=":url">Learn more about the benefits of using User ID</a>.', [':url' => 'http://piwik.org/docs/user-id/']),
+      '#description' => $this->t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href=":url">Learn more about the benefits of using User ID</a>.', [':url' => 'http://matomo.org/docs/user-id/']),
     ];
 
     // Link specific configurations.
@@ -222,17 +222,17 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Links and downloads'),
       '#group' => 'tracking_scope',
     ];
-    $form['tracking']['linktracking']['piwik_trackmailto'] = [
+    $form['tracking']['linktracking']['matomo_trackmailto'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Track clicks on mailto links'),
       '#default_value' => $config->get('track.mailto'),
     ];
-    $form['tracking']['linktracking']['piwik_trackfiles'] = [
+    $form['tracking']['linktracking']['matomo_trackfiles'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Track clicks on outbound links and downloads (clicks on file links) for the following extensions'),
       '#default_value' => $config->get('track.files'),
     ];
-    $form['tracking']['linktracking']['piwik_trackfiles_extensions'] = [
+    $form['tracking']['linktracking']['matomo_trackfiles_extensions'] = [
       '#title' => $this->t('List of download file extensions'),
       '#title_display' => 'invisible',
       '#type' => 'textfield',
@@ -241,11 +241,11 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#maxlength' => 500,
       '#states' => [
         'enabled' => [
-          ':input[name="piwik_trackfiles"]' => ['checked' => TRUE],
+          ':input[name="matomo_trackfiles"]' => ['checked' => TRUE],
         ],
         // Note: Form required marker is not visible as title is invisible.
         'required' => [
-          ':input[name="piwik_trackfiles"]' => ['checked' => TRUE],
+          ':input[name="matomo_trackfiles"]' => ['checked' => TRUE],
         ],
       ],
     ];
@@ -254,7 +254,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     $colorbox_dependencies .= t('Requires: @module-list', ['@module-list' => (\Drupal::moduleHandler()->moduleExists('colorbox') ? t('@module (<span class="admin-enabled">enabled</span>)', ['@module' => 'Colorbox']) : t('@module (<span class="admin-missing">disabled</span>)', ['@module' => 'Colorbox']))]);
     $colorbox_dependencies .= '</div>';
 
-    $form['tracking']['linktracking']['piwik_trackcolorbox'] = [
+    $form['tracking']['linktracking']['matomo_trackcolorbox'] = [
       '#type' => 'checkbox',
       '#title' => t('Track content in colorbox modal dialogs'),
       '#description' => t('Enable to track the content shown in colorbox modal windows.') . $colorbox_dependencies,
@@ -269,7 +269,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#group' => 'tracking_scope',
     ];
     $track_messages = $config->get('track.messages');
-    $form['tracking']['messagetracking']['piwik_trackmessages'] = [
+    $form['tracking']['messagetracking']['matomo_trackmessages'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Track messages of type'),
       '#default_value' => !empty($track_messages) ? $track_messages : [],
@@ -291,7 +291,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     $site_search_dependencies .= t('Requires: @module-list', ['@module-list' => (\Drupal::moduleHandler()->moduleExists('search') ? t('@module (<span class="admin-enabled">enabled</span>)', ['@module' => 'Search']) : t('@module (<span class="admin-missing">disabled</span>)', ['@module' => 'Search']))]);
     $site_search_dependencies .= '</div>';
 
-    $form['tracking']['search']['piwik_site_search'] = [
+    $form['tracking']['search']['matomo_site_search'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Track internal search'),
       '#description' => $this->t('If checked, internal search keywords are tracked.') . $site_search_dependencies,
@@ -305,42 +305,42 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Privacy'),
       '#group' => 'tracking_scope',
     ];
-    $form['tracking']['privacy']['piwik_privacy_donottrack'] = [
+    $form['tracking']['privacy']['matomo_privacy_donottrack'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Universal web tracking opt-out'),
-      '#description' => $this->t('If enabled and your Piwik server receives the <a href="http://donottrack.us/">Do-Not-Track</a> header from the client browser, the Piwik server will not track the user. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision.'),
+      '#description' => $this->t('If enabled and your Matomo server receives the <a href="http://donottrack.us/">Do-Not-Track</a> header from the client browser, the Matomo server will not track the user. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision.'),
       '#default_value' => $config->get('privacy.donottrack'),
     ];
 
-    // Piwik page title tree view settings.
+    // Matomo page title tree view settings.
     $form['page_title_hierarchy'] = [
       '#type' => 'details',
       '#title' => $this->t('Page titles hierarchy'),
-      '#description' => $this->t('This functionality enables a dynamically expandable tree view of your site page titles in your Piwik statistics. See in Piwik statistics under <em>Actions</em> > <em>Page titles</em>.'),
+      '#description' => $this->t('This functionality enables a dynamically expandable tree view of your site page titles in your Matomo statistics. See in Matomo statistics under <em>Actions</em> > <em>Page titles</em>.'),
       '#group' => 'page_title_hierarchy',
     ];
-    $form['page_title_hierarchy']['piwik_page_title_hierarchy'] = [
+    $form['page_title_hierarchy']['matomo_page_title_hierarchy'] = [
       '#type' => 'checkbox',
       '#title' => $this->t("Show page titles as hierarchy like breadcrumbs"),
-      '#description' => $this->t('By default Piwik tracks the current page title and shows you a flat list of the most popular titles. This enables a breadcrumbs like tree view.'),
+      '#description' => $this->t('By default Matomo tracks the current page title and shows you a flat list of the most popular titles. This enables a breadcrumbs like tree view.'),
       '#default_value' => $config->get('page_title_hierarchy'),
     ];
-    $form['page_title_hierarchy']['piwik_page_title_hierarchy_exclude_home'] = [
+    $form['page_title_hierarchy']['matomo_page_title_hierarchy_exclude_home'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Hide home page from hierarchy'),
-      '#description' => $this->t('If enabled, the "Home" item will be removed from the hierarchy to flatten the structure in the Piwik statistics. Hits to the home page will still be counted, but for other pages the hierarchy will start at level Home+1.'),
+      '#description' => $this->t('If enabled, the "Home" item will be removed from the hierarchy to flatten the structure in the Matomo statistics. Hits to the home page will still be counted, but for other pages the hierarchy will start at level Home+1.'),
       '#default_value' => $config->get('page_title_hierarchy_exclude_home'),
     ];
 
     // Custom variables.
-    $form['piwik_custom_var'] = [
-      '#description' => $this->t('You can add Piwiks <a href=":custom_var_documentation">Custom Variables</a> here. These will be added to every page that Piwik tracking code appears on. Custom variable names and values are limited to 200 characters in length. Keep the names and values as short as possible and expect long values to get trimmed. You may use tokens in custom variable names and values. Global and user tokens are always available; on node pages, node tokens are also available.', [':custom_var_documentation' => 'http://piwik.org/docs/custom-variables/']),
+    $form['matomo_custom_var'] = [
+      '#description' => $this->t('You can add Matomos <a href=":custom_var_documentation">Custom Variables</a> here. These will be added to every page that Matomo tracking code appears on. Custom variable names and values are limited to 200 characters in length. Keep the names and values as short as possible and expect long values to get trimmed. You may use tokens in custom variable names and values. Global and user tokens are always available; on node pages, node tokens are also available.', [':custom_var_documentation' => 'http://matomo.org/docs/custom-variables/']),
       '#title' => $this->t('Custom variables'),
       '#tree' => TRUE,
       '#type' => 'details',
     ];
 
-    $form['piwik_custom_var']['slots'] = [
+    $form['matomo_custom_var']['slots'] = [
       '#type' => 'table',
       '#header' => [
         ['data' => $this->t('Slot')],
@@ -350,11 +350,11 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $piwik_custom_vars = $config->get('custom.variable');
+    $matomo_custom_vars = $config->get('custom.variable');
 
-    // Piwik supports up to 5 custom variables.
+    // Matomo supports up to 5 custom variables.
     for ($i = 1; $i < 6; $i++) {
-      $form['piwik_custom_var']['slots'][$i]['slot'] = [
+      $form['matomo_custom_var']['slots'][$i]['slot'] = [
         '#default_value' => $i,
         '#description' => $this->t('Slot number'),
         '#disabled' => TRUE,
@@ -363,8 +363,8 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         '#title_display' => 'invisible',
         '#type' => 'textfield',
       ];
-      $form['piwik_custom_var']['slots'][$i]['name'] = [
-        '#default_value' => isset($piwik_custom_vars[$i]['name']) ? $piwik_custom_vars[$i]['name'] : '',
+      $form['matomo_custom_var']['slots'][$i]['name'] = [
+        '#default_value' => isset($matomo_custom_vars[$i]['name']) ? $matomo_custom_vars[$i]['name'] : '',
         '#description' => $this->t('The custom variable name.'),
         '#maxlength' => 100,
         '#size' => 20,
@@ -372,8 +372,8 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         '#title_display' => 'invisible',
         '#type' => 'textfield',
       ];
-      $form['piwik_custom_var']['slots'][$i]['value'] = [
-        '#default_value' => isset($piwik_custom_vars[$i]['value']) ? $piwik_custom_vars[$i]['value'] : '',
+      $form['matomo_custom_var']['slots'][$i]['value'] = [
+        '#default_value' => isset($matomo_custom_vars[$i]['value']) ? $matomo_custom_vars[$i]['value'] : '',
         '#description' => $this->t('The custom variable value.'),
         '#maxlength' => 255,
         '#title' => $this->t('Custom variable value #@slot', ['@slot' => $i]),
@@ -383,10 +383,10 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         '#token_types' => ['node'],
       ];
       if (\Drupal::moduleHandler()->moduleExists('token')) {
-        $form['piwik_custom_var']['slots'][$i]['value']['#element_validate'][] = 'token_element_validate';
+        $form['matomo_custom_var']['slots'][$i]['value']['#element_validate'][] = 'token_element_validate';
       }
-      $form['piwik_custom_var']['slots'][$i]['scope'] = [
-        '#default_value' => isset($piwik_custom_vars[$i]['scope']) ? $piwik_custom_vars[$i]['scope'] : '',
+      $form['matomo_custom_var']['slots'][$i]['scope'] = [
+        '#default_value' => isset($matomo_custom_vars[$i]['scope']) ? $matomo_custom_vars[$i]['scope'] : '',
         '#description' => $this->t('The scope for the custom variable.'),
         '#title' => $this->t('Custom variable slot #@slot', ['@slot' => $i]),
         '#title_display' => 'invisible',
@@ -398,12 +398,12 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ];
     }
 
-    $form['piwik_custom_var']['piwik_custom_var_description'] = [
+    $form['matomo_custom_var']['matomo_custom_var_description'] = [
       '#type' => 'item',
-      '#description' => $this->t("You can supplement Piwiks' basic IP address tracking of visitors by segmenting users based on custom variables. Make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties' websites) with any personally identifying information from any source as part of your use (or such third parties' use) of the Piwik' service."),
+      '#description' => $this->t("You can supplement Matomos' basic IP address tracking of visitors by segmenting users based on custom variables. Make sure you will not associate (or permit any third party to associate) any data gathered from your websites (or such third parties' websites) with any personally identifying information from any source as part of your use (or such third parties' use) of the Matomo' service."),
     ];
     if (\Drupal::moduleHandler()->moduleExists('token')) {
-      $form['piwik_custom_var']['piwik_custom_var_token_tree'] = [
+      $form['matomo_custom_var']['matomo_custom_var_token_tree'] = [
         '#theme' => 'token_tree_link',
         '#token_types' => ['node'],
       ];
@@ -416,16 +416,16 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#open' => FALSE,
     ];
 
-    $form['advanced']['piwik_cache'] = [
+    $form['advanced']['matomo_cache'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Locally cache tracking code file'),
-      '#description' => $this->t('If checked, the tracking code file is retrieved from your Piwik site and cached locally. It is updated daily to ensure updates to tracking code are reflected in the local copy.'),
+      '#description' => $this->t('If checked, the tracking code file is retrieved from your Matomo site and cached locally. It is updated daily to ensure updates to tracking code are reflected in the local copy.'),
       '#default_value' => $config->get('cache'),
     ];
 
     // Allow for tracking of the originating node when viewing translation sets.
     if (\Drupal::moduleHandler()->moduleExists('content_translation')) {
-      $form['advanced']['piwik_translation_set'] = [
+      $form['advanced']['matomo_translation_set'] = [
         '#type' => 'checkbox',
         '#title' => $this->t('Track translation sets as one unit'),
         '#description' => $this->t('When a node is part of a translation set, record statistics for the originating node instead. This allows for a translation set to be treated as a single unit.'),
@@ -433,15 +433,15 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       ];
     }
 
-    $user_access_add_js_snippets = !$this->currentUser()->hasPermission('add JS snippets for piwik');
+    $user_access_add_js_snippets = !$this->currentUser()->hasPermission('add JS snippets for matomo');
     $user_access_add_js_snippets_permission_warning = $user_access_add_js_snippets ? ' <em>' . $this->t('This field has been disabled because you do not have sufficient permissions to edit it.') . '</em>' : '';
     $form['advanced']['codesnippet'] = [
       '#type' => 'details',
       '#title' => $this->t('Custom JavaScript code'),
       '#open' => TRUE,
-      '#description' => $this->t('You can add custom Piwik <a href=":snippets">code snippets</a> here. These will be added to every page that Piwik appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'http://piwik.org/docs/javascript-tracking/']),
+      '#description' => $this->t('You can add custom Matomo <a href=":snippets">code snippets</a> here. These will be added to every page that Matomo appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'http://matomo.org/docs/javascript-tracking/']),
     ];
-    $form['advanced']['codesnippet']['piwik_codesnippet_before'] = [
+    $form['advanced']['codesnippet']['matomo_codesnippet_before'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Code snippet (before)'),
       '#default_value' => $config->get('codesnippet.before'),
@@ -449,7 +449,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       '#rows' => 5,
       '#description' => $this->t('Code in this textarea will be added <strong>before</strong> _paq.push(["trackPageView"]).') . $user_access_add_js_snippets_permission_warning,
     ];
-    $form['advanced']['codesnippet']['piwik_codesnippet_after'] = [
+    $form['advanced']['codesnippet']['matomo_codesnippet_after'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Code snippet (after)'),
       '#default_value' => $config->get('codesnippet.after'),
@@ -468,37 +468,37 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     parent::validateForm($form, $form_state);
 
     // Custom variables validation.
-    foreach ($form_state->getValue(['piwik_custom_var', 'slots']) as $custom_var) {
-      $form_state->setValue(['piwik_custom_var', 'slots', $custom_var['slot'], 'name'], trim($custom_var['name']));
-      $form_state->setValue(['piwik_custom_var', 'slots', $custom_var['slot'], 'value'], trim($custom_var['value']));
+    foreach ($form_state->getValue(['matomo_custom_var', 'slots']) as $custom_var) {
+      $form_state->setValue(['matomo_custom_var', 'slots', $custom_var['slot'], 'name'], trim($custom_var['name']));
+      $form_state->setValue(['matomo_custom_var', 'slots', $custom_var['slot'], 'value'], trim($custom_var['value']));
 
       // Validate empty names/values.
       if (empty($custom_var['name']) && !empty($custom_var['value'])) {
-        $form_state->setErrorByName("piwik_custom_var][slots][" . $custom_var['slot'] . "][name", t('The custom variable @slot-number requires a <em>Name</em> if a <em>Value</em> has been provided.', ['@slot-number' => $custom_var['slot']]));
+        $form_state->setErrorByName("matomo_custom_var][slots][" . $custom_var['slot'] . "][name", t('The custom variable @slot-number requires a <em>Name</em> if a <em>Value</em> has been provided.', ['@slot-number' => $custom_var['slot']]));
       }
       elseif (!empty($custom_var['name']) && empty($custom_var['value'])) {
-        $form_state->setErrorByName("piwik_custom_var][slots][" . $custom_var['slot'] . "][value", t('The custom variable @slot-number requires a <em>Value</em> if a <em>Name</em> has been provided.', ['@slot-number' => $custom_var['slot']]));
+        $form_state->setErrorByName("matomo_custom_var][slots][" . $custom_var['slot'] . "][value", t('The custom variable @slot-number requires a <em>Value</em> if a <em>Name</em> has been provided.', ['@slot-number' => $custom_var['slot']]));
       }
     }
-    $form_state->setValue('piwik_custom_var', $form_state->getValue(['piwik_custom_var', 'slots']));
+    $form_state->setValue('matomo_custom_var', $form_state->getValue(['matomo_custom_var', 'slots']));
 
     // Trim some text area values.
-    $form_state->setValue('piwik_site_id', trim($form_state->getValue('piwik_site_id')));
-    $form_state->setValue('piwik_visibility_request_path_pages', trim($form_state->getValue('piwik_visibility_request_path_pages')));
-    $form_state->setValue('piwik_codesnippet_before', trim($form_state->getValue('piwik_codesnippet_before')));
-    $form_state->setValue('piwik_codesnippet_after', trim($form_state->getValue('piwik_codesnippet_after')));
-    $form_state->setValue('piwik_visibility_user_role_roles', array_filter($form_state->getValue('piwik_visibility_user_role_roles')));
-    $form_state->setValue('piwik_trackmessages', array_filter($form_state->getValue('piwik_trackmessages')));
+    $form_state->setValue('matomo_site_id', trim($form_state->getValue('matomo_site_id')));
+    $form_state->setValue('matomo_visibility_request_path_pages', trim($form_state->getValue('matomo_visibility_request_path_pages')));
+    $form_state->setValue('matomo_codesnippet_before', trim($form_state->getValue('matomo_codesnippet_before')));
+    $form_state->setValue('matomo_codesnippet_after', trim($form_state->getValue('matomo_codesnippet_after')));
+    $form_state->setValue('matomo_visibility_user_role_roles', array_filter($form_state->getValue('matomo_visibility_user_role_roles')));
+    $form_state->setValue('matomo_trackmessages', array_filter($form_state->getValue('matomo_trackmessages')));
 
-    if (!preg_match('/^\d{1,}$/', $form_state->getValue('piwik_site_id'))) {
-      $form_state->setErrorByName('piwik_site_id', t('A valid Piwik site ID is an integer only.'));
+    if (!preg_match('/^\d{1,}$/', $form_state->getValue('matomo_site_id'))) {
+      $form_state->setErrorByName('matomo_site_id', t('A valid Matomo site ID is an integer only.'));
     }
 
-    $url = $form_state->getValue('piwik_url_http') . 'piwik.php';
+    $url = $form_state->getValue('matomo_url_http') . 'piwik.php';
     try {
       $result = \Drupal::httpClient()->get($url);
-      if ($result->getStatusCode() != 200 && $form_state->getValue('piwik_url_skiperror') == FALSE) {
-        $form_state->setErrorByName('piwik_url_http', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
+      if ($result->getStatusCode() != 200 && $form_state->getValue('matomo_url_skiperror') == FALSE) {
+        $form_state->setErrorByName('matomo_url_http', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
           '@url' => UrlHelper::filterBadProtocol($url),
           '@error' => $result->getReasonPhrase(),
           '@code' => $result->getStatusCode(),
@@ -506,20 +506,20 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
       }
     }
     catch (RequestException $exception) {
-      $form_state->setErrorByName('piwik_url_http', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
+      $form_state->setErrorByName('matomo_url_http', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
         '@url' => UrlHelper::filterBadProtocol($url),
         '@error' => $exception->getMessage(),
         '@code' => $exception->getCode(),
       ]));
     }
 
-    $piwik_url_https = $form_state->getValue('piwik_url_https');
-    if (!empty($piwik_url_https)) {
-      $url = $piwik_url_https . 'piwik.php';
+    $matomo_url_https = $form_state->getValue('matomo_url_https');
+    if (!empty($matomo_url_https)) {
+      $url = $matomo_url_https . 'piwik.php';
       try {
         $result = \Drupal::httpClient()->get($url);
-        if ($result->getStatusCode() != 200 && $form_state->getValue('piwik_url_skiperror') == FALSE) {
-          $form_state->setErrorByName('piwik_url_https', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
+        if ($result->getStatusCode() != 200 && $form_state->getValue('matomo_url_skiperror') == FALSE) {
+          $form_state->setErrorByName('matomo_url_https', t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
             '@url' => UrlHelper::filterBadProtocol($url),
             '@error' => $result->getReasonPhrase(),
             '@code' => $result->getStatusCode(),
@@ -527,7 +527,7 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
         }
       }
       catch (RequestException $exception) {
-        $form_state->setErrorByName('piwik_url_https', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
+        $form_state->setErrorByName('matomo_url_https', t('The validation of "@url" failed with an exception "@error" (HTTP code @code).', [
           '@url' => UrlHelper::filterBadProtocol($url),
           '@error' => $exception->getMessage(),
           '@code' => $exception->getCode(),
@@ -537,11 +537,11 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
 
     // Verify that every path is prefixed with a slash, but don't check PHP
     // code snippets.
-    if ($form_state->getValue('piwik_visibility_request_path_mode') != 2) {
-      $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('piwik_visibility_request_path_pages'));
+    if ($form_state->getValue('matomo_visibility_request_path_mode') != 2) {
+      $pages = preg_split('/(\r\n?|\n)/', $form_state->getValue('matomo_visibility_request_path_pages'));
       foreach ($pages as $page) {
         if (strpos($page, '/') !== 0 && $page !== '<front>') {
-          $form_state->setErrorByName('piwik_visibility_request_path_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
+          $form_state->setErrorByName('matomo_visibility_request_path_pages', t('Path "@page" not prefixed with slash.', ['@page' => $page]));
           // Drupal forms show one error only.
           break;
         }
@@ -549,16 +549,16 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
     }
 
     // Clear obsolete local cache if cache has been disabled.
-    if ($form_state->isValueEmpty('piwik_cache') && $form['advanced']['piwik_cache']['#default_value']) {
-      piwik_clear_js_cache();
+    if ($form_state->isValueEmpty('matomo_cache') && $form['advanced']['matomo_cache']['#default_value']) {
+      matomo_clear_js_cache();
     }
 
     // This is for the Newbie's who cannot read a text area description.
-    if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state->getValue('piwik_codesnippet_before'))) {
-      $form_state->setErrorByName('piwik_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+    if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state->getValue('matomo_codesnippet_before'))) {
+      $form_state->setErrorByName('matomo_codesnippet_before', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
-    if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state->getValue('piwik_codesnippet_after'))) {
-      $form_state->setErrorByName('piwik_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
+    if (preg_match('/(.*)<\/?script(.*)>(.*)/i', $form_state->getValue('matomo_codesnippet_after'))) {
+      $form_state->setErrorByName('matomo_codesnippet_after', t('Do not include the &lt;script&gt; tags in the javascript code snippets.'));
     }
   }
 
@@ -566,33 +566,33 @@ class PiwikAdminSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = $this->config('piwik.settings');
+    $config = $this->config('matomo.settings');
     $config
-      ->set('site_id', $form_state->getValue('piwik_site_id'))
-      ->set('url_http', $form_state->getValue('piwik_url_http'))
-      ->set('url_https', $form_state->getValue('piwik_url_https'))
-      ->set('codesnippet.before', $form_state->getValue('piwik_codesnippet_before'))
-      ->set('codesnippet.after', $form_state->getValue('piwik_codesnippet_after'))
-      ->set('custom.variable', $form_state->getValue('piwik_custom_var'))
-      ->set('domain_mode', $form_state->getValue('piwik_domain_mode'))
-      ->set('track.files', $form_state->getValue('piwik_trackfiles'))
-      ->set('track.files_extensions', $form_state->getValue('piwik_trackfiles_extensions'))
-      ->set('track.colorbox', $form_state->getValue('piwik_trackcolorbox'))
-      ->set('track.userid', $form_state->getValue('piwik_trackuserid'))
-      ->set('track.mailto', $form_state->getValue('piwik_trackmailto'))
-      ->set('track.messages', $form_state->getValue('piwik_trackmessages'))
-      ->set('track.site_search', $form_state->getValue('piwik_site_search'))
-      ->set('privacy.donottrack', $form_state->getValue('piwik_privacy_donottrack'))
-      ->set('cache', $form_state->getValue('piwik_cache'))
-      ->set('visibility.request_path_mode', $form_state->getValue('piwik_visibility_request_path_mode'))
-      ->set('visibility.request_path_pages', $form_state->getValue('piwik_visibility_request_path_pages'))
-      ->set('visibility.user_account_mode', $form_state->getValue('piwik_visibility_user_account_mode'))
-      ->set('visibility.user_role_mode', $form_state->getValue('piwik_visibility_user_role_mode'))
-      ->set('visibility.user_role_roles', $form_state->getValue('piwik_visibility_user_role_roles'))
+      ->set('site_id', $form_state->getValue('matomo_site_id'))
+      ->set('url_http', $form_state->getValue('matomo_url_http'))
+      ->set('url_https', $form_state->getValue('matomo_url_https'))
+      ->set('codesnippet.before', $form_state->getValue('matomo_codesnippet_before'))
+      ->set('codesnippet.after', $form_state->getValue('matomo_codesnippet_after'))
+      ->set('custom.variable', $form_state->getValue('matomo_custom_var'))
+      ->set('domain_mode', $form_state->getValue('matomo_domain_mode'))
+      ->set('track.files', $form_state->getValue('matomo_trackfiles'))
+      ->set('track.files_extensions', $form_state->getValue('matomo_trackfiles_extensions'))
+      ->set('track.colorbox', $form_state->getValue('matomo_trackcolorbox'))
+      ->set('track.userid', $form_state->getValue('matomo_trackuserid'))
+      ->set('track.mailto', $form_state->getValue('matomo_trackmailto'))
+      ->set('track.messages', $form_state->getValue('matomo_trackmessages'))
+      ->set('track.site_search', $form_state->getValue('matomo_site_search'))
+      ->set('privacy.donottrack', $form_state->getValue('matomo_privacy_donottrack'))
+      ->set('cache', $form_state->getValue('matomo_cache'))
+      ->set('visibility.request_path_mode', $form_state->getValue('matomo_visibility_request_path_mode'))
+      ->set('visibility.request_path_pages', $form_state->getValue('matomo_visibility_request_path_pages'))
+      ->set('visibility.user_account_mode', $form_state->getValue('matomo_visibility_user_account_mode'))
+      ->set('visibility.user_role_mode', $form_state->getValue('matomo_visibility_user_role_mode'))
+      ->set('visibility.user_role_roles', $form_state->getValue('matomo_visibility_user_role_roles'))
       ->save();
 
-    if ($form_state->hasValue('piwik_translation_set')) {
-      $config->set('translation_set', $form_state->getValue('piwik_translation_set'))->save();
+    if ($form_state->hasValue('matomo_translation_set')) {
+      $config->set('translation_set', $form_state->getValue('matomo_translation_set'))->save();
     }
 
     parent::submitForm($form, $form_state);

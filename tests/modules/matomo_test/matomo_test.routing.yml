@@ -1,7 +1,7 @@
-piwik_test.drupal_set_message:
-  path: '/piwik-test/drupal-set-message'
+matomo_test.drupal_set_message:
+  path: '/matomo-test/drupal-set-message'
   defaults:
     _title: 'Set messages with drupal_set_message()'
-    _controller: '\Drupal\piwik_test\Controller\PiwikTestController::drupalSetMessageTest'
+    _controller: '\Drupal\matomo_test\Controller\MatomoTestController::drupalSetMessageTest'
   requirements:
     _access: 'TRUE'

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\piwik\Plugin\migrate\process;
+namespace Drupal\matomo\Plugin\migrate\process;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -15,10 +15,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Converts D7 role ids to D8 role names.
  *
  * @MigrateProcessPlugin(
- *   id = "piwik_visibility_roles"
+ *   id = "matomo_visibility_roles"
  * )
  */
-class PiwikVisibilityRoles extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+class MatomoVisibilityRoles extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * The module handler.

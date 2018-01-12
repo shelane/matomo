@@ -1,28 +1,28 @@
 
-Module: Piwik - Web analytics
+Module: Matomo - Web analytics
 Author: Alexander Hass <http://drupal.org/user/85918>
 
 
 Description
 ===========
-Adds the Piwik tracking system to your website.
+Adds the Matomo tracking system to your website.
 
 Requirements
 ============
 
-* Piwik installation
-* Piwik website ID
+* Matomo installation
+* Matomo website ID
 
 
 Installation
 ============
-* Copy the 'piwik' module directory in to your Drupal 'modules'
+* Copy the 'matomo' module directory in to your Drupal 'modules'
 directory as usual.
 
 
 Usage
 =====
-In the settings page enter your Piwik website ID.
+In the settings page enter your Matomo website ID.
 
 All pages will now have the required JavaScript added to the
 HTML footer can confirm this by viewing the page source from
@@ -41,7 +41,7 @@ default the following pages are listed for exclusion:
 /user/*/*
 
 These defaults are changeable by the website administrator or any other
-user with 'Administer Piwik' permission.
+user with 'Administer Matomo' permission.
 
 Like the blocks visibility settings in Drupal core, there is a choice for
 "Add if the following PHP code returns TRUE." Sample PHP snippets that can be
@@ -52,36 +52,36 @@ Custom variables
 =================
 One example for custom variables tracking is the "User roles" tracking. Enter
 the below configuration data into the custom variables settings form under
-admin/config/system/piwik.
+admin/config/system/matomo.
 
 Slot: 1
 Name: User roles
-Value: [current-user:piwik-role-names]
+Value: [current-user:matomo-role-names]
 Scope: Visitor
 
 Slot: 1
 Name: User ids
-Value: [current-user:piwik-role-ids]
+Value: [current-user:matomo-role-ids]
 Scope: Visitor
 
-More details about custom variables can be found in the Piwik API documentation
-at http://piwik.org/docs/javascript-tracking/#toc-custom-variables.
+More details about custom variables can be found in the Matomo API documentation
+at http://matomo.org/docs/javascript-tracking/#toc-custom-variables.
 
 
 Advanced Settings
 =================
 You can include additional JavaScript snippets in the custom javascript
 code textarea. These can be found on various blog posts, or on the
-official Piwik pages. Support is not provided for any customisations
+official Matomo pages. Support is not provided for any customisations
 you include.
 
-To speed up page loading you may also cache the Piwik "piwik.js"
+To speed up page loading you may also cache the Matomo "piwik.js"
 file locally.
 
 Known issues
 ============
 Drupal requirements (http://drupal.org/requirements) tell you to configure 
-PHP with "session.save_handler = user", but your Piwik installation may
+PHP with "session.save_handler = user", but your Matomo installation may
 not work with this configuration and gives you a server error 500.
 
 1. You are able to workaround with the PHP default in your php.ini:
@@ -89,8 +89,8 @@ not work with this configuration and gives you a server error 500.
    [Session]
    session.save_handler = files
 
-2. With Apache you may overwrite the PHP setting for the Piwik directory only.
-   If Piwik is installed in /piwik you are able to create a .htaccess file in
+2. With Apache you may overwrite the PHP setting for the Matomo directory only.
+   If Matomo is installed in /matomo you are able to create a .htaccess file in
    this directory with the below code:
 
    # PHP 4, Apache 1.

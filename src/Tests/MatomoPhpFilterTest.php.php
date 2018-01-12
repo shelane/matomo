@@ -1,23 +1,23 @@
 <?php
 
-namespace Drupal\piwik\Tests;
+namespace Drupal\matomo\Tests;
 
 use Drupal\Component\Utility\Html;
 use Drupal\simpletest\WebTestBase;
 
 /**
- * Test php filter functionality of Piwik module.
+ * Test php filter functionality of Matomo module.
  *
- * @group Piwik
+ * @group Matomo
  */
-class PiwikPhpFilterTest extends WebTestBase {
+class MatomoPhpFilterTest extends WebTestBase {
 
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = ['piwik', 'php'];
+  public static $modules = ['matomo', 'php'];
 
   /**
    * {@inheritdoc}
@@ -28,15 +28,15 @@ class PiwikPhpFilterTest extends WebTestBase {
     // Administrator with all permissions.
     $permissions_admin_user = [
       'access administration pages',
-      'administer piwik',
-      'use PHP for piwik tracking visibility',
+      'administer matomo',
+      'use PHP for matomo tracking visibility',
     ];
     $this->admin_user = $this->drupalCreateUser($permissions_admin_user);
 
     // Administrator who cannot configure tracking visibility with PHP.
     $permissions_delegated_admin_user = [
       'access administration pages',
-      'administer piwik',
+      'administer matomo',
     ];
     $this->delegated_admin_user = $this->drupalCreateUser($permissions_delegated_admin_user);
   }
@@ -44,64 +44,64 @@ class PiwikPhpFilterTest extends WebTestBase {
   /**
    * Tests if PHP module integration works.
    */
-  public function testPiwikPhpFilter() {
+  public function testMatomoPhpFilter() {
     $site_id = '1';
     $this->drupalLogin($this->admin_user);
 
     $edit = [];
-    $edit['piwik_site_id'] = $site_id;
-    $edit['piwik_url_http'] = 'http://www.example.com/piwik/';
-    $edit['piwik_url_https'] = 'https://www.example.com/piwik/';
+    $edit['matomo_site_id'] = $site_id;
+    $edit['matomo_url_http'] = 'http://www.example.com/matomo/';
+    $edit['matomo_url_https'] = 'https://www.example.com/matomo/';
     // Skip url check errors in automated tests.
-    $edit['piwik_url_skiperror'] = TRUE;
-    $edit['piwik_visibility_request_path_mode'] = 2;
-    $edit['piwik_visibility_request_path_pages'] = '<?php return 0; ?>';
-    $this->drupalPostForm('admin/config/system/piwik', $edit, t('Save configuration'));
+    $edit['matomo_url_skiperror'] = TRUE;
+    $edit['matomo_visibility_request_path_mode'] = 2;
+    $edit['matomo_visibility_request_path_pages'] = '<?php return 0; ?>';
+    $this->drupalPostForm('admin/config/system/matomo', $edit, t('Save configuration'));
 
     // Compare saved setting with posted setting.
-    $piwik_visibility_request_path_pages = \Drupal::config('piwik.settings')->get('visibility.request_path_pages');
-    $this->assertEqual('<?php return 0; ?>', $piwik_visibility_request_path_pages, '[testPiwikPhpFilter]: PHP code snippet is intact.');
+    $matomo_visibility_request_path_pages = \Drupal::config('matomo.settings')->get('visibility.request_path_pages');
+    $this->assertEqual('<?php return 0; ?>', $matomo_visibility_request_path_pages, '[testMatomoPhpFilter]: PHP code snippet is intact.');
 
     // Check tracking code visibility.
-    $this->config('piwik.settings')->set('visibility.request_path_pages', '<?php return TRUE; ?>')->save();
+    $this->config('matomo.settings')->set('visibility.request_path_pages', '<?php return TRUE; ?>')->save();
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testPiwikPhpFilter]: Tracking is displayed on frontpage page.');
+    $this->assertRaw('u+"piwik.php"', '[testMatomoPhpFilter]: Tracking is displayed on frontpage page.');
     $this->drupalGet('admin');
-    $this->assertRaw('u+"piwik.php"', '[testPiwikPhpFilter]: Tracking is displayed on admin page.');
+    $this->assertRaw('u+"piwik.php"', '[testMatomoPhpFilter]: Tracking is displayed on admin page.');
 
-    $this->config('piwik.settings')->set('visibility.request_path_pages', '<?php return FALSE; ?>')->save();
+    $this->config('matomo.settings')->set('visibility.request_path_pages', '<?php return FALSE; ?>')->save();
     $this->drupalGet('');
-    $this->assertNoRaw('u+"piwik.php"', '[testPiwikPhpFilter]: Tracking is not displayed on frontpage page.');
+    $this->assertNoRaw('u+"piwik.php"', '[testMatomoPhpFilter]: Tracking is not displayed on frontpage page.');
 
     // Test administration form.
-    $this->config('piwik.settings')->set('visibility.request_path_pages', '<?php return TRUE; ?>')->save();
-    $this->drupalGet('admin/config/system/piwik');
-    $this->assertRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testPiwikPhpFilter]: Permission to administer PHP for tracking visibility.');
-    $this->assertRaw(Html::escape('<?php return TRUE; ?>'), '[testPiwikPhpFilter]: PHP code snippted is displayed.');
+    $this->config('matomo.settings')->set('visibility.request_path_pages', '<?php return TRUE; ?>')->save();
+    $this->drupalGet('admin/config/system/matomo');
+    $this->assertRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testMatomoPhpFilter]: Permission to administer PHP for tracking visibility.');
+    $this->assertRaw(Html::escape('<?php return TRUE; ?>'), '[testMatomoPhpFilter]: PHP code snippted is displayed.');
 
     // Login the delegated user and check if fields are visible.
     $this->drupalLogin($this->delegated_admin_user);
-    $this->drupalGet('admin/config/system/piwik');
-    $this->assertNoRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testPiwikPhpFilter]: No permission to administer PHP for tracking visibility.');
-    $this->assertRaw(Html::escape('<?php return TRUE; ?>'), '[testPiwikPhpFilter]: No permission to view PHP code snippted.');
+    $this->drupalGet('admin/config/system/matomo');
+    $this->assertNoRaw(t('Pages on which this PHP code returns <code>TRUE</code> (experts only)'), '[testMatomoPhpFilter]: No permission to administer PHP for tracking visibility.');
+    $this->assertRaw(Html::escape('<?php return TRUE; ?>'), '[testMatomoPhpFilter]: No permission to view PHP code snippted.');
 
     // Set a different value and verify that this is still the same after the
     // post.
-    $this->config('piwik.settings')->set('visibility.request_path_pages', '<?php return 0; ?>')->save();
+    $this->config('matomo.settings')->set('visibility.request_path_pages', '<?php return 0; ?>')->save();
 
     $edit = [];
-    $edit['piwik_site_id'] = $site_id;
-    $edit['piwik_url_http'] = 'http://www.example.com/piwik/';
-    $edit['piwik_url_https'] = 'https://www.example.com/piwik/';
+    $edit['matomo_site_id'] = $site_id;
+    $edit['matomo_url_http'] = 'http://www.example.com/matomo/';
+    $edit['matomo_url_https'] = 'https://www.example.com/matomo/';
     // Required for testing only.
-    $edit['piwik_url_skiperror'] = TRUE;
-    $this->drupalPostForm('admin/config/system/piwik', $edit, t('Save configuration'));
+    $edit['matomo_url_skiperror'] = TRUE;
+    $this->drupalPostForm('admin/config/system/matomo', $edit, t('Save configuration'));
 
     // Compare saved setting with posted setting.
-    $piwik_visibility_request_path_mode = $this->config('piwik.settings')->get('visibility.request_path_mode');
-    $piwik_visibility_request_path_pages = $this->config('piwik.settings')->get('visibility.request_path_pages');
-    $this->assertEqual(2, $piwik_visibility_request_path_mode, '[testPiwikPhpFilter]: Pages on which this PHP code returns TRUE is selected.');
-    $this->assertEqual('<?php return 0; ?>', $piwik_visibility_request_path_pages, '[testPiwikPhpFilter]: PHP code snippet is intact.');
+    $matomo_visibility_request_path_mode = $this->config('matomo.settings')->get('visibility.request_path_mode');
+    $matomo_visibility_request_path_pages = $this->config('matomo.settings')->get('visibility.request_path_pages');
+    $this->assertEqual(2, $matomo_visibility_request_path_mode, '[testMatomoPhpFilter]: Pages on which this PHP code returns TRUE is selected.');
+    $this->assertEqual('<?php return 0; ?>', $matomo_visibility_request_path_pages, '[testMatomoPhpFilter]: PHP code snippet is intact.');
   }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\piwik\Plugin\migrate\process;
+namespace Drupal\matomo\Plugin\migrate\process;
 
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\MigrateExecutableInterface;
@@ -11,11 +11,11 @@ use Drupal\migrate\MigrateSkipRowException;
  * If the source evaluates to empty, we skip the current row.
  *
  * @MigrateProcessPlugin(
- *   id = "piwik_skip_row_if_not_set",
+ *   id = "matomo_skip_row_if_not_set",
  *   handle_multiples = TRUE
  * )
  */
-class PiwikSkipRowIfNotSet extends ProcessPluginBase {
+class MatomoSkipRowIfNotSet extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}

@@ -1,22 +1,22 @@
 <?php
 
-namespace Drupal\piwik\Tests;
+namespace Drupal\matomo\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
 /**
- * Test user fields functionality of Piwik module.
+ * Test user fields functionality of Matomo module.
  *
- * @group Piwik
+ * @group Matomo
  */
-class PiwikUserFieldsTestTest extends WebTestBase {
+class MatomoUserFieldsTestTest extends WebTestBase {
 
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = ['piwik', 'field_ui'];
+  public static $modules = ['matomo', 'field_ui'];
 
   /**
    * {@inheritdoc}
@@ -27,10 +27,10 @@ class PiwikUserFieldsTestTest extends WebTestBase {
     $permissions = [
       'access administration pages',
       'administer user form display',
-      'opt-in or out of piwik tracking',
+      'opt-in or out of matomo tracking',
     ];
 
-    // User to set up piwik.
+    // User to set up matomo.
     $this->admin_user = $this->drupalCreateUser($permissions);
     $this->drupalLogin($this->admin_user);
   }
@@ -38,34 +38,34 @@ class PiwikUserFieldsTestTest extends WebTestBase {
   /**
    * Tests if "allow users to customize tracking on their account page" works.
    */
-  public function testPiwikUserFields() {
+  public function testMatomoUserFields() {
     $ua_code = 'UA-123456-1';
-    $this->config('piwik.settings')->set('account', $ua_code)->save();
+    $this->config('matomo.settings')->set('account', $ua_code)->save();
 
     // Check if the pseudo field is shown on account forms.
     $this->drupalGet('admin/config/people/accounts/form-display');
     $this->assertResponse(200);
-    $this->assertRaw(t('Piwik settings'), '[testPiwikUserFields]: Piwik settings field exists on Manage form display.');
+    $this->assertRaw(t('Matomo settings'), '[testMatomoUserFields]: Matomo settings field exists on Manage form display.');
 
     // No customization allowed.
-    $this->config('piwik.settings')->set('visibility.user_account_mode', 0)->save();
+    $this->config('matomo.settings')->set('visibility.user_account_mode', 0)->save();
     $this->drupalGet('user/' . $this->admin_user->id() . '/edit');
     $this->assertResponse(200);
-    $this->assertNoRaw(t('Piwik settings'), '[testPiwikUserFields]: Piwik settings field does not exist on user edit page.');
+    $this->assertNoRaw(t('Matomo settings'), '[testMatomoUserFields]: Matomo settings field does not exist on user edit page.');
 
     // Tracking on by default, users with opt-in or out of tracking permission
     // can opt out.
-    $this->config('piwik.settings')->set('visibility.user_account_mode', 1)->save();
+    $this->config('matomo.settings')->set('visibility.user_account_mode', 1)->save();
     $this->drupalGet('user/' . $this->admin_user->id() . '/edit');
     $this->assertResponse(200);
-    $this->assertRaw(t('Users are tracked by default, but you are able to opt out.'), '[testPiwikUserFields]: Piwik settings field exists on on user edit page');
+    $this->assertRaw(t('Users are tracked by default, but you are able to opt out.'), '[testMatomoUserFields]: Matomo settings field exists on on user edit page');
 
     // Tracking off by default, users with opt-in or out of tracking permission
     // can opt in.
-    $this->config('piwik.settings')->set('visibility.user_account_mode', 2)->save();
+    $this->config('matomo.settings')->set('visibility.user_account_mode', 2)->save();
     $this->drupalGet('user/' . $this->admin_user->id() . '/edit');
     $this->assertResponse(200);
-    $this->assertRaw(t('Users are <em>not</em> tracked by default, but you are able to opt in.'), '[testPiwikUserFields]: Piwik settings field exists on on user edit page.');
+    $this->assertRaw(t('Users are <em>not</em> tracked by default, but you are able to opt in.'), '[testMatomoUserFields]: Matomo settings field exists on on user edit page.');
   }
 
 }

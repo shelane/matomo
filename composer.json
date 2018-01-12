@@ -1,8 +1,8 @@
 {
-  "name": "drupal/piwik",
-  "description": "Adds Piwik javascript tracking code to all your site's pages",
+  "name": "drupal/matomo",
+  "description": "Adds Matomo javascript tracking code to all your site's pages",
   "type": "drupal-module",
-  "homepage": "https://www.drupal.org/project/piwik",
+  "homepage": "https://www.drupal.org/project/matomo",
   "authors": [
     {
       "name": "hass",
@@ -14,8 +14,8 @@
     }
   ],
   "support": {
-    "issues": "https://www.drupal.org/project/issues/piwik",
-    "source": "http://git.drupal.org/project/piwik.git"
+    "issues": "https://www.drupal.org/project/issues/matomo",
+    "source": "http://git.drupal.org/project/matomo.git"
   },
   "license": "GPL-2.0+",
   "require": {}
