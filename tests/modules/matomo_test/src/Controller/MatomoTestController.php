@@ -15,12 +15,13 @@ class MatomoTestController extends ControllerBase {
    * @return string
    *   Empty string, we just test the setting of messages.
    */
-  public function drupalSetMessageTest() {
+  public function drupalAddMessageTest() {
     // Set some messages.
-    drupal_set_message('Example status message.', 'status');
-    drupal_set_message('Example warning message.', 'warning');
-    drupal_set_message('Example error message.', 'error');
-    drupal_set_message('Example error <em>message</em> with html tags and <a href="http://example.com/">link</a>.', 'error');
+    $messenger = \Drupal::messenger();
+    $messenger->addMessage('Example status message.', 'status');
+    $messenger->addMessage('Example warning message.', 'warning');
+    $messenger->addMessage('Example error message.', 'error');
+    $messenger->addMessage('Example error <em>message</em> with html tags and <a href="http://example.com/">link</a>.', 'error');
 
     return [];
   }
