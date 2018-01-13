@@ -50,7 +50,7 @@ class MatomoStatusMessagesTest extends WebTestBase {
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Password field is required."]);', '[testMatomoStatusMessages]: trackEvent "Password field is required." is shown.');
 
     // Testing this Drupal::messenger() requires an extra test module.
-    $this->drupalGet('matomo-test/drupal-set-message');
+    $this->drupalGet('matomo-test/drupal-messenger-add-message');
     $this->assertNoRaw('_paq.push(["trackEvent", "Messages", "Status message", "Example status message."]);', '[testMatomoStatusMessages]: Example status message is not enabled for tracking.');
     $this->assertNoRaw('_paq.push(["trackEvent", "Messages", "Warning message", "Example warning message."]);', '[testMatomoStatusMessages]: Example warning message is not enabled for tracking.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Example error message."]);', '[testMatomoStatusMessages]: Example error message is shown.');
@@ -59,7 +59,7 @@ class MatomoStatusMessagesTest extends WebTestBase {
     // Enable logging of status, warnings and errors.
     $this->config('matomo.settings')->set('track.messages', ['status' => 'status', 'warning' => 'warning', 'error' => 'error'])->save();
 
-    $this->drupalGet('matomo-test/drupal-set-message');
+    $this->drupalGet('matomo-test/drupal-messenger-add-message');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Status message", "Example status message."]);', '[testMatomoStatusMessages]: Example status message is enabled for tracking.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Warning message", "Example warning message."]);', '[testMatomoStatusMessages]: Example warning message is enabled for tracking.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Example error message."]);', '[testMatomoStatusMessages]: Example error message is shown.');
