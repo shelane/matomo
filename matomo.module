@@ -148,7 +148,7 @@ function matomo_page_attachments(array &$page) {
 
     // #2693595: User has entered an invalid login and clicked on forgot
     // password link. This link contains the username or email address and may
-    // get send to Google if we do not override it. Override only if 'name'
+    // get send to Matomo if we do not override it. Override only if 'name'
     // query param exists. Last custom url condition, this need to win.
     //
     // URLs to protect are:
