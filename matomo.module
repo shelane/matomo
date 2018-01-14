@@ -34,7 +34,7 @@ define('MATOMO_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x
 function matomo_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'matomo.admin_settings_form':
-      return t('<a href=":pk_url">Matomo - Web analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Matomo aims to be an open source alternative to Google Analytics.', [':pk_url' => 'http://www.matomo.org/']);
+      return t('<a href=":pk_url">Matomo Analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Matomo aims to be an open source alternative to Google Analytics.', [':pk_url' => 'http://www.matomo.org/']);
   }
 }
 

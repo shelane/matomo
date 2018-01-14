@@ -1,4 +1,4 @@
-name: 'Matomo Web Analytics'
+name: 'Matomo Analytics'
 type: module
 description: "Adds Matomo javascript tracking code to all your site's pages."
 package: Statistics

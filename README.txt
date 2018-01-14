@@ -1,5 +1,5 @@
 
-Module: Matomo - Web analytics
+Module: Matomo Analytics
 Author: Alexander Hass <http://drupal.org/user/85918>
 
 
