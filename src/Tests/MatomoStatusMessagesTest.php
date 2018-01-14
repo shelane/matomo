@@ -45,7 +45,7 @@ class MatomoStatusMessagesTest extends WebTestBase {
     // Enable logging of errors only.
     $this->config('matomo.settings')->set('track.messages', ['error' => 'error'])->save();
 
-    $this->drupalPostForm('user/login', [], t('Log in'));
+    $this->drupalPostForm('user/login', [], $this->t('Log in'));
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Username field is required."]);', '[testMatomoStatusMessages]: trackEvent "Username field is required." is shown.');
     $this->assertRaw('_paq.push(["trackEvent", "Messages", "Error message", "Password field is required."]);', '[testMatomoStatusMessages]: trackEvent "Password field is required." is shown.');
 
