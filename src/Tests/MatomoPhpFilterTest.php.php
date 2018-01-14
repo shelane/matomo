@@ -56,7 +56,7 @@ class MatomoPhpFilterTest extends WebTestBase {
     $edit['matomo_url_skiperror'] = TRUE;
     $edit['matomo_visibility_request_path_mode'] = 2;
     $edit['matomo_visibility_request_path_pages'] = '<?php return 0; ?>';
-    $this->drupalPostForm('admin/config/system/matomo', $edit, $this->t('Save configuration'));
+    $this->drupalPostForm('admin/config/system/matomo', $edit, t('Save configuration'));
 
     // Compare saved setting with posted setting.
     $matomo_visibility_request_path_pages = \Drupal::config('matomo.settings')->get('visibility.request_path_pages');
@@ -95,7 +95,7 @@ class MatomoPhpFilterTest extends WebTestBase {
     $edit['matomo_url_https'] = 'https://www.example.com/matomo/';
     // Required for testing only.
     $edit['matomo_url_skiperror'] = TRUE;
-    $this->drupalPostForm('admin/config/system/matomo', $edit, $this->t('Save configuration'));
+    $this->drupalPostForm('admin/config/system/matomo', $edit, t('Save configuration'));
 
     // Compare saved setting with posted setting.
     $matomo_visibility_request_path_mode = $this->config('matomo.settings')->get('visibility.request_path_mode');

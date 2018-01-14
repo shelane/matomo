@@ -63,7 +63,7 @@ class MatomoBasicTest extends WebTestBase {
     $edit['matomo_site_id'] = 1;
     $edit['matomo_url_http'] = 'http://www.example.com/matomo/';
     $edit['matomo_url_https'] = 'https://www.example.com/matomo/';
-    $this->drupalPostForm('admin/config/system/matomo', $edit, $this->t('Save configuration'));
+    $this->drupalPostForm('admin/config/system/matomo', $edit, t('Save configuration'));
     $this->assertRaw('The validation of "http://www.example.com/matomo/piwik.php" failed with an exception', '[testMatomoConfiguration]: HTTP URL exception shown.');
     $this->assertRaw('The validation of "https://www.example.com/matomo/piwik.php" failed with an exception', '[testMatomoConfiguration]: HTTPS URL exception shown.');
 
