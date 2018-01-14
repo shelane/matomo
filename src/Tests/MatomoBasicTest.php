@@ -158,7 +158,7 @@ class MatomoBasicTest extends WebTestBase {
     <script type="text/javascript">
     var _paq = _paq || [];
     (function(){
-        var u=(("https:" == document.location.protocol) ? "https://{$PIWIK_URL}" : "http://{$PIWIK_URL}");
+        var u=(("https:" == document.location.protocol) ? "https://{$MATOMO_URL}" : "http://{$MATOMO_URL}");
         _paq.push(['setSiteId', {$IDSITE}]);
         _paq.push(['setTrackerUrl', u+'piwik.php']);
         _paq.push(['trackPageView']);

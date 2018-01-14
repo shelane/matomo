@@ -237,7 +237,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       '#title_display' => 'invisible',
       '#type' => 'textfield',
       '#default_value' => $config->get('track.files_extensions'),
-      '#description' => $this->t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: @extensions', ['@extensions' => PIWIK_TRACKFILES_EXTENSIONS]),
+      '#description' => $this->t('A file extension list separated by the | character that will be tracked as download when clicked. Regular expressions are supported. For example: @extensions', ['@extensions' => MATOMO_TRACKFILES_EXTENSIONS]),
       '#maxlength' => 500,
       '#states' => [
         'enabled' => [

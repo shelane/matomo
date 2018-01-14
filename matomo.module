@@ -26,7 +26,7 @@ use Drupal\matomo\Component\Render\MatomoJavaScriptSnippet;
 /**
  * Define the default file extension list that should be tracked as download.
  */
-define('PIWIK_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip');
+define('MATOMO_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip');
 
 /**
  * Implements hook_help().
@@ -227,7 +227,7 @@ function matomo_page_attachments(array &$page) {
     }
 
     // Custom file download extensions.
-    if ($config->get('track.files') && !($config->get('track.files_extensions') == PIWIK_TRACKFILES_EXTENSIONS)) {
+    if ($config->get('track.files') && !($config->get('track.files_extensions') == MATOMO_TRACKFILES_EXTENSIONS)) {
       $script .= '_paq.push(["setDownloadExtensions", ' . Json::encode($config->get('track.files_extensions')) . ']);';
     }
 
