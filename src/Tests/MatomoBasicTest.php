@@ -102,6 +102,7 @@ class MatomoBasicTest extends WebTestBase {
 
     // Check tracking code visibility.
     $this->drupalGet('');
+    $this->assertRaw('/matomo/js/matomo.js', '[testMatomoPageVisibility]: Custom tracking script is is displayed for authenticated users.');
     $this->assertRaw('u+"piwik.php"', '[testMatomoPageVisibility]: Tracking code is displayed for authenticated users.');
 
     // Test whether tracking code is not included on pages to omit.
