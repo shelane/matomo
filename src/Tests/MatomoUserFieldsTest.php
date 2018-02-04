@@ -39,8 +39,10 @@ class MatomoUserFieldsTest extends WebTestBase {
    * Tests if "allow users to customize tracking on their account page" works.
    */
   public function testMatomoUserFields() {
-    $ua_code = 'UA-123456-1';
-    $this->config('matomo.settings')->set('account', $ua_code)->save();
+    $site_id = '1';
+    $this->config('matomo.settings')->set('site_id', $site_id)->save();
+    $this->config('matomo.settings')->set('url_http', 'http://www.example.com/matomo/')->save();
+    $this->config('matomo.settings')->set('url_https', 'https://www.example.com/matomo/')->save();
 
     // Check if the pseudo field is shown on account forms.
     $this->drupalGet('admin/config/people/accounts/form-display');
