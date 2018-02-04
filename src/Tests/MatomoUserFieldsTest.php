@@ -9,7 +9,7 @@ use Drupal\simpletest\WebTestBase;
  *
  * @group Matomo
  */
-class MatomoUserFieldsTestTest extends WebTestBase {
+class MatomoUserFieldsTest extends WebTestBase {
 
   /**
    * Modules to enable.
