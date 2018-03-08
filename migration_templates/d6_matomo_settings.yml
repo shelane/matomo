@@ -2,6 +2,7 @@ id: d6_piwik_settings
 label: Piwik 6 configuration
 migration_tags:
   - Drupal 6
+  - Configuration
 source:
   plugin: variable
   variables:
@@ -27,6 +28,7 @@ source:
     - piwik_visibility_roles
     - piwik_page_title_hierarchy
     - piwik_page_title_hierarchy_exclude_home
+  source_module: piwik
 process:
   cache: piwik_cache
   'codesnippet/after': piwik_codesnippet_after
