@@ -18,5 +18,8 @@
     "source": "http://git.drupal.org/project/matomo.git"
   },
   "license": "GPL-2.0+",
-  "require": {}
+  "require": {},
+  "replace": {
+    "drupal/piwik": "^1.0"
+  }
 }
