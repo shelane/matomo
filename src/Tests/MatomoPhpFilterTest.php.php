@@ -29,7 +29,7 @@ class MatomoPhpFilterTest extends WebTestBase {
     $permissions_admin_user = [
       'access administration pages',
       'administer matomo',
-      'use PHP for matomo tracking visibility',
+      'use php for matomo tracking visibility',
     ];
     $this->admin_user = $this->drupalCreateUser($permissions_admin_user);
 

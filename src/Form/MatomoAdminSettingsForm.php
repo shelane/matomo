@@ -118,7 +118,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
 
     // Page specific visibility configurations.
     $account = \Drupal::currentUser();
-    $php_access = $account->hasPermission('use PHP for matomo tracking visibility');
+    $php_access = $account->hasPermission('use php for matomo tracking visibility');
     $visibility_request_path_pages = $config->get('visibility.request_path_pages');
 
     $form['tracking']['page_visibility_settings'] = [
@@ -433,7 +433,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       ];
     }
 
-    $user_access_add_js_snippets = !$this->currentUser()->hasPermission('add JS snippets for matomo');
+    $user_access_add_js_snippets = !$this->currentUser()->hasPermission('add js snippets for matomo');
     $user_access_add_js_snippets_permission_warning = $user_access_add_js_snippets ? ' <em>' . $this->t('This field has been disabled because you do not have sufficient permissions to edit it.') . '</em>' : '';
     $form['advanced']['codesnippet'] = [
       '#type' => 'details',

@@ -39,7 +39,7 @@ class MatomoBasicTest extends WebTestBase {
 
     // User to set up matomo.
     $this->noSnippetUser = $this->drupalCreateUser($permissions);
-    $permissions[] = 'add JS snippets for matomo';
+    $permissions[] = 'add js snippets for matomo';
     $this->admin_user = $this->drupalCreateUser($permissions);
     $this->drupalLogin($this->admin_user);
   }
