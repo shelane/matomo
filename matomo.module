@@ -401,6 +401,12 @@ function matomo_form_user_form_alter(&$form, FormStateInterface $form_state) {
       $description .= '</span>';
     }
 
+    // Migrate old piwik settings to matomo.
+    $account_data_piwik = \Drupal::service('user.data')->get('piwik', $account->id());
+    if (isset($account_data_piwik['user_account_users'])) {
+      $account_data_matomo['user_account_users'] = $account_data_piwik['user_account_users'];
+    }
+
     $form['matomo']['user_account_users'] = [
       '#type' => 'checkbox',
       '#title' => t('Enable user tracking'),
@@ -421,6 +427,12 @@ function matomo_user_profile_form_submit($form, FormStateInterface $form_state) 
   $account = $form_state->getFormObject()->getEntity();
   if ($account->id() && $form_state->hasValue('user_account_users')) {
     \Drupal::service('user.data')->set('matomo', $account->id(), 'user_account_users', (int) $form_state->getValue('user_account_users'));
+  }
+
+  // Remove old piwik setting to complete migration to matomo.
+  $account_data_piwik = \Drupal::service('user.data')->get('piwik', $account->id());
+  if (isset($account_data_piwik)) {
+    \Drupal::service('user.data')->delete('piwik', $account->id());
   }
 }
 
