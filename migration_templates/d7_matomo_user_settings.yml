@@ -1,12 +1,12 @@
-id: d7_piwik_user_settings
-label: Piwik user settings
+id: d7_matomo_user_settings
+label: Matomo user settings
 migration_tags:
   - Drupal 7
 source:
   plugin: d7_user
   constants:
     key: user_account_users
-    module: piwik
+    module: matomo
 process:
   uid: uid
   key: 'constants/key'
