@@ -198,7 +198,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Users'),
       '#group' => 'tracking_scope',
     ];
-    $t_permission = ['%permission' => $this->t('opt-in or out of tracking')];
+    $t_permission = ['%permission' => $this->t('opt-in or out of matomo tracking')];
     $form['tracking']['user_visibility_settings']['matomo_visibility_user_account_mode'] = [
       '#type' => 'radios',
       '#title' => $this->t('Allow users to customize tracking on their account page'),
