@@ -111,6 +111,20 @@
         }
       });
 
+      $('#edit-page-title-hierarchy').drupalSetSummary(function (context) {
+        var vals = [];
+        if ($('input#edit-matomo-page-title-hierarchy', context).is(':checked')) {
+          vals.push(Drupal.t('Show page titles'));
+        }
+        if ($('input#edit-matomo-page-title-hierarchy-exclude-home', context).is(':checked')) {
+          vals.push(Drupal.t('Hide home page'));
+        }
+        if (!vals.length) {
+          return Drupal.t('Not tracked');
+        }
+        return Drupal.t('@items enabled', {'@items': vals.join(', ')});
+      });
+
       $('#edit-privacy').drupalSetSummary(function (context) {
         var vals = [];
         if ($('input#edit-matomo-privacy-donottrack', context).is(':checked')) {

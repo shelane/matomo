@@ -317,7 +317,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       '#type' => 'details',
       '#title' => $this->t('Page titles hierarchy'),
       '#description' => $this->t('This functionality enables a dynamically expandable tree view of your site page titles in your Matomo statistics. See in Matomo statistics under <em>Actions</em> > <em>Page titles</em>.'),
-      '#group' => 'page_title_hierarchy',
+      '#group' => 'tracking_scope',
     ];
     $form['page_title_hierarchy']['matomo_page_title_hierarchy'] = [
       '#type' => 'checkbox',
