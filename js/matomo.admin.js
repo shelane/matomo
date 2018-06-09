@@ -3,7 +3,7 @@
  * Matomo admin behaviors.
  */
 
-(function ($, window) {
+(function ($) {
 
   "use strict";
 
@@ -138,4 +138,4 @@
     }
   };
 
-})(jQuery, window);
+})(jQuery);
