@@ -19,7 +19,4 @@
   },
   "license": "GPL-2.0+",
   "require": {},
-  "replace": {
-    "drupal/piwik": "^1.0"
-  }
 }
