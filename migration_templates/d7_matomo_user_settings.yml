@@ -12,11 +12,9 @@ process:
   key: 'constants/key'
   module: 'constants/module'
   settings:
-    # Based on skip_row_if_not_set
-    plugin: matomo_skip_row_if_not_set
-    key: custom
-    module: matomo
-    source: data
+    plugin: skip_row_if_not_set
+    index: 'custom'
+    source: data/matomo
 destination:
   plugin: user_data
 migration_dependencies:
