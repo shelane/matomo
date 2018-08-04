@@ -213,7 +213,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Track User ID'),
       '#default_value' => $config->get('track.userid'),
-      '#description' => $this->t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href=":url">Learn more about the benefits of using User ID</a>.', [':url' => 'http://matomo.org/docs/user-id/']),
+      '#description' => $this->t('User ID enables the analysis of groups of sessions, across devices, using a unique, persistent, and non-personally identifiable ID string representing a user. <a href=":url">Learn more about the benefits of using User ID</a>.', [':url' => 'https://matomo.org/docs/user-id/']),
     ];
 
     // Link specific configurations.
@@ -308,7 +308,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
     $form['tracking']['privacy']['matomo_privacy_donottrack'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Universal web tracking opt-out'),
-      '#description' => $this->t('If enabled and your Matomo server receives the <a href="http://donottrack.us/">Do-Not-Track</a> header from the client browser, the Matomo server will not track the user. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision.'),
+      '#description' => $this->t('If enabled and your Matomo server receives the <a href="https://www.eff.org/issues/do-not-track">Do-Not-Track</a> header from the client browser, the Matomo server will not track the user. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision.'),
       '#default_value' => $config->get('privacy.donottrack'),
     ];
 
@@ -334,7 +334,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
 
     // Custom variables.
     $form['matomo_custom_var'] = [
-      '#description' => $this->t('You can add Matomos <a href=":custom_var_documentation">Custom Variables</a> here. These will be added to every page that Matomo tracking code appears on. Custom variable names and values are limited to 200 characters in length. Keep the names and values as short as possible and expect long values to get trimmed. You may use tokens in custom variable names and values. Global and user tokens are always available; on node pages, node tokens are also available.', [':custom_var_documentation' => 'http://matomo.org/docs/custom-variables/']),
+      '#description' => $this->t('You can add Matomos <a href=":custom_var_documentation">Custom Variables</a> here. These will be added to every page that Matomo tracking code appears on. Custom variable names and values are limited to 200 characters in length. Keep the names and values as short as possible and expect long values to get trimmed. You may use tokens in custom variable names and values. Global and user tokens are always available; on node pages, node tokens are also available.', [':custom_var_documentation' => 'https://matomo.org/docs/custom-variables/']),
       '#title' => $this->t('Custom variables'),
       '#tree' => TRUE,
       '#type' => 'details',
@@ -439,7 +439,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       '#type' => 'details',
       '#title' => $this->t('Custom JavaScript code'),
       '#open' => TRUE,
-      '#description' => $this->t('You can add custom Matomo <a href=":snippets">code snippets</a> here. These will be added to every page that Matomo appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'http://matomo.org/docs/javascript-tracking/']),
+      '#description' => $this->t('You can add custom Matomo <a href=":snippets">code snippets</a> here. These will be added to every page that Matomo appears on. <strong>Do not include the &lt;script&gt; tags</strong>, and always end your code with a semicolon (;).', [':snippets' => 'https://matomo.org/docs/javascript-tracking/']),
     ];
     $form['advanced']['codesnippet']['matomo_codesnippet_before'] = [
       '#type' => 'textarea',

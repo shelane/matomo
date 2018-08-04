@@ -7,7 +7,7 @@
  * Adds the required Javascript to all your Drupal pages to allow tracking by
  * the Matomo statistics package.
  *
- * @author: Alexander Hass <http://drupal.org/user/85918>
+ * @author: Alexander Hass <https://drupal.org/user/85918>
  */
 
 use Drupal\Component\Serialization\Json;
@@ -34,7 +34,7 @@ define('MATOMO_TRACKFILES_EXTENSIONS', '7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x
 function matomo_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'matomo.admin_settings_form':
-      return t('<a href=":pk_url">Matomo Analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Matomo aims to be an open source alternative to Google Analytics.', [':pk_url' => 'http://www.matomo.org/']);
+      return t('<a href=":pk_url">Matomo Analytics</a> is an open source (GPL license) web analytics software. It gives interesting reports on your website visitors, your popular pages, the search engines keywords they used, the language they speak... and so much more. Matomo aims to be an open source alternative to Google Analytics.', [':pk_url' => 'https://www.matomo.org/']);
   }
 }
 
@@ -198,7 +198,7 @@ function matomo_page_attachments(array &$page) {
     $codesnippet_after = $config->get('codesnippet.after');
 
     // Build tracker code.
-    // @see http://matomo.org/docs/javascript-tracking/#toc-asynchronous-tracking
+    // @see https://matomo.org/docs/javascript-tracking/#toc-asynchronous-tracking
     $script = 'var _paq = _paq || [];';
     $script .= '(function(){';
     $script .= 'var u=(("https:" == document.location.protocol) ? "' . UrlHelper::filterBadProtocol($url_https) . '" : "' . UrlHelper::filterBadProtocol($url_http) . '");';
@@ -279,7 +279,7 @@ function matomo_page_attachments(array &$page) {
       ];
       // Disable the download & outlink tracking for specific CSS classes.
       // Custom code snippets with 'setIgnoreClasses' will override the value.
-      // @see http://developer.matomo.org/api-reference/tracking-javascript#disable-the-download-amp-outlink-tracking-for-specific-css-classes
+      // @see https://developer.matomo.org/api-reference/tracking-javascript#disable-the-download-amp-outlink-tracking-for-specific-css-classes
       $script .= '_paq.push(["setIgnoreClasses", ' . Json::encode($ignore_classes) . ']);';
 
       // Enable download & outlink link tracking.
