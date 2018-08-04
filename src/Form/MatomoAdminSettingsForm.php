@@ -308,7 +308,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
     $form['tracking']['privacy']['matomo_privacy_donottrack'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Universal web tracking opt-out'),
-      '#description' => $this->t('If enabled and your Matomo server receives the <a href="https://www.eff.org/issues/do-not-track">Do-Not-Track</a> header from the client browser, the Matomo server will not track the user. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision.'),
+      '#description' => $this->t('If enabled and your Matomo server receives the <a href=":donottrack">Do-Not-Track</a> header from the client browser, the Matomo server will not track the user. Compliance with Do Not Track could be purely voluntary, enforced by industry self-regulation, or mandated by state or federal law. Please accept your visitors privacy. If they have opt-out from tracking and advertising, you should accept their personal decision.', [':donottrack' => 'https://www.eff.org/issues/do-not-track']),
       '#default_value' => $config->get('privacy.donottrack'),
     ];
 
