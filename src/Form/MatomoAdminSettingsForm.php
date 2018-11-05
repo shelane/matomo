@@ -10,6 +10,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Client;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -21,13 +22,16 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
 
   protected $currentUser;
 
+  protected $httpClient;
+
   /**
    * {@inheritdoc}
    */
-  public function __construct(ConfigFactoryInterface $config_factory, AccountInterface $currentUser, ModuleHandler $moduleHandler) {
+  public function __construct(ConfigFactoryInterface $config_factory, AccountInterface $currentUser, ModuleHandler $moduleHandler, Client $httpClient) {
     parent::__construct($config_factory);
     $this->currentUser = $currentUser;
     $this->moduleHandler = $moduleHandler;
+    $this->httpClient = $httpClient;
   }
 
   /**
@@ -513,7 +517,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
 
     $url = $form_state->getValue('matomo_url_http') . 'piwik.php';
     try {
-      $result = \Drupal::httpClient()->get($url);
+      $result = $this->httpClient->get($url);
       if ($result->getStatusCode() != 200 && $form_state->getValue('matomo_url_skiperror') == FALSE) {
         $form_state->setErrorByName('matomo_url_http', $this->t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
           '@url' => UrlHelper::filterBadProtocol($url),
@@ -534,7 +538,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
     if (!empty($matomo_url_https)) {
       $url = $matomo_url_https . 'piwik.php';
       try {
-        $result = \Drupal::httpClient()->get($url);
+        $result = $this->httpClient->get($url);
         if ($result->getStatusCode() != 200 && $form_state->getValue('matomo_url_skiperror') == FALSE) {
           $form_state->setErrorByName('matomo_url_https', $this->t('The validation of "@url" failed with error "@error" (HTTP code @code).', [
             '@url' => UrlHelper::filterBadProtocol($url),
@@ -739,7 +743,8 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       // Load the service required to construct this class.
       $container->get('config.factory'),
       $container->get('current_user'),
-      $container->get('module_handler')
+      $container->get('module_handler'),
+      $container->get('http_client')
     );
   }
 
