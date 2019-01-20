@@ -442,6 +442,7 @@ function matomo_user_profile_form_submit($form, FormStateInterface $form_state) 
 function matomo_cron() {
   $config = \Drupal::config('matomo.settings');
   $request_time = \Drupal::time()->getRequestTime();
+
   // Regenerate the piwik.js every day.
   if ($request_time - \Drupal::state()->get('matomo.last_cache') >= 86400 && $config->get('cache')) {
     _matomo_cache($config->get('url_http') . 'piwik.js', TRUE);
