@@ -19,6 +19,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\matomo\MatomoInterface;
 use Drupal\node\NodeInterface;
 use GuzzleHttp\Exception\RequestException;
 use Drupal\matomo\Component\Render\MatomoJavaScriptSnippet;
@@ -215,7 +216,7 @@ function matomo_page_attachments(array &$page) {
     }
 
     // Custom file download extensions.
-    if ($config->get('track.files') && !($config->get('track.files_extensions') == MATOMO_TRACKFILES_EXTENSIONS)) {
+    if ($config->get('track.files') && !($config->get('track.files_extensions') == MatomoInterface::MATOMO_TRACKFILES_EXTENSIONS)) {
       $script .= '_paq.push(["setDownloadExtensions", ' . Json::encode($config->get('track.files_extensions')) . ']);';
     }
 
