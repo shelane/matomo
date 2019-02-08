@@ -229,7 +229,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
         1 => $this->t('Tracking on by default, users with %permission permission can opt out', $t_permission),
         2 => $this->t('Tracking off by default, users with %permission permission can opt in', $t_permission),
       ],
-      '#default_value' => !empty($visibility_user_account_mode) ? $visibility_user_account_mode : 1,
+      '#default_value' => !empty($visibility_user_account_mode) ? $visibility_user_account_mode : 0,
     ];
     $form['tracking']['user_visibility_settings']['matomo_trackuserid'] = [
       '#type' => 'checkbox',
