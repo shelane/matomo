@@ -75,7 +75,7 @@ code textarea. These can be found on various blog posts, or on the
 official Matomo pages. Support is not provided for any customisations
 you include.
 
-To speed up page loading you may also cache the Matomo "piwik.js"
+To speed up page loading you may also cache the Matomo "matomo.js"
 file locally.
 
 Known issues

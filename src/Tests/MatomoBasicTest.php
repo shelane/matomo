@@ -64,8 +64,8 @@ class MatomoBasicTest extends WebTestBase {
     $edit['matomo_url_http'] = 'http://www.example.com/matomo/';
     $edit['matomo_url_https'] = 'https://www.example.com/matomo/';
     $this->drupalPostForm('admin/config/system/matomo', $edit, t('Save configuration'));
-    $this->assertRaw('The validation of "http://www.example.com/matomo/piwik.php" failed with an exception', '[testMatomoConfiguration]: HTTP URL exception shown.');
-    $this->assertRaw('The validation of "https://www.example.com/matomo/piwik.php" failed with an exception', '[testMatomoConfiguration]: HTTPS URL exception shown.');
+    $this->assertRaw('The validation of "http://www.example.com/matomo/matomo.php" failed with an exception', '[testMatomoConfiguration]: HTTP URL exception shown.');
+    $this->assertRaw('The validation of "https://www.example.com/matomo/matomo.php" failed with an exception', '[testMatomoConfiguration]: HTTPS URL exception shown.');
 
     // User should have access to code snippets.
     $this->assertFieldByName('matomo_codesnippet_before');
@@ -103,29 +103,29 @@ class MatomoBasicTest extends WebTestBase {
     // Check tracking code visibility.
     $this->drupalGet('');
     $this->assertRaw('/matomo/js/matomo.js', '[testMatomoPageVisibility]: Custom tracking script is is displayed for authenticated users.');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoPageVisibility]: Tracking code is displayed for authenticated users.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoPageVisibility]: Tracking code is displayed for authenticated users.');
 
     // Test whether tracking code is not included on pages to omit.
     $this->drupalGet('admin');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoPageVisibility]: Tracking code is not displayed on admin page.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoPageVisibility]: Tracking code is not displayed on admin page.');
     $this->drupalGet('admin/config/system/matomo');
     // Checking for tracking URI here, as $site_id is displayed in the form.
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoPageVisibility]: Tracking code is not displayed on admin subpage.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoPageVisibility]: Tracking code is not displayed on admin subpage.');
 
     // Test whether tracking code display is properly flipped.
     $this->config('matomo.settings')->set('visibility.request_path_mode', 1)->save();
     $this->drupalGet('admin');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoPageVisibility]: Tracking code is displayed on admin page.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoPageVisibility]: Tracking code is displayed on admin page.');
     $this->drupalGet('admin/config/system/matomo');
     // Checking for tracking URI here, as $site_id is displayed in the form.
-    $this->assertRaw('u+"piwik.php"', '[testMatomoPageVisibility]: Tracking code is displayed on admin subpage.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoPageVisibility]: Tracking code is displayed on admin subpage.');
     $this->drupalGet('');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoPageVisibility]: Tracking code is NOT displayed on front page.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoPageVisibility]: Tracking code is NOT displayed on front page.');
 
     // Test whether tracking code is not display for anonymous.
     $this->drupalLogout();
     $this->drupalGet('');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoPageVisibility]: Tracking code is NOT displayed for anonymous.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoPageVisibility]: Tracking code is NOT displayed for anonymous.');
 
     // Switch back to every page except the listed pages.
     $this->config('matomo.settings')->set('visibility.request_path_mode', 0)->save();
@@ -161,7 +161,7 @@ class MatomoBasicTest extends WebTestBase {
     (function(){
         var u=(("https:" == document.location.protocol) ? "https://{$MATOMO_URL}" : "http://{$MATOMO_URL}");
         _paq.push(['setSiteId', {$IDSITE}]);
-        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
         _paq.push(['trackPageView']);
         var d=document,
             g=d.createElement('script'),
@@ -169,7 +169,7 @@ class MatomoBasicTest extends WebTestBase {
             g.type='text/javascript';
             g.defer=true;
             g.async=true;
-            g.src=u+'piwik.js';
+            g.src=u+'matomo.js';
             s.parentNode.insertBefore(g,s);
     })();
     </script>
@@ -178,7 +178,7 @@ class MatomoBasicTest extends WebTestBase {
     // Test whether tracking code uses latest JS.
     $this->config('matomo.settings')->set('cache', 0)->save();
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoTrackingCode]: Latest tracking code used.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoTrackingCode]: Latest tracking code used.');
 
     // Test if tracking of User ID is enabled.
     $this->config('matomo.settings')->set('track.userid', 1)->save();

@@ -51,27 +51,27 @@ class MatomoRolesTest extends WebTestBase {
 
     // Check tracking code visibility.
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is displayed for anonymous users on frontpage with default settings.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is displayed for anonymous users on frontpage with default settings.');
     $this->drupalGet('admin');
     $this->assertRaw('"403/URL = "', '[testMatomoRoleVisibility]: 403 Forbidden tracking code is displayed for anonymous users in admin section with default settings.');
 
     $this->drupalLogin($this->admin_user);
 
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is displayed for authenticated users on frontpage with default settings.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is displayed for authenticated users on frontpage with default settings.');
     $this->drupalGet('admin');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is NOT displayed for authenticated users in admin section with default settings.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is NOT displayed for authenticated users in admin section with default settings.');
 
     // Test if the non-default settings are working as expected.
     // Enable tracking only for authenticated users.
     $this->config('matomo.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is displayed for authenticated users only on frontpage.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is displayed for authenticated users only on frontpage.');
 
     $this->drupalLogout();
     $this->drupalGet('');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is NOT displayed for anonymous users on frontpage.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is NOT displayed for anonymous users on frontpage.');
 
     // Add to every role except the selected ones.
     $this->config('matomo.settings')->set('visibility.user_role_mode', 1)->save();
@@ -80,28 +80,28 @@ class MatomoRolesTest extends WebTestBase {
 
     // Check tracking code visibility.
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is added to every role and displayed for anonymous users.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is added to every role and displayed for anonymous users.');
     $this->drupalGet('admin');
     $this->assertRaw('"403/URL = "', '[testMatomoRoleVisibility]: 403 Forbidden tracking code is shown for anonymous users if every role except the selected ones is selected.');
 
     $this->drupalLogin($this->admin_user);
 
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is added to every role and displayed on frontpage for authenticated users.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is added to every role and displayed on frontpage for authenticated users.');
     $this->drupalGet('admin');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is added to every role and NOT displayed in admin section for authenticated users.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is added to every role and NOT displayed in admin section for authenticated users.');
 
     // Disable tracking for authenticated users.
     $this->config('matomo.settings')->set('visibility.user_role_roles', [AccountInterface::AUTHENTICATED_ROLE => AccountInterface::AUTHENTICATED_ROLE])->save();
 
     $this->drupalGet('');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is NOT displayed on frontpage for excluded authenticated users.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is NOT displayed on frontpage for excluded authenticated users.');
     $this->drupalGet('admin');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is NOT displayed in admin section for excluded authenticated users.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is NOT displayed in admin section for excluded authenticated users.');
 
     $this->drupalLogout();
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoRoleVisibility]: Tracking code is displayed on frontpage for included anonymous users.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoRoleVisibility]: Tracking code is displayed on frontpage for included anonymous users.');
   }
 
 }

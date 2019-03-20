@@ -65,13 +65,13 @@ class MatomoPhpFilterTest extends WebTestBase {
     // Check tracking code visibility.
     $this->config('matomo.settings')->set('visibility.request_path_pages', '<?php return TRUE; ?>')->save();
     $this->drupalGet('');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoPhpFilter]: Tracking is displayed on frontpage page.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoPhpFilter]: Tracking is displayed on frontpage page.');
     $this->drupalGet('admin');
-    $this->assertRaw('u+"piwik.php"', '[testMatomoPhpFilter]: Tracking is displayed on admin page.');
+    $this->assertRaw('u+"matomo.php"', '[testMatomoPhpFilter]: Tracking is displayed on admin page.');
 
     $this->config('matomo.settings')->set('visibility.request_path_pages', '<?php return FALSE; ?>')->save();
     $this->drupalGet('');
-    $this->assertNoRaw('u+"piwik.php"', '[testMatomoPhpFilter]: Tracking is not displayed on frontpage page.');
+    $this->assertNoRaw('u+"matomo.php"', '[testMatomoPhpFilter]: Tracking is not displayed on frontpage page.');
 
     // Test administration form.
     $this->config('matomo.settings')->set('visibility.request_path_pages', '<?php return TRUE; ?>')->save();

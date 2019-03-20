@@ -516,7 +516,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       $form_state->setErrorByName('matomo_site_id', $this->t('A valid Matomo site ID is an integer only.'));
     }
 
-    $url = $form_state->getValue('matomo_url_http') . 'piwik.php';
+    $url = $form_state->getValue('matomo_url_http') . 'matomo.php';
     try {
       $result = $this->httpClient->get($url);
       if ($result->getStatusCode() != 200 && $form_state->getValue('matomo_url_skiperror') == FALSE) {
@@ -537,7 +537,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
 
     $matomo_url_https = $form_state->getValue('matomo_url_https');
     if (!empty($matomo_url_https)) {
-      $url = $matomo_url_https . 'piwik.php';
+      $url = $matomo_url_https . 'matomo.php';
       try {
         $result = $this->httpClient->get($url);
         if ($result->getStatusCode() != 200 && $form_state->getValue('matomo_url_skiperror') == FALSE) {
