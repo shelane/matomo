@@ -2,7 +2,6 @@
 
 namespace Drupal\matomo\Form;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandler;
@@ -636,7 +635,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
   public static function tokenElementValidate(&$element, FormStateInterface $form_state) {
     $value = isset($element['#value']) ? $element['#value'] : $element['#default_value'];
 
-    if (!Unicode::strlen($value)) {
+    if (!mb_strlen($value)) {
       // Empty value needs no further validation since the element should depend
       // on using the '#required' FAPI property.
       return $element;
