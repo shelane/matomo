@@ -603,6 +603,8 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
       ->set('track.mailto', $form_state->getValue('matomo_trackmailto'))
       ->set('track.messages', $form_state->getValue('matomo_trackmessages'))
       ->set('track.site_search', $form_state->getValue('matomo_site_search'))
+      ->set('page_title_hierarchy', $form_state->getValue('matomo_page_title_hierarchy'))
+      ->set('page_title_hierarchy_exclude_home', $form_state->getValue('matomo_page_title_hierarchy_exclude_home'))
       ->set('privacy.donottrack', $form_state->getValue('matomo_privacy_donottrack'))
       ->set('cache', $form_state->getValue('matomo_cache'))
       ->set('visibility.request_path_mode', $form_state->getValue('matomo_visibility_request_path_mode'))
