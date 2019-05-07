@@ -4,7 +4,7 @@ namespace Drupal\matomo\Form;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Extension\ModuleHandler;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -27,7 +27,7 @@ class MatomoAdminSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(ConfigFactoryInterface $config_factory, AccountInterface $currentUser, ModuleHandler $moduleHandler, Client $httpClient) {
+  public function __construct(ConfigFactoryInterface $config_factory, AccountInterface $currentUser, ModuleHandlerInterface $moduleHandler, Client $httpClient) {
     parent::__construct($config_factory);
     $this->currentUser = $currentUser;
     $this->moduleHandler = $moduleHandler;
